@@ -9,7 +9,6 @@ c++链表
 //查找元素
 
 std::pair<int, int> getElem(int a,list *l1){
-
     list *b=l1;
     int count=0;
     for(;b->next!=NULL;b=b->next){
