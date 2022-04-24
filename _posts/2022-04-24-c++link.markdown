@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-date:   2022-04-24 22:01:41 +0800
-categories: jekyll update
+title:  c++ link
+date:   2022-04-24 22:56:41 +0800
+categories: c++
 ---
 c++链表
 //查找元素
