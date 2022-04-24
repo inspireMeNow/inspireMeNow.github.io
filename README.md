@@ -1,3 +1,1 @@
-layout: page
-title: "博客"
-permalink: /docs
+duan-dky.github.io
