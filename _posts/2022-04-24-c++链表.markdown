@@ -1,13 +1,7 @@
----
-layout: post
-title:  c++ link
-date:   2022-04-24 22:56:41 +0800
-categories: c++
----
 c++链表
 
 //查找元素
-
+```
 std::pair<int, int> getElem(int a,list *l1)
 {
 
@@ -15,13 +9,14 @@ std::pair<int, int> getElem(int a,list *l1)
     int count=0;
     for(;b->next!=NULL;b=b->next){
         if(a==b->a){
-            return std::pair<int, int>(a,count);
+            return std::pair<int, int>(a,count); //返回元素和下标
         }
         count++;
     }
     if(b->a==a){
-        return std::pair<int, int>(a,count);
+        return std::pair<int, int>(a,count); //未找到返回-1
     }
     return std::pair<int, int>(a,-1);
     
 }
+```
