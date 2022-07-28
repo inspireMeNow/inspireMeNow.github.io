@@ -1,11 +1,11 @@
-#Rust初步学习
-##1.rust函数
+Rust初步学习  
+1.rust函数
 ```
 fn main(){ //主函数
 	println!("hello world!");
 }
 ```
-##2.Rust变量
+2.Rust变量
 Rust 是强类型语言，但具有自动判断变量类型的能力。  
 声明变量使用let关键字。
 重影:指变量的名称可以被重新使用。
