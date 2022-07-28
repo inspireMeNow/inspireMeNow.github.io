@@ -1,31 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-28T15:38:12+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">C++链表</title><link href="http://localhost:4000/2022/04/24/c++%E9%93%BE%E8%A1%A8.html" rel="alternate" type="text/html" title="C++链表" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/c++%E9%93%BE%E8%A1%A8</id><content type="html" xml:base="http://localhost:4000/2022/04/24/c++%E9%93%BE%E8%A1%A8.html">&lt;p&gt;c++链表&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-28T19:13:13+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Your Site Title</title><subtitle>Your Site Description
+</subtitle><author><name>Your Name</name></author><entry><title type="html">C++链表</title><link href="http://localhost:4000/2022/04/24/c++%E9%93%BE%E8%A1%A8.html" rel="alternate" type="text/html" title="C++链表" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/c++%E9%93%BE%E8%A1%A8</id><content type="html" xml:base="http://localhost:4000/2022/04/24/c++%E9%93%BE%E8%A1%A8.html"><![CDATA[<p>c++链表</p>
 
-&lt;p&gt;//查找元素&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;std::pair&amp;lt;int, int&amp;gt; getElem(int a,list *l1)
+<p>//查找元素</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>std::pair&lt;int, int&gt; getElem(int a,list *l1)
 {
 
     list *b=l1;
     int count=0;
-    for(;b-&amp;gt;next!=NULL;b=b-&amp;gt;next){
-        if(a==b-&amp;gt;a){
-            return std::pair&amp;lt;int, int&amp;gt;(a,count); //返回元素和下标
+    for(;b-&gt;next!=NULL;b=b-&gt;next){
+        if(a==b-&gt;a){
+            return std::pair&lt;int, int&gt;(a,count); //返回元素和下标
         }
         count++;
     }
-    if(b-&amp;gt;a==a){
-        return std::pair&amp;lt;int, int&amp;gt;(a,count); //未找到返回-1
+    if(b-&gt;a==a){
+        return std::pair&lt;int, int&gt;(a,count); //未找到返回-1
     }
-    return std::pair&amp;lt;int, int&amp;gt;(a,-1);
+    return std::pair&lt;int, int&gt;(a,-1);
     
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">c++链表</summary></entry><entry><title type="html">Rust变量</title><link href="http://localhost:4000/2022/04/24/rust%E5%8F%98%E9%87%8F.html" rel="alternate" type="text/html" title="Rust变量" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/rust%E5%8F%98%E9%87%8F</id><content type="html" xml:base="http://localhost:4000/2022/04/24/rust%E5%8F%98%E9%87%8F.html">&lt;p&gt;Rust初步学习&lt;br /&gt;
-1.rust函数&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;fn main(){ //主函数
-	println!(&quot;hello world!&quot;);
+</code></pre></div></div>]]></content><author><name>Your Name</name></author><summary type="html"><![CDATA[c++链表 //查找元素 std::pair&lt;int, int&gt; getElem(int a,list *l1) { list *b=l1; int count=0; for(;b-&gt;next!=NULL;b=b-&gt;next){ if(a==b-&gt;a){ return std::pair&lt;int, int&gt;(a,count); //返回元素和下标 } count++; } if(b-&gt;a==a){ return std::pair&lt;int, int&gt;(a,count); //未找到返回-1 } return std::pair&lt;int, int&gt;(a,-1); }]]></summary></entry><entry><title type="html">Rust变量</title><link href="http://localhost:4000/2022/04/24/rust%E5%8F%98%E9%87%8F.html" rel="alternate" type="text/html" title="Rust变量" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/rust%E5%8F%98%E9%87%8F</id><content type="html" xml:base="http://localhost:4000/2022/04/24/rust%E5%8F%98%E9%87%8F.html"><![CDATA[<p>Rust初步学习<br />
+1.rust函数</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fn main(){ //主函数
+	println!("hello world!");
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;2.Rust变量
-Rust 是强类型语言，但具有自动判断变量类型的能力。&lt;br /&gt;
+</code></pre></div></div>
+<p>2.Rust变量
+Rust 是强类型语言，但具有自动判断变量类型的能力。<br />
 声明变量使用let关键字。
 重影:指变量的名称可以被重新使用。
-有符号类型&lt;/p&gt;</content><author><name></name></author><summary type="html">Rust初步学习 1.rust函数 fn main(){ //主函数 println!(&quot;hello world!&quot;); } 2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。 声明变量使用let关键字。 重影:指变量的名称可以被重新使用。 有符号类型</summary></entry></feed>
+有符号类型</p>]]></content><author><name>Your Name</name></author><summary type="html"><![CDATA[Rust初步学习 1.rust函数 fn main(){ //主函数 println!("hello world!"); } 2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。 声明变量使用let关键字。 重影:指变量的名称可以被重新使用。 有符号类型]]></summary></entry><entry><title type="html">Welcome</title><link href="http://localhost:4000/2018/07/01/welcome.html" rel="alternate" type="text/html" title="Welcome" /><published>2018-07-01T00:00:00+08:00</published><updated>2018-07-01T00:00:00+08:00</updated><id>http://localhost:4000/2018/07/01/welcome</id><content type="html" xml:base="http://localhost:4000/2018/07/01/welcome.html"><![CDATA[<p>If you see this page, that means you have setup your site. enjoy! :ghost: :ghost: :ghost:</p>
+
+<p>You may want to <a href="https://tianqi.name/jekyll-TeXt-theme/docs/en/configuration">config the site</a> or <a href="https://tianqi.name/jekyll-TeXt-theme/docs/en/writing-posts">writing a post</a> next. Please feel free to <a href="https://github.com/kitian616/jekyll-TeXt-theme/issues">create an issue</a> or <a href="mailto:kitian616@outlook.com">send me email</a> if you have any questions.</p>
+
+<!--more-->
+
+<hr />
+
+<p>If you like TeXt, don’t forget to give me a star. :star2:</p>
+
+<p><a href="https://github.com/kitian616/jekyll-TeXt-theme/"><img src="https://img.shields.io/github/stars/kitian616/jekyll-TeXt-theme.svg?label=Stars&amp;style=social" alt="Star This Project" /></a></p>]]></content><author><name>Your Name</name></author><category term="TeXt" /><summary type="html"><![CDATA[If you see this page, that means you have setup your site. enjoy! :ghost: :ghost: :ghost: You may want to config the site or writing a post next. Please feel free to create an issue or send me email if you have any questions.]]></summary></entry><entry><title type="html">Post with Header Image</title><link href="http://localhost:4000/2018/06/01/header-image.html" rel="alternate" type="text/html" title="Post with Header Image" /><published>2018-06-01T00:00:00+08:00</published><updated>2018-06-01T00:00:00+08:00</updated><id>http://localhost:4000/2018/06/01/header-image</id><content type="html" xml:base="http://localhost:4000/2018/06/01/header-image.html"><![CDATA[<p>A Post with Header Image, See <a href="https://tianqi.name/jekyll-TeXt-theme/samples.html#page-layout">Page layout</a> for more examples.</p>
+
+<!--more-->]]></content><author><name>Your Name</name></author><category term="TeXt" /><summary type="html"><![CDATA[A Post with Header Image, See Page layout for more examples.]]></summary></entry></feed>
