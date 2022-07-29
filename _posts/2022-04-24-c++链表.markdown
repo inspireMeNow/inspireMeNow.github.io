@@ -1,5 +1,7 @@
-c++链表
-
+---
+title: c++链表
+tags: c++
+---
 //查找元素
 {% highlight c++ %}
 std::pair<int, int> getElem(int a,list *l1)
