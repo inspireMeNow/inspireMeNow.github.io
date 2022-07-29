@@ -84,15 +84,14 @@ toc:
 ## => Markdown Enhancements
 ##############################
 ## Mathjax
-mathjax: # false (default), true
-mathjax_autoNumber: # false (default), true
+mathjax: true # false (default), true
+mathjax_autoNumber: true # false (default), true
 
 ## Mermaid
-mermaid: # false (default), true
+mermaid: true # false (default), true
 
 ## Chart
-chart: # true (default), true
-
+chart: true # true (default), true
 
 ## => Paginate
 ##############################
@@ -180,10 +179,11 @@ analytics:
 
 ## => Build
 ##############################
-markdown    : kramdown
+markdown    : CommonMark
 highlighter : rouge
 permalink   : date
-
+commonmark:
+  extensions: ["table"]
 exclude:
   - CHANGELOG.md
   - HOW_TO_RELEASE.md
