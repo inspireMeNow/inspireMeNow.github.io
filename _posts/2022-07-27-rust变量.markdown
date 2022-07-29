@@ -1,4 +1,8 @@
-Rust初步学习  
+---
+title: rust学习
+tags: rust
+key: rust-learning
+---
 1.rust函数
 ```
 fn main(){ //主函数
