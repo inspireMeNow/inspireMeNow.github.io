@@ -1,6 +1,7 @@
 ---
 title: c++链表
 tags: c++
+key: c++link
 ---
 //查找元素
 {% highlight c++ %}
