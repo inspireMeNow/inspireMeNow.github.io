@@ -1,7 +1,7 @@
 c++链表
 
 //查找元素
-```
+{% highlight c++ %}
 std::pair<int, int> getElem(int a,list *l1)
 {
 
@@ -19,4 +19,4 @@ std::pair<int, int> getElem(int a,list *l1)
     return std::pair<int, int>(a,-1);
     
 }
-```
+{% endhighlight %}
