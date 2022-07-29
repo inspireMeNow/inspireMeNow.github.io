@@ -122,7 +122,7 @@ comments:
 
   ## Disqus
   disqus:
-    shortname: duan_me # the Disqus shortname for the site
+    shortname: duan # the Disqus shortname for the site
 
   ## Gitalk
   # please refer to https://github.com/gitalk/gitalk for more info.
@@ -209,7 +209,7 @@ defaults:
       layout: article
       sharing: true
       license: false
-      comment: true
+      comments: true
       aside:
         toc: true
       show_edit_on_github: true
