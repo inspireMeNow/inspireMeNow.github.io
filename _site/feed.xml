@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2022-07-29T19:19:53+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>My Blogs
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2022-07-29T19:30:27+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>My Blogs
 </subtitle><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><entry><title type="html">rust学习</title><link href="http://localhost:4000/2022/07/27/rust-practice.html" rel="alternate" type="text/html" title="rust学习" /><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><id>http://localhost:4000/2022/07/27/rust-practice</id><content type="html" xml:base="http://localhost:4000/2022/07/27/rust-practice.html"><![CDATA[<p>1.rust函数</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fn main(){ //主函数
- println!("hello world!");
+<pre><code>fn main(){ //主函数
+ println!(&quot;hello world!&quot;);
 }
-</code></pre></div></div>
+</code></pre>
 <p>2.Rust变量
 Rust 是强类型语言，但具有自动判断变量类型的能力。<br />
 声明变量使用let关键字。<br />
@@ -49,8 +49,8 @@ Rust 是强类型语言，但具有自动判断变量类型的能力。<br />
 <td align="center">usize</td>
 </tr>
 </tbody>
-</table>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="rust" /><summary type="html"><![CDATA[1.rust函数 fn main(){ //主函数 println!("hello world!"); } 2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。 声明变量使用let关键字。 重影:指变量的名称可以被重新使用。 有符号类型 长度 有符号 无符号 8bit i8 u8 16bit i16 u16 32bit i32 u32 64bit i64 u64 128bit i128 u128 arch isize usize]]></summary></entry><entry><title type="html">c++链表</title><link href="http://localhost:4000/2022/04/24/c++link.html" rel="alternate" type="text/html" title="c++链表" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/c++link</id><content type="html" xml:base="http://localhost:4000/2022/04/24/c++link.html"><![CDATA[<p>//查找元素</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>std::pair&lt;int, int&gt; getElem(int a,list *l1)
+</table>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="rust" /><summary type="html"><![CDATA[1.rust函数 fn main(){ //主函数 println!(&quot;hello world!&quot;); } 2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。 声明变量使用let关键字。 重影:指变量的名称可以被重新使用。 有符号类型 长度 有符号 无符号 8bit i8 u8 16bit i16 u16 32bit i32 u32 64bit i64 u64 128bit i128 u128 arch isize usize]]></summary></entry><entry><title type="html">c++链表</title><link href="http://localhost:4000/2022/04/24/c++link.html" rel="alternate" type="text/html" title="c++链表" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/c++link</id><content type="html" xml:base="http://localhost:4000/2022/04/24/c++link.html"><![CDATA[<p>//查找元素</p>
+<pre><code>std::pair&lt;int, int&gt; getElem(int a,list *l1)
 {
 
     list *b=l1;
@@ -67,7 +67,7 @@ Rust 是强类型语言，但具有自动判断变量类型的能力。<br />
     return std::pair&lt;int, int&gt;(a,-1);
     
 }
-</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="c++" /><summary type="html"><![CDATA[//查找元素 std::pair&lt;int, int&gt; getElem(int a,list *l1) { list *b=l1; int count=0; for(;b-&gt;next!=NULL;b=b-&gt;next){ if(a==b-&gt;a){ return std::pair&lt;int, int&gt;(a,count); //返回元素和下标 } count++; } if(b-&gt;a==a){ return std::pair&lt;int, int&gt;(a,count); //未找到返回-1 } return std::pair&lt;int, int&gt;(a,-1); }]]></summary></entry><entry><title type="html">Welcome</title><link href="http://localhost:4000/2018/07/01/welcome.html" rel="alternate" type="text/html" title="Welcome" /><published>2018-07-01T00:00:00+08:00</published><updated>2018-07-01T00:00:00+08:00</updated><id>http://localhost:4000/2018/07/01/welcome</id><content type="html" xml:base="http://localhost:4000/2018/07/01/welcome.html"><![CDATA[<p>If you see this page, that means you have setup your site. enjoy! :ghost: :ghost: :ghost:</p>
+</code></pre>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="c++" /><summary type="html"><![CDATA[//查找元素 std::pair&lt;int, int&gt; getElem(int a,list *l1) { list *b=l1; int count=0; for(;b-&gt;next!=NULL;b=b-&gt;next){ if(a==b-&gt;a){ return std::pair&lt;int, int&gt;(a,count); //返回元素和下标 } count++; } if(b-&gt;a==a){ return std::pair&lt;int, int&gt;(a,count); //未找到返回-1 } return std::pair&lt;int, int&gt;(a,-1); }]]></summary></entry><entry><title type="html">Welcome</title><link href="http://localhost:4000/2018/07/01/welcome.html" rel="alternate" type="text/html" title="Welcome" /><published>2018-07-01T00:00:00+08:00</published><updated>2018-07-01T00:00:00+08:00</updated><id>http://localhost:4000/2018/07/01/welcome</id><content type="html" xml:base="http://localhost:4000/2018/07/01/welcome.html"><![CDATA[<p>If you see this page, that means you have setup your site. enjoy! :ghost: :ghost: :ghost:</p>
 <p>You may want to <a href="https://tianqi.name/jekyll-TeXt-theme/docs/en/configuration">config the site</a> or <a href="https://tianqi.name/jekyll-TeXt-theme/docs/en/writing-posts">writing a post</a> next. Please feel free to <a href="https://github.com/kitian616/jekyll-TeXt-theme/issues">create an issue</a> or <a href="mailto:kitian616@outlook.com">send me email</a> if you have any questions.</p>
 <!-- raw HTML omitted -->
 <hr />

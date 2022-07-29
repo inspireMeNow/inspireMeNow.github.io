@@ -179,7 +179,7 @@ analytics:
 
 ## => Build
 ##############################
-markdown    : CommonMark
+markdown    : CommonMarkGhPages
 highlighter : rouge
 permalink   : date
 commonmark:
