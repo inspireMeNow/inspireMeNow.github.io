@@ -131,7 +131,6 @@ comments:
     clientSecret: 8d310663537cd85a8f3e201747552a6993625ef7 # GitHub Application Client Secret
     repository  : duan-dky.github.io
     owner       : duan-dky
-    proxy       : https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
     admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
       # - your GitHub Id
       - duan-dky
