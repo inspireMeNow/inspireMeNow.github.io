@@ -1,5 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2022-07-29T19:30:27+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>My Blogs
-</subtitle><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><entry><title type="html">rust学习</title><link href="http://localhost:4000/2022/07/27/rust-practice.html" rel="alternate" type="text/html" title="rust学习" /><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><id>http://localhost:4000/2022/07/27/rust-practice</id><content type="html" xml:base="http://localhost:4000/2022/07/27/rust-practice.html"><![CDATA[<p>1.rust函数</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2022-08-01T20:40:58+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>My Blogs
+</subtitle><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><entry><title type="html">frp内网穿透</title><link href="http://localhost:4000/2022/07/31/frp-config.html" rel="alternate" type="text/html" title="frp内网穿透" /><published>2022-07-31T00:00:00+08:00</published><updated>2022-07-31T00:00:00+08:00</updated><id>http://localhost:4000/2022/07/31/frp-config</id><content type="html" xml:base="http://localhost:4000/2022/07/31/frp-config.html"><![CDATA[<h1 id="frp-server">1.frp server端配置</h1>
+<pre><code>[common]
+# frp监听的端口，默认是7000，可以改成其他的
+bind_port = 14823
+vhost_http_port = 12345
+# 授权码，请改成更复杂的
+token = 12345678
+
+# frp管理后台端口，请按自己需求更改
+dashboard_port = 7800 
+# frp管理后台用户名和密码，请改成自己的
+dashboard_user = admin
+dashboard_pwd = admin
+enable_prometheus = true
+
+</code></pre>
+<h1 id="frp-client">2.frp client端配置</h1>
+<pre><code>[common]
+server_addr = yourdomain
+server_port = 14823 #server端bind_port
+token = 12345678  #授权码
+[ssh]   #ssh远程链接
+type = tcp
+local_ip = 127.0.0.1
+local_port = 22 #本地ssh端口
+remote_port = 6000 #远程ssh连接端口
+[web1]
+type = http #http服务
+local_port = 80
+custom_domains = yourdomain
+
+</code></pre>
+<h1 id="frpmariadb">3.frp配置mariadb</h1>
+<pre><code>[mariadb]
+type = tcp
+local_ip = 127.0.0.1   #内网ip
+local_port = 3306 # 内网mariadb端口
+remote_port = 1006 # 公网mariadb端口
+</code></pre>
+<h1 id="frpnginx80443">4.frp与nginx共用80、443端口</h1>
+<h2 id="http">http</h2>
+<h3 id="nginx">nginx配置</h3>
+<pre><code>location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        # try_files $uri $uri/ =404;
+        proxy_pass http://127.0.0.1:8081; #填写frpc的vhost端口
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header REMOTE-HOST $remote_addr;
+    }
+
+</code></pre>
+<h3 id="frp-server-1">frp server端配置</h3>
+<pre><code>vhost_http_port = 8081
+</code></pre>
+<h3 id="frp-client-1">frp client配置</h3>
+<pre><code>[web1]
+type = http
+local_port = 80
+custom_domains = yourdomain
+</code></pre>
+<h2 id="https">https</h2>
+<h3 id="frp-server-2">frp server配置</h3>
+<pre><code>vhost_https_port = 8082
+</code></pre>
+<h3 id="frp-client-2">frp client配置</h3>
+<pre><code>#plugin = https2http
+#plugin_local_addr = 127.0.0.1:1313 #本地服务器端口
+
+# HTTPS证书的路径
+#plugin_crt_path = /etc/frp/domain/yourdomain/fullchain1.pem
+#plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem
+#plugin_host_header_rewrite = 127.0.0.1
+#plugin_header_X-From-Where = frp
+</code></pre>
+<h3 id="nginx-1">nginx配置</h3>
+<p>未完待续</p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="frp" /><summary type="html"><![CDATA[1.frp server端配置 [common] # frp监听的端口，默认是7000，可以改成其他的 bind_port = 14823 vhost_http_port = 12345 # 授权码，请改成更复杂的 token = 12345678 # frp管理后台端口，请按自己需求更改 dashboard_port = 7800 # frp管理后台用户名和密码，请改成自己的 dashboard_user = admin dashboard_pwd = admin enable_prometheus = true 2.frp client端配置 [common] server_addr = yourdomain server_port = 14823 #server端bind_port token = 12345678 #授权码 [ssh] #ssh远程链接 type = tcp local_ip = 127.0.0.1 local_port = 22 #本地ssh端口 remote_port = 6000 #远程ssh连接端口 [web1] type = http #http服务 local_port = 80 custom_domains = yourdomain 3.frp配置mariadb [mariadb] type = tcp local_ip = 127.0.0.1 #内网ip local_port = 3306 # 内网mariadb端口 remote_port = 1006 # 公网mariadb端口 4.frp与nginx共用80、443端口 http nginx配置 location / { # First attempt to serve request as file, then # as directory, then fall back to displaying a 404. # try_files $uri $uri/ =404; proxy_pass http://127.0.0.1:8081; #填写frpc的vhost端口 proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header REMOTE-HOST $remote_addr; } frp server端配置 vhost_http_port = 8081 frp client配置 [web1] type = http local_port = 80 custom_domains = yourdomain https frp server配置 vhost_https_port = 8082 frp client配置 #plugin = https2http #plugin_local_addr = 127.0.0.1:1313 #本地服务器端口 # HTTPS证书的路径 #plugin_crt_path = /etc/frp/domain/yourdomain/fullchain1.pem #plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem #plugin_host_header_rewrite = 127.0.0.1 #plugin_header_X-From-Where = frp nginx配置 未完待续]]></summary></entry><entry><title type="html">rust学习</title><link href="http://localhost:4000/2022/07/27/rust-practice.html" rel="alternate" type="text/html" title="rust学习" /><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><id>http://localhost:4000/2022/07/27/rust-practice</id><content type="html" xml:base="http://localhost:4000/2022/07/27/rust-practice.html"><![CDATA[<p>1.rust函数</p>
 <pre><code>fn main(){ //主函数
  println!(&quot;hello world!&quot;);
 }
