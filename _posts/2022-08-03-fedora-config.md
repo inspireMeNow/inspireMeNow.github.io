@@ -1,7 +1,7 @@
 ---
 title: fedora基本配置
 tags: linux
-key: fedora-config
+key: fedora-setting 
 ---
 # 1.软件包管理工具
 ## dnf命令
@@ -101,4 +101,51 @@ sudo reboot
 ```
 ```
 lsmod | grep nvidia //查看模块加载情况
+```
+# 3. systemd服务
+```
+systemctl start service_name //启动服务
+```
+```
+systemctl restart service_name //重启服务
+```
+```
+systemctl enable service_name //服务自动启动
+```
+```
+systemctl disable service_name //服务取消自动启动
+```
+```
+systemctl mask service_name //屏蔽服务
+```
+```
+systemctl is-enabled service_name //查看服务是否自动启动
+```
+```
+systemctl edit httpd.service //编辑服务
+```
+```
+vim /etc/systemd/system/foo.service //新建服务
+```
+```
+//示例
+[Unit]
+Description=frpc //服务描述
+After=network.target //在网络连接激活后启动
+
+[Service]
+Type=simple //服务类型
+ExecStart=/usr/bin/frpc -c frp.ini //命令
+
+[Install]
+WantedBy=multi-user.target
+```
+```
+systemctl status service_name //查看服务运行状态
+```
+```
+journalctl -u service_name //查看服务运行日志
+```
+```
+journalctl --vacuum-size=1M //清理运行日志
 ```
