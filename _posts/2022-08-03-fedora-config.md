@@ -149,3 +149,63 @@ journalctl -u service_name //查看服务运行日志
 ```
 journalctl --vacuum-size=1M //清理运行日志
 ```
+# 4.vim命令
+## 命令模式  
+i 进入编辑模式  
+x 删除当前光标所在处的字符  
+: 切换到底线命令模式  
+## 输入模式
+回车键换行  
+退格键删除光标前一个字符  
+删除键删除光标后一个字符  
+方向键在文本中移动光标  
+HOME/END移动光标到行首/行尾  
+Page Up/Page Down上/下翻页  
+Insert切换光标为输入/替换模式，光标将变成竖线/下划线  
+ESC退出输入模式，切换到命令模式  
+
+# 5.KVM虚拟化
+```
+egrep '^flags.*(vmx|svm)' /proc/cpuinfo //查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化
+```
+```
+sudo dnf install @virtualization //安装虚拟化包组
+```
+```
+sudo systemctl enable --now libvirtd //设置libvirtd自动启动并启动服务
+```
+```
+lsmod | grep kvm //查看KVM内核模块是否加载
+```
+## 使用virsh-install配置
+```
+sudo virt-install --name Fedora \
+--description 'Fedora' \
+--ram 4096 \
+--vcpus 4 \
+--disk path=/var/lib/libvirt/images/linux.qcow2,size=20 \
+--os-type linux \
+--os-variant fedora36 \
+--network bridge=virbr0 \
+--graphics vnc,listen=127.0.0.1,port=5901 \
+--cdrom Fedora-Workstation-Live-x86-64-36-1.1.iso \
+--noautoconsole
+```
+## 使用virt-manager配置
+### 根据gui界面管理
+## 使用virsh配置
+```
+virsh create machine_name //创建虚拟机
+```
+```
+virsh list --all //列出所有虚拟机
+```
+```
+virsh dumpxml <virtual machine (name | id | uuid) //导出配置文件
+```
+```
+virsh shutdown machine_name //虚拟机关机
+```
+```
+virsh destroy machine_name //虚拟机强制关机
+```
