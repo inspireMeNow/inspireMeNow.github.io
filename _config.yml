@@ -216,6 +216,8 @@ defaults:
       show_subscribe: true
       pageview: true
 
+sitemap:
+  file: /sitemap.xml
 
 ## => Plugins
 ##############################
