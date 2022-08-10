@@ -1,6 +1,6 @@
 ---
 title: frp内网穿透
-tags: frp
+tags: web
 key: frp-config
 ---
 # 1.frp server端配置
