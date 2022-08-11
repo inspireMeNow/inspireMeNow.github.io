@@ -1,9 +1,13 @@
 ---
+
 title: frp内网穿透
 tags: web
 key: frp-config
+
 ---
+
 # 1.frp server端配置
+
 ```
 [common]
 # frp监听的端口，默认是7000，可以改成其他的
@@ -18,10 +22,10 @@ dashboard_port = 7800
 dashboard_user = admin
 dashboard_pwd = admin
 enable_prometheus = true
-
 ```
 
 # 2.frp client端配置
+
 ```
 [common]
 server_addr = yourdomain
@@ -36,9 +40,10 @@ remote_port = 6000 #远程ssh连接端口
 type = http #http服务
 local_port = 80
 custom_domains = yourdomain
-
 ```
+
 # 3.frp配置mariadb
+
 ```
 [mariadb]
 type = tcp
@@ -46,9 +51,13 @@ local_ip = 127.0.0.1   #内网ip
 local_port = 3306 # 内网mariadb端口
 remote_port = 1006 # 公网mariadb端口
 ```
-# 4.frp与nginx共用80、443端口  
-## http  
-### nginx配置  
+
+# 4.frp与nginx共用80、443端口
+
+## http
+
+### nginx配置
+
 ```
 location / {
         # First attempt to serve request as file, then
@@ -60,26 +69,35 @@ location / {
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header REMOTE-HOST $remote_addr;
     }
-
 ```
+
 ### frp server端配置
+
 ```
 vhost_http_port = 8081
 ```
+
 ### frp client配置
+
 ```
 [web1]
 type = http
 local_port = 80
 custom_domains = yourdomain
 ```
-## https  
+
+## https
+
 ### 配置frp
-#### frp server  
+
+#### frp server
+
 ```
 vhost_https_port = 8082
 ```
+
 #### frp client
+
 ```
 #plugin = https2http
 #plugin_local_addr = 127.0.0.1:1313 #本地服务器端口
@@ -89,8 +107,10 @@ vhost_https_port = 8082
 #plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem
 #plugin_host_header_rewrite = 127.0.0.1
 #plugin_header_X-From-Where = frp
-```  
+```
+
 ### 或配置nginx
+
 ```
   map $ssl_preread_server_name $backend_name {
     default frp;
@@ -118,4 +138,48 @@ server {
             proxy_redirect off;
         } 
 }
+```
+
+# 5.frp注册成systemd服务
+
+*frp server端*
+
+```
+[Unit]
+Description=FRP Server Daemon
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/sbin/setcap cap_net_bind_service=+ep /usr/bin/frps
+ExecStart=/usr/bin/frps -c /etc/frp/frps.ini
+Restart=always
+RestartSec=2s
+User=nobody
+PermissionsStartOnly=true
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
+
+```
+
+*frp client端*
+
+```
+[Unit]
+Description=FRP Client Daemon
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/frpc -c /etc/frp/frpc.ini
+Restart=always
+RestartSec=20s
+User=nobody
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
+
 ```
