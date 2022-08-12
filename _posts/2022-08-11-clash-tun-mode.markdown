@@ -106,7 +106,7 @@ nslookup www.google.com
 
 *出现应答结果即为劫持成功*
 
-clash tun网卡配置
+# 2.clash tun网卡配置
 
 *注：clash需要root权限创建网卡*
 
