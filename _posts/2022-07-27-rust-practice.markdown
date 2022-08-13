@@ -5,7 +5,7 @@ key: rust-learning
 ---
 1.rust函数
 
-```
+```rust
 fn main(){ //主函数
  println!("hello world!");
 }

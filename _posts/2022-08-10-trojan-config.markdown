@@ -4,35 +4,38 @@ tags: web
 key: trojan-config 
 ---
 1.github下载trojan-go二进制文件
-```
+```bash
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
 ```
 2.解压trojan-go并放至/usr/bin,赋予其执行权限
-```
+```bash
 unzip trojan-go-linux-amd64.zip
+
 cp trojan-go /usr/bin
+
 chmod +x trojan-go
 ```
 3.将剩余文件放至/etc/trojan-go
-```
+```bash
 mkdir /etc/trojan-go
+
 cp -r * /etc/trojan-go
 ```
 4.申请trojan-go的证书
-```
+```bash
 sudo certbot certonly –agree-tos –standalone –no-eff-email -m youremail -d yourdomain
 ```
 将证书移至/etc/trojan-go中
-```
+```bash
 sudo cp -r /etc/letsencrypt/archive/yourdomain /etc/trojan-go
 ```
 5.编辑config.json  
 *生成随机uuid*
-```
+```bash
 cat /proc/sys/kernel/random/uuid
 ```
 *config.json*
-```
+```json
 {
     "run_type": "server",
     "local_addr": "0.0.0.0",
@@ -59,7 +62,7 @@ cat /proc/sys/kernel/random/uuid
 由于trojan与nginx都占用443端口，因此需设置端口转发  
 
 *nginx.conf*
-```
+```conf
 stream { 
 # 这里就是 SNI 识别，将域名映射成一个配置名，请修改自己的一级域名 
   map $ssl_preread_server_name $backend_name { 
@@ -85,19 +88,19 @@ stream {
 ```
 7.新建trojan用户
 *用于安全原因，trojan-go需要以trojan用户的身份运行*  
-```
+```bash
 sudo useradd -s /sbin/nologin trojan
 ```
 *设置文件夹权限*  
-```
+```bash
 sudo chown -R /etc/trojan-go
 ```
 7.新建systemd服务
-```
+```bash
 sudo vim /usr/lib/systemd/system/trojan-go.service
 ```
 *trojan-go.service*
-```
+```text
 [Unit]
 Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW
 Documentation=https://p4gefau1t.github.io/trojan-go/
@@ -118,13 +121,14 @@ WantedBy=multi-user.target
 sudo systemctl daemon-reload //重载systemd服务
 ```
 8.重启nginx并设置trojan-go开机启动
-```
+```bash
 sudo systemctl enable –now trojan-go
+
 sudo systemctl restart nginx
 ```
 9.客户端设置（自选客户端）  
 *设置clash*
-```
+```yaml
 - name: 'trojan'
       type: trojan
       server: yourdomain

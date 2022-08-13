@@ -4,7 +4,7 @@ tags: c++
 key: c++link
 ---
 //查找元素
-```
+```c++
 std::pair<int, int> getElem(int a,list *l1)
 {
 

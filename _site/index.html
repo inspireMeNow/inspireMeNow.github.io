@@ -284,18 +284,21 @@
           <div class="item__description"><div class="article__content" itemprop="description articleBody">1. 劫持系统dns
 安装dnsmasq并启动dnsmasq
 sudo dnf install dnsmasq
+
 sudo systemctl start dnsmasq
 
 删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip
 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1
 sudo rm /etc/resolv.conf
+
 sudo vim /etc/resolv.conf
+
 nameserver 127.0.0.1
 options edns0 trust-ad
 search .
 
 注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换
-sudo vim /etc...</div><p><a href="/2022/08/11/clash-tun-mode.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+sudo vim /...</div><p><a href="/2022/08/11/clash-tun-mode.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=web">web</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2022年 08月11日</span>
@@ -308,15 +311,18 @@ wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-
 
 2.解压trojan-go并放至/usr/bin,赋予其执行权限
 unzip trojan-go-linux-amd64.zip
+
 cp trojan-go /usr/bin
+
 chmod +x trojan-go
 
 3.将剩余文件放至/etc/trojan-go
 mkdir /etc/trojan-go
+
 cp -r * /etc/trojan-go
 
 4.申请trojan-go的证书
-sudo certbot certonly –agree-tos...</div><p><a href="/2022/08/10/trojan-config.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+sudo certbot certonly –agree-...</div><p><a href="/2022/08/10/trojan-config.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=web">web</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2022年 08月10日</span>
@@ -358,6 +364,7 @@ server {
           <div class="item__description"><div class="article__content" itemprop="description articleBody">安装git
 Linux
 sudo apt install git //Debian
+
 sudo dnf install git //Fedora
 
 Windows
@@ -367,11 +374,15 @@ winget安装
 winget install --id Git.Git -e --source winget
 
 git初步配置
-git config --global user.name &quot;username&quot; //用户名
+git config --global user.name "username" //用户名
+
 git config --list //已有配置信息
+
 git config --global user.email youremail //邮箱
+
 git config --global core.editor nvim //默认文本编辑器
-git config --g...</div><p><a href="/2022/08/05/git-config.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+
+git config --global...</div><p><a href="/2022/08/05/git-config.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=git">git</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2022年 08月05日</span>
@@ -382,9 +393,12 @@ git config --g...</div><p><a href="/2022/08/05/git-config.html">阅读更多</a>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">1.软件包管理工具
 dnf命令
 sudo dnf makecache //建立软件包缓存
+
 sudo dnf upgrade //进行软件包更新
+
 sudo dnf upgrade package_name //更新单个软件包
-sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmf...</div><p><a href="/2022/08/03/fedora-config.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
+
+sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用r...</div><p><a href="/2022/08/03/fedora-config.html">阅读更多</a></p></div><div class="article__info clearfix"><ul class="left-col menu"><li>
               <a class="button button--secondary button--pill button--sm"
                 href="/archive.html?tag=linux">linux</a>
             </li></ul><ul class="right-col menu"><li><i class="far fa-calendar-alt"></i> <span>2022年 08月03日</span>
@@ -420,7 +434,7 @@ server_port = 14823 #server端bind_...</div><p><a href="/2022/07/31/frp-config.h
           <header><a href="/2022/07/27/rust-practice.html"><h2 itemprop="headline" class="item__header">rust学习</h2></a></header>
           <div class="item__description"><div class="article__content" itemprop="description articleBody">1.rust函数
 fn main(){ //主函数
- println!(&quot;hello world!&quot;);
+ println!("hello world!");
 }
 
 2.Rust变量

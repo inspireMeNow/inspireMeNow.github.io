@@ -8,7 +8,7 @@ key: frp-config
 
 # 1.frp server端配置
 
-```
+```conf
 [common]
 # frp监听的端口，默认是7000，可以改成其他的
 bind_port = 14823
@@ -26,7 +26,7 @@ enable_prometheus = true
 
 # 2.frp client端配置
 
-```
+```conf
 [common]
 server_addr = yourdomain
 server_port = 14823 #server端bind_port
@@ -44,7 +44,7 @@ custom_domains = yourdomain
 
 # 3.frp配置mariadb
 
-```
+```conf
 [mariadb]
 type = tcp
 local_ip = 127.0.0.1   #内网ip
@@ -58,7 +58,7 @@ remote_port = 1006 # 公网mariadb端口
 
 ### nginx配置
 
-```
+```conf
 location / {
         # First attempt to serve request as file, then
         # as directory, then fall back to displaying a 404.
@@ -73,13 +73,13 @@ location / {
 
 ### frp server端配置
 
-```
+```conf
 vhost_http_port = 8081
 ```
 
 ### frp client配置
 
-```
+```conf
 [web1]
 type = http
 local_port = 80
@@ -92,13 +92,13 @@ custom_domains = yourdomain
 
 #### frp server
 
-```
+```conf
 vhost_https_port = 8082
 ```
 
 #### frp client
 
-```
+```conf
 #plugin = https2http
 #plugin_local_addr = 127.0.0.1:1313 #本地服务器端口
 
@@ -111,7 +111,7 @@ vhost_https_port = 8082
 
 ### 或配置nginx
 
-```
+```conf
   map $ssl_preread_server_name $backend_name {
     default frp;
   }
@@ -144,7 +144,7 @@ server {
 
 *frp server端*
 
-```
+```conf
 [Unit]
 Description=FRP Server Daemon
 
@@ -165,7 +165,7 @@ WantedBy=multi-user.target
 
 *frp client端*
 
-```
+```conf
 [Unit]
 Description=FRP Client Daemon
 After=network.target

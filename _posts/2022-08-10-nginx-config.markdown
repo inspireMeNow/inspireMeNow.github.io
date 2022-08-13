@@ -6,11 +6,11 @@ key: nginx-config
 *测试系统：Debian11*
 
 # 1.安装升级系统
-```
+```bash
 sudo apt update
 ```
 # 2.安装nginx
-```
+```bash
 sudo apt install nginx
 ```
 # 3.申请域名
@@ -20,16 +20,16 @@ sudo apt install nginx
 *zerossl或者letsencrypt即可*  
 
 ## letsencrypt申请方法：
-```
+```bash
 sudo apt install python3-certbot-nginx
 ```
 安装完成后：
-```
+```bash
 sudo certbot –nginx
 ```
 # 5.编辑nginx配置文件
 编辑/etc/nginx/sites-enabled/default文件
-```
+```conf
 server {
 
 	# SSL configuration
@@ -98,7 +98,7 @@ server {
 }
 ```
 6.启用nginx服务
-```
+```bash
 sudo systemctl enable –now nginx
 ```
 

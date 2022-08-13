@@ -9,8 +9,9 @@ key: clash-tun-mode
 
 ## 安装dnsmasq并启动dnsmasq
 
-```
+```bash
 sudo dnf install dnsmasq
+
 sudo systemctl start dnsmasq
 ```
 
@@ -18,12 +19,13 @@ sudo systemctl start dnsmasq
 
 *注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1*
 
-```
+```bash
 sudo rm /etc/resolv.conf
+
 sudo vim /etc/resolv.conf
 ```
 
-```
+```conf
 nameserver 127.0.0.1
 options edns0 trust-ad
 search .
@@ -31,28 +33,28 @@ search .
 
 **注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换**
 
-```
+```bash
 sudo vim /etc/NetworkManager/NetworkManager.conf
 ```
 
-```
+```conf
 [main]
 dns = none
 ```
 
 *重启networkmanager*
 
-```
+```bash
 sudo systemctl restart NetworkManager
 ```
 
 *编辑dnsmasq配置文件*
 
-```
+```bash
 sudo vim /etc/dnsmasq.d/clash.conf
 ```
 
-```
+```conf
 no-hosts
 no-resolv
 server=127.0.0.1#1053 //将dns请求全部转发到clash
@@ -60,7 +62,7 @@ server=127.0.0.1#1053 //将dns请求全部转发到clash
 
 *重新启动dnsmasq*
 
-```
+```bash
 sudo systemctl restart dnsmasq
 ```
 
@@ -68,7 +70,7 @@ sudo systemctl restart dnsmasq
 
 *config.yaml*
 
-```
+```yaml
 dns:
   enable: true
   ipv6: true
@@ -100,7 +102,7 @@ dns:
 
 *验证dns是否被劫持成功*
 
-```
+```bash
 nslookup www.google.com
 ```
 
@@ -110,7 +112,7 @@ nslookup www.google.com
 
 *注：clash需要root权限创建网卡*
 
-```
+```yaml
 tun:
   enable: true
   stack: system
@@ -120,12 +122,12 @@ tun:
 
 最后重启clash
 
-```
+```bash
 sudo systemctl restart clash
 ```
 
 查看clash运行状态
 
-```
+```bash
 sudo systemctl status clash
 ```
