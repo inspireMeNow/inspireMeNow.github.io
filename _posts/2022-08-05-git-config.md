@@ -125,19 +125,19 @@ git fetch //从远程获取代码库
 
 ## git diff命令
 
-### 不加参数即默认比较工作区与暂存区
+*不加参数即默认比较工作区与暂存区*
 
 ```
 git diff
 ```
 
-### 比较暂存区与最新本地版本库
+*比较暂存区与最新本地版本库*
 
 ```
 git diff --cached  [<path>...] 
 ```
 
-### 比较工作区与最新本地版本库
+*比较工作区与最新本地版本库*
 
 *注：如果HEAD指向的是master分支，那么HEAD还可以换成master* 
 
@@ -145,19 +145,19 @@ git diff --cached  [<path>...]
 git diff HEAD [<path>...]
 ```
 
-### 比较工作区与指定commit-id的差异
+*比较工作区与指定commit-id的差异*
 
 ```
 git diff commit-id  [<path>...]
 ```
 
-### 比较暂存区与指定commit-id的差异
+*比较暂存区与指定commit-id的差异*
 
 ```
 git diff --cached [<commit-id>] [<path>...] 
 ```
 
-### 比较两个commit-id之间的差异
+*比较两个commit-id之间的差异*
 
 ```
 git diff [<commit-id>] [<commit-id>]
