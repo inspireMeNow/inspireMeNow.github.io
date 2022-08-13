@@ -170,7 +170,7 @@ x 删除当前光标所在处的字符
 *输入“/”搜索字符串，回车后跳转到对应字符串位置*
 
 # 5.KVM虚拟化
-
+```bash
 egrep '^flags.*(vmx|svm)' /proc/cpuinfo //查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化
 
 sudo dnf install @virtualization //安装虚拟化包组

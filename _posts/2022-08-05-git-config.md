@@ -168,7 +168,7 @@ git checkout (branchname)
 
 **注：使用分支将工作切分开来，并能够来回切换。**  
 
-![git-checkout](https://duan-dky.me/assets/images/posts/git-config/git-checkout.png)  
+![git-checkout](https://duan-dky.me/assets/img/posts/git-config/git-checkout.png)  
 
 如图，切换到test分支后创建README.md,提交更改，然后切换回master分支后发现README.md消失，再切换回test分支后README.md文件出现。  
 
