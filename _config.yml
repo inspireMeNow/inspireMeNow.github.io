@@ -230,7 +230,7 @@ giscus:
 #  mapping: pathname
 #  reactions-enabled: 1
 #  emit-metadata: 0
-#  theme: light
+  theme: light
 
 ################
 # --- Misc --- #
