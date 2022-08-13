@@ -216,7 +216,7 @@ virsh destroy machine_name //虚拟机强制关机
 
 # 6.启用flathub软件仓库
 
-*添加软件原*
+*添加软件源*
 
 ```bash
 flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
