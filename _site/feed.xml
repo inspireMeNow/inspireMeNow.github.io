@@ -1,775 +1,173 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2022-08-13T23:33:56+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>My Blogs
-</subtitle><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><entry><title type="html">clash tun模式配置</title><link href="http://localhost:4000/2022/08/11/clash-tun-mode.html" rel="alternate" type="text/html" title="clash tun模式配置" /><published>2022-08-11T00:00:00+08:00</published><updated>2022-08-11T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/11/clash-tun-mode</id><content type="html" xml:base="http://localhost:4000/2022/08/11/clash-tun-mode.html"><![CDATA[<h1 id="dns">1. 劫持系统dns</h1>
-<h2 id="dnsmasqdnsmasq">安装dnsmasq并启动dnsmasq</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install </span>dnsmasq
-
-<span class="nb">sudo </span>systemctl start dnsmasq
-</code></pre></div></div>
-<h2 id="resolvconfresolvconfdnsip">删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip</h2>
-<p><em>注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo rm</span> /etc/resolv.conf
-
-<span class="nb">sudo </span>vim /etc/resolv.conf
-</code></pre></div></div>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nameserver</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>
-<span class="n">options</span> <span class="n">edns0</span> <span class="n">trust</span>-<span class="n">ad</span>
-<span class="n">search</span> .
-</code></pre></div></div>
-<p><strong>注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换</strong></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/NetworkManager/NetworkManager.conf
-</code></pre></div></div>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">main</span>]
-<span class="n">dns</span> = <span class="n">none</span>
-</code></pre></div></div>
-<p><em>重启networkmanager</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart NetworkManager
-</code></pre></div></div>
-<p><em>编辑dnsmasq配置文件</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/dnsmasq.d/clash.conf
-</code></pre></div></div>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">no</span>-<span class="n">hosts</span>
-<span class="n">no</span>-<span class="n">resolv</span>
-<span class="n">server</span>=<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span><span class="c">#1053 //将dns请求全部转发到clash
-</span></code></pre></div></div>
-<p><em>重新启动dnsmasq</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart dnsmasq
-</code></pre></div></div>
-<p><em>clash的dns服务器配置</em></p>
-<p><em>config.yaml</em></p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">dns</span><span class="pi">:</span>
-  <span class="na">enable</span><span class="pi">:</span> <span class="no">true</span>
-  <span class="na">ipv6</span><span class="pi">:</span> <span class="no">true</span>
-  <span class="na">listen</span><span class="pi">:</span> <span class="s">:1053</span>
-  <span class="na">enhanced-mode</span><span class="pi">:</span> <span class="s">fake-ip</span>      <span class="c1"># redir-host or fake-ip</span>
-  <span class="na">fake-ip-range</span><span class="pi">:</span> <span class="s">198.18.0.1/16</span>    <span class="c1"># Fake IP addresses pool CIDR</span>
-  <span class="na">use-hosts</span><span class="pi">:</span> <span class="no">true</span>                 <span class="c1"># lookup hosts and return IP record</span>
-  <span class="na">nameserver</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">223.5.5.5</span>         <span class="c1"># 阿里 19ms</span>
-    <span class="pi">-</span> <span class="s">119.29.29.29</span>      <span class="c1"># DNSpod DNS 17ms</span>
-  <span class="c1"># 提供 fallback 时，如果GEOIP非 CN 中国时使用 fallback 解析</span>
-  <span class="na">fallback</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="s">tls://8.8.8.8:53</span>         <span class="c1"># Google DNS over TLS 50ms</span>
-    <span class="pi">-</span> <span class="s">tls://8.8.4.4:53</span>         <span class="c1"># cloudflare DNS over TLS 50ms</span>
-    <span class="pi">-</span> <span class="s">https://1.1.1.1/dns-query</span> <span class="c1"># cloudflare DNS over HTTPS</span>
-    <span class="pi">-</span> <span class="s">https://dns.google/dns-query</span> <span class="c1"># Google DNS over HTTPS</span>
-
-  <span class="c1"># 强制DNS解析使用`fallback`配置</span>
-  <span class="na">fallback-filter</span><span class="pi">:</span>
-    <span class="c1"># true: CN使用nameserver解析，非CN使用fallback</span>
-    <span class="na">geoip</span><span class="pi">:</span> <span class="no">true</span>
-    <span class="c1"># geoip设置为false时有效： 不匹配`ipcidr`地址时会使用`nameserver`结果，匹配`ipcidr`地址时使用`fallback`结果。</span>
-    <span class="na">ipcidr</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="s">240.0.0.0/4</span>
-
-</code></pre></div></div>
-<p><em>验证dns是否被劫持成功</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nslookup www.google.com
-</code></pre></div></div>
-<p><em>出现应答结果即为劫持成功</em></p>
-<h1 id="clash-tun">2.clash tun网卡配置</h1>
-<p><em>注：clash需要root权限创建网卡</em></p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">tun</span><span class="pi">:</span>
-  <span class="na">enable</span><span class="pi">:</span> <span class="no">true</span>
-  <span class="na">stack</span><span class="pi">:</span> <span class="s">system</span>
-  <span class="na">auto-route</span><span class="pi">:</span> <span class="no">true</span>
-  <span class="na">auto-detect-interface</span><span class="pi">:</span> <span class="no">true</span>
-</code></pre></div></div>
-<p>最后重启clash</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart clash
-</code></pre></div></div>
-<p>查看clash运行状态</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl status clash
-</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="web" /><summary type="html"><![CDATA[1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq 删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1 sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf nameserver 127.0.0.1 options edns0 trust-ad search . 注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换 sudo vim /etc/NetworkManager/NetworkManager.conf [main] dns = none 重启networkmanager sudo systemctl restart NetworkManager 编辑dnsmasq配置文件 sudo vim /etc/dnsmasq.d/clash.conf no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash 重新启动dnsmasq sudo systemctl restart dnsmasq clash的dns服务器配置 config.yaml dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host or fake-ip fake-ip-range: 198.18.0.1/16 # Fake IP addresses pool CIDR use-hosts: true # lookup hosts and return IP record nameserver: - 223.5.5.5 # 阿里 19ms - 119.29.29.29 # DNSpod DNS 17ms # 提供 fallback 时，如果GEOIP非 CN 中国时使用 fallback 解析 fallback: - tls://8.8.8.8:53 # Google DNS over TLS 50ms - tls://8.8.4.4:53 # cloudflare DNS over TLS 50ms - https://1.1.1.1/dns-query # cloudflare DNS over HTTPS - https://dns.google/dns-query # Google DNS over HTTPS # 强制DNS解析使用`fallback`配置 fallback-filter: # true: CN使用nameserver解析，非CN使用fallback geoip: true # geoip设置为false时有效： 不匹配`ipcidr`地址时会使用`nameserver`结果，匹配`ipcidr`地址时使用`fallback`结果。 ipcidr: - 240.0.0.0/4 验证dns是否被劫持成功 nslookup www.google.com 出现应答结果即为劫持成功 2.clash tun网卡配置 注：clash需要root权限创建网卡 tun: enable: true stack: system auto-route: true auto-detect-interface: true 最后重启clash sudo systemctl restart clash 查看clash运行状态 sudo systemctl status clash]]></summary></entry><entry><title type="html">nginx配置</title><link href="http://localhost:4000/2022/08/10/nginx-config.html" rel="alternate" type="text/html" title="nginx配置" /><published>2022-08-10T00:00:00+08:00</published><updated>2022-08-10T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/10/nginx-config</id><content type="html" xml:base="http://localhost:4000/2022/08/10/nginx-config.html"><![CDATA[<p><em>测试系统：Debian11</em></p>
-<h1 id="section">1.安装升级系统</h1>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
-</code></pre></div></div>
-<h1 id="nginx">2.安装nginx</h1>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>nginx
-</code></pre></div></div>
-<h1 id="section-1">3.申请域名</h1>
-<p><em>github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn</em></p>
-<h1 id="section-2">4.申请证书</h1>
-<p><em>zerossl或者letsencrypt即可</em></p>
-<h2 id="letsencrypt">letsencrypt申请方法：</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>python3-certbot-nginx
-</code></pre></div></div>
-<p>安装完成后：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>certbot –nginx
-</code></pre></div></div>
-<h1 id="nginx-1">5.编辑nginx配置文件</h1>
-<p>编辑/etc/nginx/sites-enabled/default文件</p>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
-
-	<span class="c"># SSL configuration
-</span>	<span class="c">#
-</span>	<span class="c"># listen 443 ssl default_server;
-</span>	<span class="c"># listen [::]:443 ssl default_server;
-</span>	<span class="c">#
-</span>	<span class="c"># Note: You should disable gzip for SSL traffic.
-</span>	<span class="c"># See: https://bugs.debian.org/773332
-</span>	<span class="c">#
-</span>	<span class="c"># Read up on ssl_ciphers to ensure a secure configuration.
-</span>	<span class="c"># See: https://bugs.debian.org/765782
-</span>	<span class="c">#
-</span>	<span class="c"># Self signed certs generated by the ssl-cert package
-</span>	<span class="c"># Don't use them in a production server!
-</span>	<span class="c">#
-</span>	<span class="c"># include snippets/snakeoil.conf;
-</span>
-	<span class="n">root</span> /<span class="n">var</span>/<span class="n">www</span>/<span class="n">html</span>;
-
-	<span class="c"># Add index.php to the list if you are using PHP
-</span>	<span class="n">index</span> <span class="n">index</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">htm</span> <span class="n">index</span>.<span class="n">nginx</span>-<span class="n">debian</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">php</span>;
-    <span class="n">server_name</span> <span class="n">yourdomain</span>;
-        
-        <span class="n">location</span> / {
-                <span class="n">try_files</span> $<span class="n">uri</span> $<span class="n">uri</span>/ =<span class="m">404</span>;
-        }
-	<span class="c"># pass PHP scripts to FastCGI server
-</span>	<span class="c">#
-</span>	<span class="n">location</span> ~ \.<span class="n">php</span>$ {
-		<span class="n">include</span> <span class="n">snippets</span>/<span class="n">fastcgi</span>-<span class="n">php</span>.<span class="n">conf</span>;
-	
-		<span class="c"># With php-fpm (or other unix sockets):
-</span>		<span class="n">fastcgi_pass</span> <span class="n">unix</span>:/<span class="n">run</span>/<span class="n">php</span>/<span class="n">php7</span>.<span class="m">4</span>-<span class="n">fpm</span>.<span class="n">sock</span>;
-		<span class="c"># With php-cgi (or other tcp sockets):
-</span>		<span class="c"># fastcgi_pass 127.0.0.1:9000;
-</span>	}
-
-	<span class="c"># deny access to .htaccess files, if Apache's document root
-</span>	<span class="c"># concurs with nginx's one
-</span>	<span class="c">#
-</span>	<span class="c">#location ~ /\.ht {
-</span>	<span class="c">#	deny all;
-</span>	<span class="c">#}
-</span>
-    <span class="n">listen</span> [::]:<span class="m">10005</span> <span class="n">ssl</span> <span class="n">ipv6only</span>=<span class="n">on</span>; <span class="c"># managed by Certbot
-</span>    <span class="n">listen</span> <span class="m">10005</span> <span class="n">ssl</span>; <span class="c"># managed by Certbot
-</span>    <span class="n">ssl_certificate</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/<span class="n">yourdomain</span>/<span class="n">fullchain</span>.<span class="n">pem</span>; <span class="c"># managed by Certbot
-</span>    <span class="n">ssl_certificate_key</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/<span class="n">yourdomain</span>/<span class="n">privkey</span>.<span class="n">pem</span>; <span class="c"># managed by Certbot
-</span>    <span class="n">include</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">options</span>-<span class="n">ssl</span>-<span class="n">nginx</span>.<span class="n">conf</span>; <span class="c"># managed by Certbot
-</span>    <span class="n">ssl_dhparam</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">ssl</span>-<span class="n">dhparams</span>.<span class="n">pem</span>; <span class="c"># managed by Certbot
-</span>
-}
-<span class="n">server</span> {
-    <span class="n">if</span> ($<span class="n">host</span> = <span class="n">yourdomain</span> ) { //<span class="n">http</span>强制跳转至<span class="n">https</span>
-        <span class="n">return</span> <span class="m">301</span> <span class="n">https</span>://$<span class="n">host</span>$<span class="n">request_uri</span>;
-    } <span class="c"># managed by Certbot
-</span>
-
-	<span class="n">listen</span> <span class="m">80</span> ;
-	<span class="n">listen</span> [::]:<span class="m">80</span> ;
-    <span class="n">server_name</span> <span class="n">yourdomain</span>;
-    <span class="n">return</span> <span class="m">404</span>; <span class="c"># managed by Certbot
-</span>
-
-}
-</code></pre></div></div>
-<p>6.启用nginx服务</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable</span> –now nginx
-</code></pre></div></div>
-<p>7.浏览器查看网页</p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="web" /><summary type="html"><![CDATA[测试系统：Debian11 1.安装升级系统 sudo apt update 2.安装nginx sudo apt install nginx 3.申请域名 github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn 4.申请证书 zerossl或者letsencrypt即可 letsencrypt申请方法： sudo apt install python3-certbot-nginx 安装完成后： sudo certbot –nginx 5.编辑nginx配置文件 编辑/etc/nginx/sites-enabled/default文件 server { # SSL configuration # # listen 443 ssl default_server; # listen [::]:443 ssl default_server; # # Note: You should disable gzip for SSL traffic. # See: https://bugs.debian.org/773332 # # Read up on ssl_ciphers to ensure a secure configuration. # See: https://bugs.debian.org/765782 # # Self signed certs generated by the ssl-cert package # Don't use them in a production server! # # include snippets/snakeoil.conf; root /var/www/html; # Add index.php to the list if you are using PHP index index.html index.htm index.nginx-debian.html index.php; server_name yourdomain; location / { try_files $uri $uri/ =404; } # pass PHP scripts to FastCGI server # location ~ \.php$ { include snippets/fastcgi-php.conf; # With php-fpm (or other unix sockets): fastcgi_pass unix:/run/php/php7.4-fpm.sock; # With php-cgi (or other tcp sockets): # fastcgi_pass 127.0.0.1:9000; } # deny access to .htaccess files, if Apache's document root # concurs with nginx's one # #location ~ /\.ht { # deny all; #} listen [::]:10005 ssl ipv6only=on; # managed by Certbot listen 10005 ssl; # managed by Certbot ssl_certificate /etc/letsencrypt/live/yourdomain/fullchain.pem; # managed by Certbot ssl_certificate_key /etc/letsencrypt/live/yourdomain/privkey.pem; # managed by Certbot include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot } server { if ($host = yourdomain ) { //http强制跳转至https return 301 https://$host$request_uri; } # managed by Certbot listen 80 ; listen [::]:80 ; server_name yourdomain; return 404; # managed by Certbot } 6.启用nginx服务 sudo systemctl enable –now nginx 7.浏览器查看网页]]></summary></entry><entry><title type="html">trojan-go配置</title><link href="http://localhost:4000/2022/08/10/trojan-config.html" rel="alternate" type="text/html" title="trojan-go配置" /><published>2022-08-10T00:00:00+08:00</published><updated>2022-08-10T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/10/trojan-config</id><content type="html" xml:base="http://localhost:4000/2022/08/10/trojan-config.html"><![CDATA[<p>1.github下载trojan-go二进制文件</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
-</code></pre></div></div>
-<p>2.解压trojan-go并放至/usr/bin,赋予其执行权限</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unzip trojan-go-linux-amd64.zip
-
-<span class="nb">cp </span>trojan-go /usr/bin
-
-<span class="nb">chmod</span> +x trojan-go
-</code></pre></div></div>
-<p>3.将剩余文件放至/etc/trojan-go</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> /etc/trojan-go
-
-<span class="nb">cp</span> <span class="nt">-r</span> <span class="k">*</span> /etc/trojan-go
-</code></pre></div></div>
-<p>4.申请trojan-go的证书</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>certbot certonly –agree-tos –standalone –no-eff-email <span class="nt">-m</span> youremail <span class="nt">-d</span> yourdomain
-</code></pre></div></div>
-<p>将证书移至/etc/trojan-go中</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cp</span> <span class="nt">-r</span> /etc/letsencrypt/archive/yourdomain /etc/trojan-go
-</code></pre></div></div>
-<p>5.编辑config.json<br />
-<em>生成随机uuid</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /proc/sys/kernel/random/uuid
-</code></pre></div></div>
-<p><em>config.json</em></p>
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"run_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"server"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"local_addr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"local_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">10010</span><span class="p">,</span><span class="w"> </span><span class="err">//与nginx共存时不可填写</span><span class="mi">443</span><span class="err">端口</span><span class="w">
-    </span><span class="nl">"remote_addr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"remote_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="err">//默认返回网页</span><span class="w">
-    </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="s2">"yourpassword"</span><span class="w"> </span><span class="err">//填写自己密码</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"ssl"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"cert"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/etc/trojan-go/yourdomain/fullchain1.pem"</span><span class="p">,</span><span class="w"> </span><span class="err">//网站的证书</span><span class="w">
-        </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/etc/trojan-go/yourdomain/privkey1.pem"</span><span class="p">,</span><span class="w">
-	</span><span class="nl">"fallback"</span><span class="p">:</span><span class="w"> </span><span class="mi">10005</span><span class="p">,</span><span class="w"> </span><span class="err">//回程默认网页</span><span class="w">
-        </span><span class="nl">"sni"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yourdomain"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"websocket"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//ws模式伪装path</span><span class="w">
-	</span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-	</span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/yourpath"</span><span class="p">,</span><span class="w"> </span><span class="err">//建议填写随机值</span><span class="w">
-	</span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yourdomain"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-<p>6.设置端口转发
-由于trojan与nginx都占用443端口，因此需设置端口转发</p>
-<p><em>nginx.conf</em></p>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stream</span> { 
-<span class="c"># 这里就是 SNI 识别，将域名映射成一个配置名，请修改自己的一级域名 
-</span>  <span class="n">map</span> $<span class="n">ssl_preread_server_name</span> $<span class="n">backend_name</span> { 
-    <span class="n">yourdomain</span> <span class="n">web</span>;
-    <span class="n">yourdomain</span> <span class="n">trojan</span>;
-    <span class="n">default</span> <span class="n">web</span>; 
-  } 
-<span class="c"># web，配置转发详情 
-</span>  <span class="n">upstream</span> <span class="n">web</span> { 
-    <span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">10005</span>;
-  }
-  <span class="n">upstream</span> <span class="n">trojan</span> {
-    <span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">10010</span>;
-  }
-<span class="c"># 监听 443 并开启 ssl_preread
-</span>  <span class="n">server</span> { 
-    <span class="n">listen</span> <span class="m">443</span> <span class="n">reuseport</span>; 
-    <span class="n">listen</span> [::]:<span class="m">443</span> <span class="n">reuseport</span>;
-    <span class="n">proxy_pass</span> $<span class="n">backend_name</span>; 
-    <span class="n">ssl_preread</span> <span class="n">on</span>; 
-  }
-}
-</code></pre></div></div>
-<p>7.新建trojan用户
-<em>用于安全原因，trojan-go需要以trojan用户的身份运行</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>useradd <span class="nt">-s</span> /sbin/nologin trojan
-</code></pre></div></div>
-<p><em>设置文件夹权限</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo chown</span> <span class="nt">-R</span> /etc/trojan-go
-</code></pre></div></div>
-<p>7.新建systemd服务</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /usr/lib/systemd/system/trojan-go.service
-</code></pre></div></div>
-<p><em>trojan-go.service</em></p>
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Unit]
-Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW
-Documentation=https://p4gefau1t.github.io/trojan-go/
-After=network.target nss-lookup.target
-
-[Service]
-User=trojan
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/bin/trojan-go -config /etc/trojan-go/config.json
-Restart=on-failure
-RestartSec=10s
-LimitNOFILE=infinity
-
-[Install]
-WantedBy=multi-user.target
-sudo systemctl daemon-reload //重载systemd服务
-</code></pre></div></div>
-<p>8.重启nginx并设置trojan-go开机启动</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable</span> –now trojan-go
-
-<span class="nb">sudo </span>systemctl restart nginx
-</code></pre></div></div>
-<p>9.客户端设置（自选客户端）<br />
-<em>设置clash</em></p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">trojan'</span>
-      <span class="na">type</span><span class="pi">:</span> <span class="s">trojan</span>
-      <span class="na">server</span><span class="pi">:</span> <span class="s">yourdomain</span>
-      <span class="na">port</span><span class="pi">:</span> <span class="s1">'</span><span class="s">443'</span>
-      <span class="na">password</span><span class="pi">:</span> <span class="s2">"</span><span class="s">yourwassword"</span>
-      <span class="na">sni</span><span class="pi">:</span> <span class="s">yoursni</span>
-      <span class="na">udp</span><span class="pi">:</span> <span class="no">true</span>
-      <span class="na">ws-opts</span><span class="pi">:</span>
-        <span class="na">path</span><span class="pi">:</span> <span class="s">/yourpath</span>
-        <span class="na">headers</span><span class="pi">:</span>
-          <span class="na">Host</span><span class="pi">:</span> <span class="s">yourdomain</span>
-</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="web" /><summary type="html"><![CDATA[1.github下载trojan-go二进制文件 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip 2.解压trojan-go并放至/usr/bin,赋予其执行权限 unzip trojan-go-linux-amd64.zip cp trojan-go /usr/bin chmod +x trojan-go 3.将剩余文件放至/etc/trojan-go mkdir /etc/trojan-go cp -r * /etc/trojan-go 4.申请trojan-go的证书 sudo certbot certonly –agree-tos –standalone –no-eff-email -m youremail -d yourdomain 将证书移至/etc/trojan-go中 sudo cp -r /etc/letsencrypt/archive/yourdomain /etc/trojan-go 5.编辑config.json 生成随机uuid cat /proc/sys/kernel/random/uuid config.json { "run_type": "server", "local_addr": "0.0.0.0", "local_port": 10010, //与nginx共存时不可填写443端口 "remote_addr": "127.0.0.1", "remote_port": 80, //默认返回网页 "password": [ "yourpassword" //填写自己密码 ], "ssl": { "cert": "/etc/trojan-go/yourdomain/fullchain1.pem", //网站的证书 "key": "/etc/trojan-go/yourdomain/privkey1.pem", "fallback": 10005, //回程默认网页 "sni": "yourdomain" }, "websocket": { //ws模式伪装path "enabled": true, "path": "/yourpath", //建议填写随机值 "host": "yourdomain" } } 6.设置端口转发 由于trojan与nginx都占用443端口，因此需设置端口转发 nginx.conf stream { # 这里就是 SNI 识别，将域名映射成一个配置名，请修改自己的一级域名 map $ssl_preread_server_name $backend_name { yourdomain web; yourdomain trojan; default web; } # web，配置转发详情 upstream web { server 127.0.0.1:10005; } upstream trojan { server 127.0.0.1:10010; } # 监听 443 并开启 ssl_preread server { listen 443 reuseport; listen [::]:443 reuseport; proxy_pass $backend_name; ssl_preread on; } } 7.新建trojan用户 用于安全原因，trojan-go需要以trojan用户的身份运行 sudo useradd -s /sbin/nologin trojan 设置文件夹权限 sudo chown -R /etc/trojan-go 7.新建systemd服务 sudo vim /usr/lib/systemd/system/trojan-go.service trojan-go.service [Unit] Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW Documentation=https://p4gefau1t.github.io/trojan-go/ After=network.target nss-lookup.target [Service] User=trojan CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE NoNewPrivileges=true ExecStart=/usr/bin/trojan-go -config /etc/trojan-go/config.json Restart=on-failure RestartSec=10s LimitNOFILE=infinity [Install] WantedBy=multi-user.target sudo systemctl daemon-reload //重载systemd服务 8.重启nginx并设置trojan-go开机启动 sudo systemctl enable –now trojan-go sudo systemctl restart nginx 9.客户端设置（自选客户端） 设置clash - name: 'trojan' type: trojan server: yourdomain port: '443' password: "yourwassword" sni: yoursni udp: true ws-opts: path: /yourpath headers: Host: yourdomain]]></summary></entry><entry><title type="html">git配置</title><link href="http://localhost:4000/2022/08/05/git-config.html" rel="alternate" type="text/html" title="git配置" /><published>2022-08-05T00:00:00+08:00</published><updated>2022-08-05T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/05/git-config</id><content type="html" xml:base="http://localhost:4000/2022/08/05/git-config.html"><![CDATA[<h1 id="git">安装git</h1>
-<h2 id="linux">Linux</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>git //Debian
-
-<span class="nb">sudo </span>dnf <span class="nb">install </span>git //Fedora
-</code></pre></div></div>
-<h2 id="windows">Windows</h2>
-<h3 id="section">直接安装</h3>
-<p><a href="https://github.com/git-for-windows/git/releases/download/v2.37.1.windows.1/Git-2.37.1-64-bit.exe">下载链接</a></p>
-<h3 id="winget">winget安装</h3>
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">winget</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">--id</span><span class="w"> </span><span class="nx">Git.Git</span><span class="w"> </span><span class="nt">-e</span><span class="w"> </span><span class="nt">--source</span><span class="w"> </span><span class="nx">winget</span><span class="w">
-</span></code></pre></div></div>
-<h1 id="git-1">git初步配置</h1>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> user.name <span class="s2">"username"</span> //用户名
-
-git config <span class="nt">--list</span> //已有配置信息
-
-git config <span class="nt">--global</span> user.email youremail //邮箱
-
-git config <span class="nt">--global</span> core.editor nvim //默认文本编辑器
-
-git config <span class="nt">--global</span> merge.tool vimdiff //差异分析工具
-</code></pre></div></div>
-<h1 id="git-2">git使用</h1>
-<p><strong>概念:</strong><br />
-工作区：就是你在电脑里能看到的目录。<br />
-暂存区：英文叫 stage 或 index。一般存放在 .git 目录下的 index 文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）。<br />
-版本库：工作区有一个隐藏目录 .git，这个不算工作区，而是 Git 的版本库。</p>
-<h2 id="section-1">基本操作</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init //初始化仓库
-</code></pre></div></div>
-<p><strong>注：第一次初始提交后才有master分支</strong></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset HEAD //版本回退，重写暂存区的目录树，被 master 分支指向的目录树所替换
-
-git <span class="nb">rm</span> <span class="nt">--cached</span> &lt;file&gt;  //直接从暂存区删除文件，工作区则不做出改变
-
-git checkout <span class="nb">.</span>  //清除工作区中未添加到暂存区中的改动
-
-git <span class="nb">mv</span>    //移动或重命名工作区文件
-
-git checkout HEAD <span class="nb">.</span> //用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件
-
-git add file //将文件加入版本控制
-
-git commit <span class="nt">-m</span> <span class="s1">'first commit'</span> //提交说明
-
-git status //查看仓库状态
-
-git clone &lt;repo&gt; &lt;directory&gt; //拷贝项目到指定目录
-
-git log //查看历史提交记录
-
-git blame &lt;path&gt; //查看文件修改记录（列表形式）
-
-git pull //下载源代码合并
-
-git push //上传源代码合并
-
-git fetch //从远程获取代码库
-</code></pre></div></div>
-<h2 id="git-diff">git diff命令</h2>
-<p><em>不加参数即默认比较工作区与暂存区</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff
-</code></pre></div></div>
-<p><em>比较暂存区与最新本地版本库</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--cached</span>  <span class="o">[</span>&lt;path&gt;...] 
-</code></pre></div></div>
-<p><em>比较工作区与最新本地版本库</em></p>
-<p><em>注：如果HEAD指向的是master分支，那么HEAD还可以换成master</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff HEAD <span class="o">[</span>&lt;path&gt;...]
-</code></pre></div></div>
-<p><em>比较工作区与指定commit-id的差异</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff commit-id  <span class="o">[</span>&lt;path&gt;...]
-</code></pre></div></div>
-<p><em>比较暂存区与指定commit-id的差异</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--cached</span> <span class="o">[</span>&lt;commit-id&gt;] <span class="o">[</span>&lt;path&gt;...] 
-</code></pre></div></div>
-<p><em>比较两个commit-id之间的差异</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="o">[</span>&lt;commit-id&gt;] <span class="o">[</span>&lt;commit-id&gt;]
-</code></pre></div></div>
-<h3 id="git-diff-1">使用git diff打补丁</h3>
-<h4 id="section-2">做补丁</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="o">&gt;</span> patch //patch命名随意
-git diff <span class="nt">--cached</span> <span class="o">&gt;</span> patch //是将我们暂存区与版本库的差异做成补丁
-git diff <span class="nt">--HEAD</span> <span class="o">&gt;</span> patch //是将工作区与版本库的差异做成补丁
-git diff Testfile <span class="o">&gt;</span> patch//将单个文件做成一个单独的补丁
-</code></pre></div></div>
-<h4 id="section-3">打补丁</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git apply patch //打补丁
-git apply <span class="nt">--check</span> patch //无输出表示可以顺利接受补丁
-git apply <span class="nt">--reject</span> patch //若有冲突则生成.rej文件，可手动打补丁
-</code></pre></div></div>
-<h2 id="git-branch">git branch命令</h2>
-<p><em>列出分支</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch
-</code></pre></div></div>
-<p><em>创建分支</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch <span class="o">(</span>branchname<span class="o">)</span>
-</code></pre></div></div>
-<p><em>切换分支</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="o">(</span>branchname<span class="o">)</span>
-</code></pre></div></div>
-<p><strong>注：使用分支将工作切分开来，并能够来回切换。</strong></p>
-<p><img src="https://duan-dky.me/assets/images/posts/git-config/git-checkout.png" alt="git-checkout" /></p>
-<p>如图，切换到test分支后创建README.md,提交更改，然后切换回master分支后发现README.md消失，再切换回test分支后README.md文件出现。</p>
-<p><em>合并分支</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git merge 
-</code></pre></div></div>
-<p><strong>注：多次合并到统一分支， 也可在合并之后直接删除被并入的分支。</strong></p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="git" /><summary type="html"><![CDATA[安装git Linux sudo apt install git //Debian sudo dnf install git //Fedora Windows 直接安装 下载链接 winget安装 winget install --id Git.Git -e --source winget git初步配置 git config --global user.name "username" //用户名 git config --list //已有配置信息 git config --global user.email youremail //邮箱 git config --global core.editor nvim //默认文本编辑器 git config --global merge.tool vimdiff //差异分析工具 git使用 概念: 工作区：就是你在电脑里能看到的目录。 暂存区：英文叫 stage 或 index。一般存放在 .git 目录下的 index 文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git，这个不算工作区，而是 Git 的版本库。 基本操作 git init //初始化仓库 注：第一次初始提交后才有master分支 git reset HEAD //版本回退，重写暂存区的目录树，被 master 分支指向的目录树所替换 git rm --cached &lt;file&gt; //直接从暂存区删除文件，工作区则不做出改变 git checkout . //清除工作区中未添加到暂存区中的改动 git mv //移动或重命名工作区文件 git checkout HEAD . //用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件 git add file //将文件加入版本控制 git commit -m 'first commit' //提交说明 git status //查看仓库状态 git clone &lt;repo&gt; &lt;directory&gt; //拷贝项目到指定目录 git log //查看历史提交记录 git blame &lt;path&gt; //查看文件修改记录（列表形式） git pull //下载源代码合并 git push //上传源代码合并 git fetch //从远程获取代码库 git diff命令 不加参数即默认比较工作区与暂存区 git diff 比较暂存区与最新本地版本库 git diff --cached [&lt;path&gt;...] 比较工作区与最新本地版本库 注：如果HEAD指向的是master分支，那么HEAD还可以换成master git diff HEAD [&lt;path&gt;...] 比较工作区与指定commit-id的差异 git diff commit-id [&lt;path&gt;...] 比较暂存区与指定commit-id的差异 git diff --cached [&lt;commit-id&gt;] [&lt;path&gt;...] 比较两个commit-id之间的差异 git diff [&lt;commit-id&gt;] [&lt;commit-id&gt;] 使用git diff打补丁 做补丁 git diff &gt; patch //patch命名随意 git diff --cached &gt; patch //是将我们暂存区与版本库的差异做成补丁 git diff --HEAD &gt; patch //是将工作区与版本库的差异做成补丁 git diff Testfile &gt; patch//将单个文件做成一个单独的补丁 打补丁 git apply patch //打补丁 git apply --check patch //无输出表示可以顺利接受补丁 git apply --reject patch //若有冲突则生成.rej文件，可手动打补丁 git branch命令 列出分支 git branch 创建分支 git branch (branchname) 切换分支 git checkout (branchname) 注：使用分支将工作切分开来，并能够来回切换。 如图，切换到test分支后创建README.md,提交更改，然后切换回master分支后发现README.md消失，再切换回test分支后README.md文件出现。 合并分支 git merge 注：多次合并到统一分支， 也可在合并之后直接删除被并入的分支。]]></summary></entry><entry><title type="html">fedora基本配置</title><link href="http://localhost:4000/2022/08/03/fedora-config.html" rel="alternate" type="text/html" title="fedora基本配置" /><published>2022-08-03T00:00:00+08:00</published><updated>2022-08-03T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/03/fedora-config</id><content type="html" xml:base="http://localhost:4000/2022/08/03/fedora-config.html"><![CDATA[<h1 id="section">1.软件包管理工具</h1>
-<h2 id="dnf">dnf命令</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf makecache //建立软件包缓存
-
-<span class="nb">sudo </span>dnf upgrade //进行软件包更新
-
-<span class="nb">sudo </span>dnf upgrade package_name //更新单个软件包
-
-<span class="nb">sudo </span>dnf <span class="nb">install </span>https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-<span class="si">$(</span>rpm <span class="nt">-E</span> %fedora<span class="si">)</span>.noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-<span class="si">$(</span>rpm <span class="nt">-E</span> %fedora<span class="si">)</span>.noarch.rpm //启用rpmfusion软件仓库
-
-dnf search package_name //搜索软件包
-
-dnf list kernel-<span class="k">*</span> //查找软件包，使用通配符
-
-dnf list all //列出所有软件包
-
-dnf list installed package_name //列出已安装软件包
-
-dnf group list //列出所有包组
-
-dnf repolist //列出已启用的软件仓库
-
-dnf repository-packages fedora list //列出来自单个软件仓库的软件包
-
-dnf info package_name //显示单个软件包的信息
-
-dnf repoquery package_name <span class="nt">--info</span> //列出具体软件包的所有信息
-
-dnf provides <span class="s2">"*bin/named"</span> //列出哪个软件包提供了该二进制文件
-
-dnf <span class="nt">-v</span> group list group_name //列出某个软件包组的详细信息
-
-<span class="nb">sudo </span>dnf <span class="nb">install </span>package_name //安装单个软件包
-
-<span class="nb">sudo </span>dnf <span class="nb">install</span> /usr/sbin/named //不知道包名的情况下使用
-
-<span class="nb">sudo </span>dnf groupinstall group_nane //安装软件包组
-
-<span class="nb">sudo </span>dnf remove package _name //卸载软件包
-
-<span class="nb">sudo </span>dnf group remove group_name //卸载软件包组
-
-dnf <span class="nb">history </span>list //列出所有事务
-</code></pre></div></div>
-<h1 id="section-1">2.驱动安装</h1>
-<h2 id="section-2">显卡</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lspci <span class="nt">-k</span> | <span class="nb">grep</span> <span class="nt">-EA3</span> <span class="s1">'VGA|3D|Display'</span> //查看显卡型号
-</code></pre></div></div>
-<h3 id="amd-intel">AMD, Intel显卡免驱</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsmod|grep amdgpu //查看模块加载情况
-</code></pre></div></div>
-<h3 id="nvidia-">NVIDIA 显卡驱动安装</h3>
-<h4 id="section-3">1.进行软件包更新</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf update  <span class="nt">--refresh</span>
-</code></pre></div></div>
-<h4 id="section-4">2. 安装驱动程序及其依赖</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install </span>gcc kernel-headers kernel-devel akmod-nvidia xorg-x11-drv-nvidia xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-libs.i686
-</code></pre></div></div>
-<h4 id="section-5">3.等待驱动模块加载，过程需要5~10分钟</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ps <span class="nt">-e</span> | <span class="nb">grep </span>akmods //执行命令无输出说明模块安装完成
-</code></pre></div></div>
-<h4 id="section-6">4.强制从更新的内核模块中读取配置</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>akmods <span class="nt">--force</span>
-
-<span class="nb">sudo </span>dracut <span class="nt">--force</span>
-</code></pre></div></div>
-<h4 id="section-7">5.命令完成后重新启动系统</h4>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>reboot
-</code></pre></div></div>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsmod | <span class="nb">grep </span>nvidia //查看模块加载情况
-</code></pre></div></div>
-<h1 id="systemd">3. systemd服务</h1>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl start service_name //启动服务
-
-systemctl restart service_name //重启服务
-
-systemctl <span class="nb">enable </span>service_name //服务自动启动
-
-systemctl disable service_name //服务取消自动启动
-
-systemctl mask service_name //屏蔽服务
-
-systemctl is-enabled service_name //查看服务是否自动启动
-
-systemctl edit httpd.service //编辑服务
-</code></pre></div></div>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vim /etc/systemd/system/foo.service //新建服务
-</code></pre></div></div>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//示例
-[<span class="n">Unit</span>]
-<span class="n">Description</span>=<span class="n">frpc</span> //服务描述
-<span class="n">After</span>=<span class="n">network</span>.<span class="n">target</span> //在网络连接激活后启动
-
-[<span class="n">Service</span>]
-<span class="n">Type</span>=<span class="n">simple</span> //服务类型
-<span class="n">ExecStart</span>=/<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">frpc</span> -<span class="n">c</span> <span class="n">frp</span>.<span class="n">ini</span> //命令
-
-[<span class="n">Install</span>]
-<span class="n">WantedBy</span>=<span class="n">multi</span>-<span class="n">user</span>.<span class="n">target</span>
-</code></pre></div></div>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl status service_name //查看服务运行状态
-
-journalctl <span class="nt">-u</span> service_name //查看服务运行日志
-
-journalctl <span class="nt">--vacuum-size</span><span class="o">=</span>1M //清理运行日志
-</code></pre></div></div>
-<h1 id="vim">4.vim命令</h1>
-<h2 id="section-8">命令模式</h2>
-<p>i 进入编辑模式<br />
-x 删除当前光标所在处的字符<br />
-: 切换到底线命令模式</p>
-<h2 id="section-9">输入模式</h2>
-<p><em>回车键换行</em><br />
-<em>退格键删除光标前一个字符</em><br />
-*删除键删除光标后一个字符 *
-<em>方向键在文本中移动光标</em><br />
-<em>HOME/END移动光标到行首/行尾</em>
-<em>Page Up/Page Down上/下翻页</em><br />
-<em>Insert切换光标为输入/替换模式，光标将变成竖线/下划线</em><br />
-<em>ESC退出输入模式，切换到命令模式</em></p>
-<p><em>输入“/”搜索字符串，回车后跳转到对应字符串位置</em></p>
-<h1 id="kvm">5.KVM虚拟化</h1>
-<p>egrep '^flags.*(vmx|svm)' /proc/cpuinfo //查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化</p>
-<p>sudo dnf install @virtualization //安装虚拟化包组</p>
-<p>sudo systemctl enable --now libvirtd //设置libvirtd自动启动并启动服务</p>
-<p>lsmod | grep kvm //查看KVM内核模块是否加载</p>
-<pre><code>
-## 使用virsh-install配置
-
-```bash
-sudo virt-install --name Fedora \
---description 'Fedora' \
---ram 4096 \
---vcpus 4 \
---disk path=/var/lib/libvirt/images/linux.qcow2,size=20 \
---os-type linux \
---os-variant fedora36 \
---network bridge=virbr0 \
---graphics vnc,listen=127.0.0.1,port=5901 \
---cdrom Fedora-Workstation-Live-x86-64-36-1.1.iso \
---noautoconsole
-</code></pre>
-<h2 id="virt-manager">使用virt-manager配置</h2>
-<h3 id="gui">根据gui界面管理</h3>
-<h2 id="virsh">使用virsh配置</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>virsh create machine_name //创建虚拟机
-
-virsh list <span class="nt">--all</span> //列出所有虚拟机
-
-virsh dumpxml &lt;virtual machine <span class="o">(</span>name | <span class="nb">id</span> | uuid<span class="o">)</span> //导出配置文件
-
-virsh shutdown machine_name //虚拟机关机
-
-virsh destroy machine_name //虚拟机强制关机
-</code></pre></div></div>
-<h1 id="flathub">6.启用flathub软件仓库</h1>
-<p><em>添加软件原</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flatpak remote-add <span class="nt">--user</span> <span class="nt">--if-not-exists</span> flathub https://flathub.org/repo/flathub.flatpakrepo
-</code></pre></div></div>
-<p><em>搜索软件包</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flatpak <span class="nt">--user</span> search package_name
-</code></pre></div></div>
-<p><em>安装软件包</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flatpak <span class="nt">--user</span> <span class="nb">install </span>package_name
-</code></pre></div></div>
-<p><em>删除软件包</em></p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flatpak <span class="nt">--user</span> remove package_name
-</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="linux" /><summary type="html"><![CDATA[1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides "*bin/named" //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务 2.驱动安装 显卡 lspci -k | grep -EA3 'VGA|3D|Display' //查看显卡型号 AMD, Intel显卡免驱 lsmod|grep amdgpu //查看模块加载情况 NVIDIA 显卡驱动安装 1.进行软件包更新 sudo dnf update --refresh 2. 安装驱动程序及其依赖 sudo dnf install gcc kernel-headers kernel-devel akmod-nvidia xorg-x11-drv-nvidia xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-libs.i686 3.等待驱动模块加载，过程需要5~10分钟 ps -e | grep akmods //执行命令无输出说明模块安装完成 4.强制从更新的内核模块中读取配置 sudo akmods --force sudo dracut --force 5.命令完成后重新启动系统 sudo reboot lsmod | grep nvidia //查看模块加载情况 3. systemd服务 systemctl start service_name //启动服务 systemctl restart service_name //重启服务 systemctl enable service_name //服务自动启动 systemctl disable service_name //服务取消自动启动 systemctl mask service_name //屏蔽服务 systemctl is-enabled service_name //查看服务是否自动启动 systemctl edit httpd.service //编辑服务 vim /etc/systemd/system/foo.service //新建服务 //示例 [Unit] Description=frpc //服务描述 After=network.target //在网络连接激活后启动 [Service] Type=simple //服务类型 ExecStart=/usr/bin/frpc -c frp.ini //命令 [Install] WantedBy=multi-user.target systemctl status service_name //查看服务运行状态 journalctl -u service_name //查看服务运行日志 journalctl --vacuum-size=1M //清理运行日志 4.vim命令 命令模式 i 进入编辑模式 x 删除当前光标所在处的字符 : 切换到底线命令模式 输入模式 回车键换行 退格键删除光标前一个字符 *删除键删除光标后一个字符 * 方向键在文本中移动光标 HOME/END移动光标到行首/行尾 Page Up/Page Down上/下翻页 Insert切换光标为输入/替换模式，光标将变成竖线/下划线 ESC退出输入模式，切换到命令模式 输入“/”搜索字符串，回车后跳转到对应字符串位置 5.KVM虚拟化 egrep '^flags.*(vmx|svm)' /proc/cpuinfo //查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化 sudo dnf install @virtualization //安装虚拟化包组 sudo systemctl enable --now libvirtd //设置libvirtd自动启动并启动服务 lsmod | grep kvm //查看KVM内核模块是否加载 ## 使用virsh-install配置 ```bash sudo virt-install --name Fedora \ --description 'Fedora' \ --ram 4096 \ --vcpus 4 \ --disk path=/var/lib/libvirt/images/linux.qcow2,size=20 \ --os-type linux \ --os-variant fedora36 \ --network bridge=virbr0 \ --graphics vnc,listen=127.0.0.1,port=5901 \ --cdrom Fedora-Workstation-Live-x86-64-36-1.1.iso \ --noautoconsole 使用virt-manager配置 根据gui界面管理 使用virsh配置 virsh create machine_name //创建虚拟机 virsh list --all //列出所有虚拟机 virsh dumpxml &lt;virtual machine (name | id | uuid) //导出配置文件 virsh shutdown machine_name //虚拟机关机 virsh destroy machine_name //虚拟机强制关机 6.启用flathub软件仓库 添加软件原 flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 搜索软件包 flatpak --user search package_name 安装软件包 flatpak --user install package_name 删除软件包 flatpak --user remove package_name]]></summary></entry><entry><title type="html">frp内网穿透</title><link href="http://localhost:4000/2022/07/31/frp-config.html" rel="alternate" type="text/html" title="frp内网穿透" /><published>2022-07-31T00:00:00+08:00</published><updated>2022-07-31T00:00:00+08:00</updated><id>http://localhost:4000/2022/07/31/frp-config</id><content type="html" xml:base="http://localhost:4000/2022/07/31/frp-config.html"><![CDATA[<h1 id="frp-server">1.frp server端配置</h1>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">common</span>]
-<span class="c"># frp监听的端口，默认是7000，可以改成其他的
-</span><span class="n">bind_port</span> = <span class="m">14823</span>
-<span class="n">vhost_http_port</span> = <span class="m">12345</span>
-<span class="c"># 授权码，请改成更复杂的
-</span><span class="n">token</span> = <span class="m">12345678</span>
-
-<span class="c"># frp管理后台端口，请按自己需求更改
-</span><span class="n">dashboard_port</span> = <span class="m">7800</span> 
-<span class="c"># frp管理后台用户名和密码，请改成自己的
-</span><span class="n">dashboard_user</span> = <span class="n">admin</span>
-<span class="n">dashboard_pwd</span> = <span class="n">admin</span>
-<span class="n">enable_prometheus</span> = <span class="n">true</span>
-</code></pre></div></div>
-<h1 id="frp-client">2.frp client端配置</h1>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">common</span>]
-<span class="n">server_addr</span> = <span class="n">yourdomain</span>
-<span class="n">server_port</span> = <span class="m">14823</span> <span class="c">#server端bind_port
-</span><span class="n">token</span> = <span class="m">12345678</span>  <span class="c">#授权码
-</span>[<span class="n">ssh</span>]   <span class="c">#ssh远程链接
-</span><span class="n">type</span> = <span class="n">tcp</span>
-<span class="n">local_ip</span> = <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>
-<span class="n">local_port</span> = <span class="m">22</span> <span class="c">#本地ssh端口
-</span><span class="n">remote_port</span> = <span class="m">6000</span> <span class="c">#远程ssh连接端口
-</span>[<span class="n">web1</span>]
-<span class="n">type</span> = <span class="n">http</span> <span class="c">#http服务
-</span><span class="n">local_port</span> = <span class="m">80</span>
-<span class="n">custom_domains</span> = <span class="n">yourdomain</span>
-</code></pre></div></div>
-<h1 id="frpmariadb">3.frp配置mariadb</h1>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">mariadb</span>]
-<span class="n">type</span> = <span class="n">tcp</span>
-<span class="n">local_ip</span> = <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>   <span class="c">#内网ip
-</span><span class="n">local_port</span> = <span class="m">3306</span> <span class="c"># 内网mariadb端口
-</span><span class="n">remote_port</span> = <span class="m">1006</span> <span class="c"># 公网mariadb端口
-</span></code></pre></div></div>
-<h1 id="frpnginx80443">4.frp与nginx共用80、443端口</h1>
-<h2 id="http">http</h2>
-<h3 id="nginx">nginx配置</h3>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">location</span> / {
-        <span class="c"># First attempt to serve request as file, then
-</span>        <span class="c"># as directory, then fall back to displaying a 404.
-</span>        <span class="c"># try_files $uri $uri/ =404;
-</span>        <span class="n">proxy_pass</span> <span class="n">http</span>://<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">8081</span>; <span class="c">#填写frpc的vhost端口
-</span>                <span class="n">proxy_set_header</span> <span class="n">Host</span> $<span class="n">host</span>;
-                <span class="n">proxy_set_header</span> <span class="n">X</span>-<span class="n">Real</span>-<span class="n">IP</span> $<span class="n">remote_addr</span>;
-                <span class="n">proxy_set_header</span> <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">For</span> $<span class="n">proxy_add_x_forwarded_for</span>;
-                <span class="n">proxy_set_header</span> <span class="n">REMOTE</span>-<span class="n">HOST</span> $<span class="n">remote_addr</span>;
-    }
-</code></pre></div></div>
-<h3 id="frp-server-1">frp server端配置</h3>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vhost_http_port</span> = <span class="m">8081</span>
-</code></pre></div></div>
-<h3 id="frp-client-1">frp client配置</h3>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">web1</span>]
-<span class="n">type</span> = <span class="n">http</span>
-<span class="n">local_port</span> = <span class="m">80</span>
-<span class="n">custom_domains</span> = <span class="n">yourdomain</span>
-</code></pre></div></div>
-<h2 id="https">https</h2>
-<h3 id="frp">配置frp</h3>
-<h4 id="frp-server-2">frp server</h4>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vhost_https_port</span> = <span class="m">8082</span>
-</code></pre></div></div>
-<h4 id="frp-client-2">frp client</h4>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#plugin = https2http
-#plugin_local_addr = 127.0.0.1:1313 #本地服务器端口
-</span>
-<span class="c"># HTTPS证书的路径
-#plugin_crt_path = /etc/frp/domain/yourdomain/fullchain1.pem
-#plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem
-#plugin_host_header_rewrite = 127.0.0.1
-#plugin_header_X-From-Where = frp
-</span></code></pre></div></div>
-<h3 id="nginx-1">或配置nginx</h3>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">map</span> $<span class="n">ssl_preread_server_name</span> $<span class="n">backend_name</span> {
-    <span class="n">default</span> <span class="n">frp</span>;
-  }
-  <span class="n">upstream</span> <span class="n">frp</span> {
-    <span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">10013</span>;
-  }
-<span class="n">server</span> {
-   <span class="n">listen</span> <span class="m">10013</span> <span class="n">ssl</span>;
-   <span class="n">server_name</span> *.<span class="n">duan</span>-<span class="n">dky</span>.<span class="n">me</span>;
-   <span class="n">ssl_certificate</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/<span class="n">duan</span>-<span class="n">dky</span>.<span class="n">me</span>/<span class="n">fullchain</span>.<span class="n">pem</span>;
-   <span class="n">ssl_certificate_key</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/<span class="n">duan</span>-<span class="n">dky</span>.<span class="n">me</span>/<span class="n">privkey</span>.<span class="n">pem</span>;
-   <span class="n">location</span> / {
-                <span class="c"># First attempt to serve request as file, then
-</span>                <span class="c"># as directory, then fall back to displaying a 404.
-</span>                <span class="c"># try_files $uri $uri/ =404;
-</span>            <span class="n">proxy_pass</span> <span class="n">http</span>://<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">8082</span>;
-            <span class="n">proxy_set_header</span> <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">For</span> $<span class="n">proxy_add_x_forwarded_for</span>;
-            <span class="n">proxy_set_header</span> <span class="n">Host</span> $<span class="n">http_host</span>;
-            <span class="n">proxy_set_header</span> <span class="n">X</span>-<span class="n">NginX</span>-<span class="n">Proxy</span> <span class="n">true</span>;
-            <span class="n">proxy_http_version</span> <span class="m">1</span>.<span class="m">1</span>;
-            <span class="n">proxy_set_header</span> <span class="n">Upgrade</span> $<span class="n">http_upgrade</span>;
-            <span class="n">proxy_set_header</span> <span class="n">Connection</span> <span class="s2">"upgrade"</span>;
-            <span class="n">proxy_max_temp_file_size</span> <span class="m">0</span>;
-            <span class="n">proxy_redirect</span> <span class="n">off</span>;
-        } 
-}
-</code></pre></div></div>
-<h1 id="frpsystemd">5.frp注册成systemd服务</h1>
-<p><em>frp server端</em></p>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">Unit</span>]
-<span class="n">Description</span>=<span class="n">FRP</span> <span class="n">Server</span> <span class="n">Daemon</span>
-
-[<span class="n">Service</span>]
-<span class="n">Type</span>=<span class="n">simple</span>
-<span class="n">ExecStartPre</span>=-/<span class="n">usr</span>/<span class="n">sbin</span>/<span class="n">setcap</span> <span class="n">cap_net_bind_service</span>=+<span class="n">ep</span> /<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">frps</span>
-<span class="n">ExecStart</span>=/<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">frps</span> -<span class="n">c</span> /<span class="n">etc</span>/<span class="n">frp</span>/<span class="n">frps</span>.<span class="n">ini</span>
-<span class="n">Restart</span>=<span class="n">always</span>
-<span class="n">RestartSec</span>=<span class="m">2</span><span class="n">s</span>
-<span class="n">User</span>=<span class="n">nobody</span>
-<span class="n">PermissionsStartOnly</span>=<span class="n">true</span>
-<span class="n">LimitNOFILE</span>=<span class="n">infinity</span>
-
-[<span class="n">Install</span>]
-<span class="n">WantedBy</span>=<span class="n">multi</span>-<span class="n">user</span>.<span class="n">target</span>
-
-</code></pre></div></div>
-<p><em>frp client端</em></p>
-<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">Unit</span>]
-<span class="n">Description</span>=<span class="n">FRP</span> <span class="n">Client</span> <span class="n">Daemon</span>
-<span class="n">After</span>=<span class="n">network</span>.<span class="n">target</span>
-<span class="n">Wants</span>=<span class="n">network</span>.<span class="n">target</span>
-
-[<span class="n">Service</span>]
-<span class="n">Type</span>=<span class="n">simple</span>
-<span class="n">ExecStart</span>=/<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">frpc</span> -<span class="n">c</span> /<span class="n">etc</span>/<span class="n">frp</span>/<span class="n">frpc</span>.<span class="n">ini</span>
-<span class="n">Restart</span>=<span class="n">always</span>
-<span class="n">RestartSec</span>=<span class="m">20</span><span class="n">s</span>
-<span class="n">User</span>=<span class="n">nobody</span>
-<span class="n">LimitNOFILE</span>=<span class="n">infinity</span>
-
-[<span class="n">Install</span>]
-<span class="n">WantedBy</span>=<span class="n">multi</span>-<span class="n">user</span>.<span class="n">target</span>
-
-</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="web" /><summary type="html"><![CDATA[1.frp server端配置 [common] # frp监听的端口，默认是7000，可以改成其他的 bind_port = 14823 vhost_http_port = 12345 # 授权码，请改成更复杂的 token = 12345678 # frp管理后台端口，请按自己需求更改 dashboard_port = 7800 # frp管理后台用户名和密码，请改成自己的 dashboard_user = admin dashboard_pwd = admin enable_prometheus = true 2.frp client端配置 [common] server_addr = yourdomain server_port = 14823 #server端bind_port token = 12345678 #授权码 [ssh] #ssh远程链接 type = tcp local_ip = 127.0.0.1 local_port = 22 #本地ssh端口 remote_port = 6000 #远程ssh连接端口 [web1] type = http #http服务 local_port = 80 custom_domains = yourdomain 3.frp配置mariadb [mariadb] type = tcp local_ip = 127.0.0.1 #内网ip local_port = 3306 # 内网mariadb端口 remote_port = 1006 # 公网mariadb端口 4.frp与nginx共用80、443端口 http nginx配置 location / { # First attempt to serve request as file, then # as directory, then fall back to displaying a 404. # try_files $uri $uri/ =404; proxy_pass http://127.0.0.1:8081; #填写frpc的vhost端口 proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header REMOTE-HOST $remote_addr; } frp server端配置 vhost_http_port = 8081 frp client配置 [web1] type = http local_port = 80 custom_domains = yourdomain https 配置frp frp server vhost_https_port = 8082 frp client #plugin = https2http #plugin_local_addr = 127.0.0.1:1313 #本地服务器端口 # HTTPS证书的路径 #plugin_crt_path = /etc/frp/domain/yourdomain/fullchain1.pem #plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem #plugin_host_header_rewrite = 127.0.0.1 #plugin_header_X-From-Where = frp 或配置nginx map $ssl_preread_server_name $backend_name { default frp; } upstream frp { server 127.0.0.1:10013; } server { listen 10013 ssl; server_name *.duan-dky.me; ssl_certificate /etc/letsencrypt/live/duan-dky.me/fullchain.pem; ssl_certificate_key /etc/letsencrypt/live/duan-dky.me/privkey.pem; location / { # First attempt to serve request as file, then # as directory, then fall back to displaying a 404. # try_files $uri $uri/ =404; proxy_pass http://127.0.0.1:8082; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header Host $http_host; proxy_set_header X-NginX-Proxy true; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_max_temp_file_size 0; proxy_redirect off; } } 5.frp注册成systemd服务 frp server端 [Unit] Description=FRP Server Daemon [Service] Type=simple ExecStartPre=-/usr/sbin/setcap cap_net_bind_service=+ep /usr/bin/frps ExecStart=/usr/bin/frps -c /etc/frp/frps.ini Restart=always RestartSec=2s User=nobody PermissionsStartOnly=true LimitNOFILE=infinity [Install] WantedBy=multi-user.target frp client端 [Unit] Description=FRP Client Daemon After=network.target Wants=network.target [Service] Type=simple ExecStart=/usr/bin/frpc -c /etc/frp/frpc.ini Restart=always RestartSec=20s User=nobody LimitNOFILE=infinity [Install] WantedBy=multi-user.target]]></summary></entry><entry><title type="html">rust学习</title><link href="http://localhost:4000/2022/07/27/rust-practice.html" rel="alternate" type="text/html" title="rust学习" /><published>2022-07-27T00:00:00+08:00</published><updated>2022-07-27T00:00:00+08:00</updated><id>http://localhost:4000/2022/07/27/rust-practice</id><content type="html" xml:base="http://localhost:4000/2022/07/27/rust-practice.html"><![CDATA[<p>1.rust函数</p>
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span> <span class="c1">//主函数</span>
- <span class="nd">println!</span><span class="p">(</span><span class="s">"hello world!"</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<p>2.Rust变量
-Rust 是强类型语言，但具有自动判断变量类型的能力。<br />
-声明变量使用let关键字。<br />
-重影:指变量的名称可以被重新使用。<br />
-有符号类型</p>
-<table>
-<thead>
-<tr>
-<th>长度</th>
-<th align="left">有符号</th>
-<th align="center">无符号</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>8bit</td>
-<td align="left">i8</td>
-<td align="center">u8</td>
-</tr>
-<tr>
-<td>16bit</td>
-<td align="left">i16</td>
-<td align="center">u16</td>
-</tr>
-<tr>
-<td>32bit</td>
-<td align="left">i32</td>
-<td align="center">u32</td>
-</tr>
-<tr>
-<td>64bit</td>
-<td align="left">i64</td>
-<td align="center">u64</td>
-</tr>
-<tr>
-<td>128bit</td>
-<td align="left">i128</td>
-<td align="center">u128</td>
-</tr>
-<tr>
-<td>arch</td>
-<td align="left">isize</td>
-<td align="center">usize</td>
-</tr>
-</tbody>
-</table>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="rust" /><summary type="html"><![CDATA[1.rust函数 fn main(){ //主函数 println!("hello world!"); } 2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。 声明变量使用let关键字。 重影:指变量的名称可以被重新使用。 有符号类型 长度 有符号 无符号 8bit i8 u8 16bit i16 u16 32bit i32 u32 64bit i64 u64 128bit i128 u128 arch isize usize]]></summary></entry><entry><title type="html">c++链表</title><link href="http://localhost:4000/2022/04/24/c++link.html" rel="alternate" type="text/html" title="c++链表" /><published>2022-04-24T00:00:00+08:00</published><updated>2022-04-24T00:00:00+08:00</updated><id>http://localhost:4000/2022/04/24/c++link</id><content type="html" xml:base="http://localhost:4000/2022/04/24/c++link.html"><![CDATA[<p>//查找元素</p>
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">getElem</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="n">list</span> <span class="o">*</span><span class="n">l1</span><span class="p">)</span>
-<span class="p">{</span>
-
-    <span class="n">list</span> <span class="o">*</span><span class="n">b</span><span class="o">=</span><span class="n">l1</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-    <span class="k">for</span><span class="p">(;</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">;</span><span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">){</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">){</span>
-            <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">count</span><span class="p">);</span> <span class="c1">//返回元素和下标</span>
-        <span class="p">}</span>
-        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">a</span><span class="o">==</span><span class="n">a</span><span class="p">){</span>
-        <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">count</span><span class="p">);</span> <span class="c1">//未找到返回-1</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
     
-<span class="p">}</span>
-</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="c++" /><summary type="html"><![CDATA[//查找元素 std::pair&lt;int, int&gt; getElem(int a,list *l1) { list *b=l1; int count=0; for(;b-&gt;next!=NULL;b=b-&gt;next){ if(a==b-&gt;a){ return std::pair&lt;int, int&gt;(a,count); //返回元素和下标 } count++; } if(b-&gt;a==a){ return std::pair&lt;int, int&gt;(a,count); //未找到返回-1 } return std::pair&lt;int, int&gt;(a,-1); }]]></summary></entry></feed>
+    <title>My Blogs</title>
+    
+    
+    <description>This website is a virtual proof that I&apos;m awesome</description>
+    
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+      <item>
+        <title>clash tun模式配置</title>
+        <description>
+          
+          1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq 删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1 sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf nameserver 127.0.0.1 options edns0 trust-ad search . 注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换 sudo vim /etc/NetworkManager/NetworkManager.conf [main] dns = none 重启networkmanager sudo systemctl restart NetworkManager 编辑dnsmasq配置文件 sudo vim /etc/dnsmasq.d/clash.conf no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash 重新启动dnsmasq sudo systemctl...
+        </description>
+        <pubDate>Thu, 11 Aug 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/08/11/clash-tun-mode.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/08/11/clash-tun-mode.html</guid>
+      </item>
+    
+      <item>
+        <title>trojan-go配置</title>
+        <description>
+          
+          1.github下载trojan-go二进制文件 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip 2.解压trojan-go并放至/usr/bin,赋予其执行权限 unzip trojan-go-linux-amd64.zip cp trojan-go /usr/bin chmod +x trojan-go 3.将剩余文件放至/etc/trojan-go mkdir /etc/trojan-go cp -r * /etc/trojan-go 4.申请trojan-go的证书 sudo certbot certonly –agree-tos –standalone –no-eff-email -m youremail -d yourdomain 将证书移至/etc/trojan-go中 sudo cp -r /etc/letsencrypt/archive/yourdomain /etc/trojan-go 5.编辑config.json 生成随机uuid cat /proc/sys/kernel/random/uuid config.json { &quot;run_type&quot;: &quot;server&quot;, &quot;local_addr&quot;: &quot;0.0.0.0&quot;, &quot;local_port&quot;: 10010, //与nginx共存时不可填写443端口 &quot;remote_addr&quot;:...
+        </description>
+        <pubDate>Wed, 10 Aug 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/08/10/trojan-config.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/08/10/trojan-config.html</guid>
+      </item>
+    
+      <item>
+        <title>nginx配置</title>
+        <description>
+          
+          测试系统：Debian11 1.安装升级系统 sudo apt update 2.安装nginx sudo apt install nginx 3.申请域名 github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn 4.申请证书 zerossl或者letsencrypt即可 letsencrypt申请方法： sudo apt install python3-certbot-nginx 安装完成后： sudo certbot –nginx 5.编辑nginx配置文件 编辑/etc/nginx/sites-enabled/default文件 server { # SSL configuration # # listen 443 ssl default_server; # listen [::]:443 ssl default_server; # # Note: You should disable gzip for SSL...
+        </description>
+        <pubDate>Wed, 10 Aug 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/08/10/nginx-config.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/08/10/nginx-config.html</guid>
+      </item>
+    
+      <item>
+        <title>git配置</title>
+        <description>
+          
+          安装git Linux sudo apt install git //Debian sudo dnf install git //Fedora Windows 直接安装 下载链接 winget安装 winget install --id Git.Git -e --source winget git初步配置 git config --global user.name &quot;username&quot; //用户名 git config --list //已有配置信息 git config --global user.email youremail //邮箱 git config --global core.editor nvim //默认文本编辑器 git config --global merge.tool...
+        </description>
+        <pubDate>Fri, 05 Aug 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/08/05/git-config.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/08/05/git-config.html</guid>
+      </item>
+    
+      <item>
+        <title>fedora基本配置</title>
+        <description>
+          
+          1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf...
+        </description>
+        <pubDate>Wed, 03 Aug 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/08/03/fedora-config.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/08/03/fedora-config.html</guid>
+      </item>
+    
+      <item>
+        <title>frp内网穿透</title>
+        <description>
+          
+          1.frp server端配置 [common] # frp监听的端口，默认是7000，可以改成其他的 bind_port = 14823 vhost_http_port = 12345 # 授权码，请改成更复杂的 token = 12345678 # frp管理后台端口，请按自己需求更改 dashboard_port = 7800 # frp管理后台用户名和密码，请改成自己的 dashboard_user = admin dashboard_pwd = admin enable_prometheus = true 2.frp client端配置 [common] server_addr = yourdomain server_port = 14823 #server端bind_port token = 12345678 #授权码 [ssh] #ssh远程链接 type =...
+        </description>
+        <pubDate>Sun, 31 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/07/31/frp-config.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/07/31/frp-config.html</guid>
+      </item>
+    
+      <item>
+        <title>rust学习</title>
+        <description>
+          
+          1.rust函数
+fn main(){ //主函数
+ println!(&quot;hello world!&quot;);
+}
+
+2.Rust变量
+Rust 是强类型语言，但具有自动判断变量类型的能力。
+声明变量使用let关键字。
+重影:指变量的名称可以被重新使用。
+有符号类型
+
+
+
+长度
+有符号
+无符号
+
+
+
+
+8bit
+i8
+u8
+
+
+16bit
+i16
+u16
+
+
+32bit
+i32
+u32
+
+
+64bit
+i64
+u64
+
+
+128bit
+i128
+u128
+
+
+arch
+isize
+usize
+
+
+
+
+        </description>
+        <pubDate>Wed, 27 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/07/27/rust-practice.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/07/27/rust-practice.html</guid>
+      </item>
+    
+      <item>
+        <title>c++链表</title>
+        <description>
+          
+          //查找元素
+std::pair&amp;lt;int, int&amp;gt; getElem(int a,list *l1)
+{
+
+    list *b=l1;
+    int count=0;
+    for(;b-&amp;gt;next!=NULL;b=b-&amp;gt;next){
+        if(a==b-&amp;gt;a){
+            return std::pair&amp;lt;int, int&amp;gt;(a,count); //返回元素和下标
+        }
+        count++;
+    }
+    if(b-&amp;gt;a==a){
+        return std::pair&amp;lt;int, int&amp;gt;(a,count); //未找到返回-1
+    }
+    return std::pair&amp;lt;int, int&amp;gt;(a,-1);
+    
+}
+
+
+        </description>
+        <pubDate>Sun, 24 Apr 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/04/24/c++link.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/04/24/c++link.html</guid>
+      </item>
+    
+  </channel>
+</rss>
