@@ -99,14 +99,14 @@ vhost_https_port = 8082
 #### frp client
 
 ```conf
-#plugin = https2http
-#plugin_local_addr = 127.0.0.1:1313 #本地服务器端口
+plugin = https2http
+plugin_local_addr = 127.0.0.1:1313 #本地服务器端口
 
 # HTTPS证书的路径
-#plugin_crt_path = /etc/frp/domain/yourdomain/fullchain1.pem
-#plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem
-#plugin_host_header_rewrite = 127.0.0.1
-#plugin_header_X-From-Where = frp
+plugin_crt_path = /etc/frp/domain/yourdomain/fullchain1.pem
+plugin_key_path = /etc/frp/domain/yourdomain/privkey1.pem
+plugin_host_header_rewrite = 127.0.0.1
+plugin_header_X-From-Where = frp
 ```
 
 ### 或配置nginx

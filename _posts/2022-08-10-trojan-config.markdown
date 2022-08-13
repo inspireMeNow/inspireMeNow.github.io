@@ -100,7 +100,7 @@ sudo chown -R /etc/trojan-go
 sudo vim /usr/lib/systemd/system/trojan-go.service
 ```
 *trojan-go.service*
-```text
+```conf
 [Unit]
 Description=Trojan-Go - An unidentifiable mechanism that helps you bypass GFW
 Documentation=https://p4gefau1t.github.io/trojan-go/
