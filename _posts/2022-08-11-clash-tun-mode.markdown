@@ -152,7 +152,7 @@ sudo sed -i 's/127.0.0.1/127.0.0.53/g' /etc/resolv.conf
 sudo systemctl restart clash@dky
 ```
 **windows**
-```cmd
+```powershell
 netsh int ip reset
 netsh winsock reset
 ipconfig /flushdns
