@@ -111,7 +111,7 @@ nslookup www.google.com
 # 2.clash tun网卡配置
 
 *注：clash需要root权限创建网卡*
-
+**linux/unix**
 ```yaml
 tun:
   enable: true
@@ -119,7 +119,17 @@ tun:
   auto-route: true
   auto-detect-interface: true
 ```
-
+**windows**
+```
+tun:
+  enable: true
+  stack: gvisor # or system
+  dns-hijack:
+    - 198.18.0.2:53 # when `fake-ip-range` is 198.18.0.1/16, should hijack 198.18.0.2:53
+  auto-route: true # auto set global route for Windows
+  # It is recommended to use `interface-name`
+  auto-detect-interface: true # auto detect interface, conflict with `interface-name`
+```
 最后重启clash
 
 ```bash
