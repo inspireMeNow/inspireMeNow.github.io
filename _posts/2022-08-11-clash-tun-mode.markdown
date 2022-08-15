@@ -120,7 +120,7 @@ tun:
   auto-detect-interface: true
 ```
 **windows**
-```
+```yaml
 tun:
   enable: true
   stack: gvisor # or system
@@ -141,3 +141,20 @@ sudo systemctl restart clash
 ```bash
 sudo systemctl status clash
 ```
+# 3.tun模式退出后网络遇到问题
+**linux/unix**
+```bash
+sudo systemctl stop clash
+sudo systemctl stop dnsmasq
+sudo systemctl start systemd-resolved
+sudo resolvectl flush-caches
+sudo sed -i 's/127.0.0.1/127.0.0.53/g' /etc/resolv.conf
+sudo systemctl restart clash@dky
+```
+**windows**
+```cmd
+netsh int ip reset
+netsh winsock reset
+ipconfig /flushdns
+```
+*注：windows系统需要重启才能完成网络重置。*
