@@ -77,6 +77,8 @@ git status //查看仓库状态
 git clone <repo> <directory> //拷贝项目到指定目录
 
 git log //查看历史提交记录
+ 
+git log --show-signature //查看仓库每次提交的签名信息
 
 git blame <path> //查看文件修改记录（列表形式）
 
@@ -178,4 +180,4 @@ git checkout (branchname)
 git merge 
 ```
 
-**注：多次合并到统一分支， 也可在合并之后直接删除被并入的分支。**  
+**注：多次合并到统一分支， 也可在合并之后直接删除被并入的分支。** 
