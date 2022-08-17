@@ -23,7 +23,9 @@ navbar-links:
   About Me: "aboutme"
   Resources:
     - 我的网盘: "https://cloud.duan-dky.me"
-    - 学习markdown: "https://www.markdowntutorial.com/"
+    - 学习markdown: "https://github.com/Sakiyary/Markdown-Typora-VSCode-Doc"
+    - 网络学习: "https://www.cloudflare.com/zh-cn/learning/"
+    - c++学习: "https://cl.duan-dky.me"
   Github: "https://github.com/duan-dky"
 
 ################
