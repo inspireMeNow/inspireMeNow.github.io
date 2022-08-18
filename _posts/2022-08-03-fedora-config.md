@@ -239,3 +239,17 @@ flatpak --user install package_name
 ```bash
 flatpak --user remove package_name
 ```
+# 7.端口被占用解决方法
+## 查看占用端口的程序
+*lsof命令*  
+```bash
+lsof -i:port_number
+```
+*netstat命令*
+```bash
+netstat -tunlp | grep port_number
+```
+## 杀死占用端口的程序
+```bash
+kill -9 PID
+```
