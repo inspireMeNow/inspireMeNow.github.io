@@ -253,3 +253,11 @@ netstat -tunlp | grep port_number
 ```bash
 kill -9 PID
 ```
+# 8.开启sysrq
+```bash
+sudo vim /etc/sysctl.d/90-sysrq.conf
+```
+```conf
+kernel.sysrq = 1
+```
+注：需重启电脑或~~sysctl -p~~生效
