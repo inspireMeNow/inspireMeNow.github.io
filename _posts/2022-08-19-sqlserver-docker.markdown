@@ -65,3 +65,4 @@ public class SQLDatabaseConnection {
     }
 }
 ```
+**注意：中文输入请规定数据类型为nvarchar,否则显示中文为问号**
