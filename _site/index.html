@@ -24,7 +24,7 @@
   
 
   
-  <link rel="alternate" type="application/rss+xml" title="My Blogs" href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="My Blogs" href="http://localhost:4000/feed.xml">
   
 
   
@@ -82,13 +82,13 @@
   <meta property="og:description" content="This is where I will tell my friends way too much about me">
 
   
-  <meta property="og:image" content="/assets/img/avatar-icon.jpeg">
+  <meta property="og:image" content="http://localhost:4000/assets/img/avatar-icon.jpeg">
   
 
   
   <meta property="og:type" content="website">
-  <meta property="og:url" content="/">
-  <link rel="canonical" href="/">
+  <meta property="og:url" content="http://localhost:4000/">
+  <link rel="canonical" href="http://localhost:4000/">
   
 
   
@@ -101,7 +101,7 @@
   <meta property="twitter:description" content="This is where I will tell my friends way too much about me">
 
   
-  <meta name="twitter:image" content="/assets/img/avatar-icon.jpeg">
+  <meta name="twitter:image" content="http://localhost:4000/assets/img/avatar-icon.jpeg">
   
 
   
@@ -119,7 +119,7 @@
   
 
 
-  <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom top-nav-regular"><a class="navbar-brand" href="">My Blogs</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom top-nav-regular"><a class="navbar-brand" href="http://localhost:4000/">My Blogs</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -154,7 +154,7 @@
   
     <div class="avatar-container">
       <div class="avatar-img-border">
-        <a href="">
+        <a href="http://localhost:4000/">
           <img alt="Navigation bar avatar" class="avatar-img" src="/assets/img/avatar-icon.jpeg" />
         </a>
       </div>
@@ -174,6 +174,20 @@
   <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
   <script>
     var searchjson = '[ \
+       \
+        { \
+          "title"    : "随机数生成", \
+          "category" : "linux", \
+          "url"      : "/2022/08/21/random-number.html", \
+          "date"     : "August 21, 2022" \
+        }, \
+       \
+        { \
+          "title"    : "sql server docker镜像配置", \
+          "category" : "linux", \
+          "url"      : "/2022/08/19/sqlserver-docker.html", \
+          "date"     : "August 19, 2022" \
+        }, \
        \
         { \
           "title"    : "gpg加密解密", \
@@ -265,6 +279,13 @@
           "category" : "page", \
           "url"      : "/page2/", \
           "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "My Blogs", \
+          "category" : "page", \
+          "url"      : "/page3/", \
+          "date"     : "January 1, 1970" \
         } \
        \
     ]';
@@ -335,7 +356,105 @@
 
       
 
-      <a href="/2022/08/15/gpg-encrypt.html">
+      <a href="http://localhost:4000/2022/08/21/random-number.html">
+        <h2 class="post-title">随机数生成</h2>
+
+        
+      </a>
+
+      <p class="post-meta">
+        
+        Posted on August 21, 2022
+      </p>
+
+      
+
+      
+      
+
+      <div class="post-entry">
+        
+        通过系统变量生成 echo $RANDOM 获取特定位数的随机字符,这里为10位 echo $RANDOM |md5sum |cut -c 1-10 获取随机数字,这里为10位 echo $RANDOM |cksum |cut -c 1-10 通过openssl生成 base64编码 openssl rand -base64 10 注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字 通过系统uuid生成 cat /proc/sys/kernel/random/uuid 通过程序实现 C++实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同 # include &lt;iostream&gt; #include&lt;random&gt; #include&lt;time.h&gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout &lt;&lt; (rand() % (b - a...
+        
+        
+          <a href="http://localhost:4000/2022/08/21/random-number.html" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+      
+
+      
+      <div class="blog-tags">
+        <span>Tags:</span>
+        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
+        <ul class="d-inline list-inline" role="list">
+          
+          <li class="list-inline-item">
+            <a href="http://localhost:4000/tags#linux">linux</a>
+          </li>
+          
+        </ul>
+      </div>
+      
+
+    </article>
+  </li>
+  
+  <li class="post-preview">
+    <article>
+      
+
+      
+
+      <a href="http://localhost:4000/2022/08/19/sqlserver-docker.html">
+        <h2 class="post-title">sql server docker镜像配置</h2>
+
+        
+      </a>
+
+      <p class="post-meta">
+        
+        Posted on August 19, 2022
+      </p>
+
+      
+
+      
+      
+
+      <div class="post-entry">
+        
+        1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest 2.创建并运行docker镜像 sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=&lt;YourPassword&gt;" \ -p 1433:1433 --name sql1 --hostname sql1 \ -d \ mcr.microsoft.com/mssql/server:2022-latest 注：开放1433端口以进行数据库连接，docker镜像名称为sql1 3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection 4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \ -S localhost -U SA \...
+        
+        
+          <a href="http://localhost:4000/2022/08/19/sqlserver-docker.html" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+      
+
+      
+      <div class="blog-tags">
+        <span>Tags:</span>
+        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
+        <ul class="d-inline list-inline" role="list">
+          
+          <li class="list-inline-item">
+            <a href="http://localhost:4000/tags#linux">linux</a>
+          </li>
+          
+        </ul>
+      </div>
+      
+
+    </article>
+  </li>
+  
+  <li class="post-preview">
+    <article>
+      
+
+      
+
+      <a href="http://localhost:4000/2022/08/15/gpg-encrypt.html">
         <h2 class="post-title">gpg加密解密</h2>
 
         
@@ -356,7 +475,7 @@
         生成密钥 gpg生成私钥 gpg --gen-key 导出密钥 gpg --export --armor keyID &gt; gpgkey.pub.asc 导入公钥 gpg --import gpgkey.pub.asc 从服务器导入 gpg --keyserver servername --recv-keys keyID 非对称加密解密 加密文件 gpg -e -r username filename 解密文件 gpg -d filename 对称加密解密 加密文件 gpg --symmetric filename 解密文件 gpg -d filename 对文件签名 数字签名 gpg -o filename.sig -s filename 签名+加密 gpg...
         
         
-          <a href="/2022/08/15/gpg-encrypt.html" class="post-read-more">[Read&nbsp;More]</a>
+          <a href="http://localhost:4000/2022/08/15/gpg-encrypt.html" class="post-read-more">[Read&nbsp;More]</a>
         
       </div>
       
@@ -368,7 +487,7 @@
         <ul class="d-inline list-inline" role="list">
           
           <li class="list-inline-item">
-            <a href="/tags#gpg">gpg</a>
+            <a href="http://localhost:4000/tags#gpg">gpg</a>
           </li>
           
         </ul>
@@ -384,7 +503,7 @@
 
       
 
-      <a href="/2022/08/11/clash-tun-mode.html">
+      <a href="http://localhost:4000/2022/08/11/clash-tun-mode.html">
         <h2 class="post-title">clash tun模式配置</h2>
 
         
@@ -406,7 +525,7 @@
 
         
         
-          <a href="/2022/08/11/clash-tun-mode.html" class="post-read-more">[Read&nbsp;More]</a>
+          <a href="http://localhost:4000/2022/08/11/clash-tun-mode.html" class="post-read-more">[Read&nbsp;More]</a>
         
       </div>
       
@@ -418,7 +537,7 @@
         <ul class="d-inline list-inline" role="list">
           
           <li class="list-inline-item">
-            <a href="/tags#web">web</a>
+            <a href="http://localhost:4000/tags#web">web</a>
           </li>
           
         </ul>
@@ -434,7 +553,7 @@
 
       
 
-      <a href="/2022/08/10/trojan-config.html">
+      <a href="http://localhost:4000/2022/08/10/trojan-config.html">
         <h2 class="post-title">trojan-go配置</h2>
 
         
@@ -462,7 +581,7 @@ unzip trojan-go-linux-amd64.zip
 
         
         
-          <a href="/2022/08/10/trojan-config.html" class="post-read-more">[Read&nbsp;More]</a>
+          <a href="http://localhost:4000/2022/08/10/trojan-config.html" class="post-read-more">[Read&nbsp;More]</a>
         
       </div>
       
@@ -474,107 +593,7 @@ unzip trojan-go-linux-amd64.zip
         <ul class="d-inline list-inline" role="list">
           
           <li class="list-inline-item">
-            <a href="/tags#web">web</a>
-          </li>
-          
-        </ul>
-      </div>
-      
-
-    </article>
-  </li>
-  
-  <li class="post-preview">
-    <article>
-      
-
-      
-
-      <a href="/2022/08/10/nginx-config.html">
-        <h2 class="post-title">nginx配置</h2>
-
-        
-      </a>
-
-      <p class="post-meta">
-        
-        Posted on August 10, 2022
-      </p>
-
-      
-
-      
-      
-
-      <div class="post-entry">
-        
-        测试系统：Debian11
-
-        
-        
-          <a href="/2022/08/10/nginx-config.html" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-      
-
-      
-      <div class="blog-tags">
-        <span>Tags:</span>
-        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-        <ul class="d-inline list-inline" role="list">
-          
-          <li class="list-inline-item">
-            <a href="/tags#web">web</a>
-          </li>
-          
-        </ul>
-      </div>
-      
-
-    </article>
-  </li>
-  
-  <li class="post-preview">
-    <article>
-      
-
-      
-
-      <a href="/2022/08/05/git-config.html">
-        <h2 class="post-title">git配置</h2>
-
-        
-      </a>
-
-      <p class="post-meta">
-        
-        Posted on August 5, 2022
-      </p>
-
-      
-
-      
-      
-
-      <div class="post-entry">
-        
-        安装git
-
-        
-        
-          <a href="/2022/08/05/git-config.html" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-      
-
-      
-      <div class="blog-tags">
-        <span>Tags:</span>
-        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-        <ul class="d-inline list-inline" role="list">
-          
-          <li class="list-inline-item">
-            <a href="/tags#git">git</a>
+            <a href="http://localhost:4000/tags#web">web</a>
           </li>
           
         </ul>
@@ -591,7 +610,7 @@ unzip trojan-go-linux-amd64.zip
   
   
   <li class="page-item next">
-    <a class="page-link" href="/page2">Older Posts &rarr;</a>
+    <a class="page-link" href="http://localhost:4000/page2">Older Posts &rarr;</a>
   </li>
   
 </ul>
@@ -664,7 +683,7 @@ unzip trojan-go-linux-amd64.zip
       
         &nbsp;&bull;&nbsp;
         <span class="author-site">
-          <a href="">duan-dky.github.io</a>
+          <a href="http://localhost:4000/">duan-dky.github.io</a>
         </span>
       
 
