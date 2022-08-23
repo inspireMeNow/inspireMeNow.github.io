@@ -18,8 +18,7 @@ sudo apt install nginx
 
 # 4.申请证书
 *zerossl或者letsencrypt即可*  
-
-## letsencrypt申请方法：
+## 80端口验证
 ```bash
 sudo apt install python3-certbot-nginx
 ```
@@ -27,6 +26,31 @@ sudo apt install python3-certbot-nginx
 ```bash
 sudo certbot –nginx
 ```
+## 邮箱系统验证
+
+## dns验证
+### 泛域名申请  
+*以cloudflare为例：*  
+  
+*创建cloudflare api密钥，记下token*  
+
+*创建cloudflare.ini配置文件并放入指定位置*  
+```conf
+dns_cloudflare_api_token = your_token
+```
+*申请证书*
+```bash
+certbot certonly \
+  --dns-cloudflare \
+  --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini \
+  -d example.com \
+  -d www.example.com
+```
+### 二级域名申请
+```bash
+sudo certbot -d my.example.com --manual --preferred-challenges dns certonly
+```
+*注：根据提示添加txt域名映射记录，待域名生效后即可回车*
 # 5.编辑nginx配置文件
 编辑/etc/nginx/sites-enabled/default文件
 ```conf
