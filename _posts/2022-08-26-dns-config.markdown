@@ -1,7 +1,7 @@
 ---
-title: 随机数生成
-tags: linux
-key: random-number
+title: 解决dns污染问题
+tags: dns
+key: dns-config
 ---
 # 起因
 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
