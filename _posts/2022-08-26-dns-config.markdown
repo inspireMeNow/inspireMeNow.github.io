@@ -165,6 +165,21 @@ servers:
     - protocol: tcp
       addr: 127.0.0.1:1053
 ```
+*新建systemd服务*
+```conf
+[Unit]
+Description=mosdns Service
+Documentation=https://irine-sistiana.gitbook.io/mosdns-wiki/
+After=network.target
+
+[Service]
+NoNewPrivileges=true
+ExecStart=/usr/bin/mosdns start -c /etc/mosdns/config.yaml -d /etc/mosdns/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
 #### dnsmasq
 *配置文件*
 ```bash
