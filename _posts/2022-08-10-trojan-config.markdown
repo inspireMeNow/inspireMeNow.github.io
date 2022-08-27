@@ -126,6 +126,18 @@ sudo systemctl enable –now trojan-go
 
 sudo systemctl restart nginx
 ```
+9.（可选）启用tcp bbr加速
+```bash
+echo 'net.core.default_qdisc=fq' | sudo tee -a /etc/sysctl.conf
+
+echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.conf
+
+sudo sysctl -p
+
+init 6 //重启机器
+
+lsmod|grep bbr //查看bbr模块是否加载
+```
 9.客户端设置（自选客户端）  
 *设置clash*
 ```yaml
