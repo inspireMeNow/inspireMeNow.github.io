@@ -12,7 +12,7 @@
     
     
       <item>
-        <title>自建gitlab</title>
+        <title>hysteria配置</title>
         <description>
           
           由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。 server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64 编辑配置文件config.json { &quot;listen&quot;: &quot;:37658&quot;, #监听端口 &quot;protocol&quot;: &quot;wechat-video&quot;, #流量类型，支持udp，faketcp，wechat-video &quot;cert&quot;: &quot;/path/to/fullchain.pem&quot;, &quot;key&quot;: &quot;/path/to/privkey.pem&quot;, &quot;alpn&quot;: &quot;h3&quot;, &quot;auth&quot;: { &quot;mode&quot;: &quot;passwords&quot;, &quot;config&quot;: [&quot;yourpassword&quot;] }, &quot;up_mbps&quot;: 100, #限速，建议值不要过高，默认单位：Mbps &quot;down_mbps&quot;: 100 } 启动hysteria ./hysteria -c config.json server 注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor...
