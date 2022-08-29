@@ -1,6 +1,6 @@
 ---
 title: trojan-go配置
-tags: web
+tags: network
 key: trojan-config 
 ---
 1.github下载trojan-go二进制文件

@@ -104,3 +104,76 @@ postgresql['shared_buffers'] = "256MB"
 *其他优化方式可查看[Running GitLab in a memory-constrained environment](https://docs.gitlab.com/omnibus/settings/memory_constrained_envs.html)*  
   
 *效果：实际比之前少了一半内存占用，还行*
+# gitlab runner配置
+*我是用的是docker镜像*
+## 拉取镜像
+```bash
+docker pull gitlab/gitlab-runner:latest
+```
+## 运行镜像
+```bash
+docker run -d --name gitlab-runner --restart always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner:Z \
+  gitlab/gitlab-runner:latest
+```
+## 设置与gitlab的连接
+### 获取gitlab ci token
+### 注册runner
+```bash
+docker exec -it gitlab-runner gitlab-runner register
+```
+**注：由于网络环境影响，下载依赖较慢，故为docker镜像配置代理**  
+### 为docker配置代理
+*编辑/etc/systemd/system/docker.service.d/http-proxy.conf文件*  
+```conf
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:7890"
+Environment="HTTPS_PROXY=http://127.0.0.1:7890"
+Environment="NO_PROXY=localhost,127.0.0.0/8,::1" #局域网直连
+```
+*重载systemd服务*
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+### 为gitlab runner配置代理
+编辑/srv/gitlab-runner/config/config.toml文件，在[[runners]]处加入以下内容  
+```conf
+pre_clone_script = "git config --global http.proxy $HTTP_PROXY; git config --global https.proxy $HTTPS_PROXY" #为git配置代理
+environment = ["https_proxy=http://172.17.0.1:7890", "http_proxy=http://172.17.0.1:7890", "HTTPS_PROXY=172.17.0.1:7890", "HTTP_PROXY=172.17.0.1:7890"]
+```
+### 测试gitlab runner
+*在项目根目录新建.gitlab-ci.yml文件，以下为示例*  
+```yaml
+image: ruby:latest
+
+variables:
+  JEKYLL_ENV: production
+  LC_ALL: C.UTF-8
+
+before_script:
+  - gem install bundler #部署之前安装依赖
+  - bundle install
+
+test:
+  stage: test
+  script:
+  - bundle exec jekyll build -d test #测试命令
+  artifacts:
+    paths:
+    - test
+  except:
+  - master
+
+pages:
+  stage: deploy #部署命令
+  script:
+  - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+```
+*在web界面查看部署情况*

@@ -1,6 +1,6 @@
 ---
 title: gpg加密解密
-tags: gpg
+tags: encrypt
 key: gpg-encrypt
 ---
 # 生成密钥

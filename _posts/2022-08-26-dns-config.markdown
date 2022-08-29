@@ -1,6 +1,6 @@
 ---
 title: 解决dns污染问题
-tags: dns
+tags: network
 key: dns-config
 ---
 # 起因

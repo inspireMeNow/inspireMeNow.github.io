@@ -1,6 +1,6 @@
 ---
 title: sql server docker镜像配置
-tags: linux
+tags: database
 key: sqlserver-docker
 ---
 # 1.拉取docker镜像

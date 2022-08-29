@@ -1,6 +1,6 @@
 ---
 title: clash tun模式配置
-tags: web
+tags: network
 key: clash-tun-mode
 
 ---
@@ -142,7 +142,8 @@ sudo systemctl restart clash
 sudo systemctl status clash
 ```
 # 3.tun模式退出后网络遇到问题
-**linux/unix**
+**linux/unix**  
+*dnsmasq*
 ```bash
 sudo systemctl stop clash
 sudo systemctl stop dnsmasq
@@ -151,10 +152,29 @@ sudo resolvectl flush-caches
 sudo sed -i 's/127.0.0.1/127.0.0.53/g' /etc/resolv.conf
 sudo systemctl restart clash@dky
 ```
+**注意：由于dns污染问题，正在考虑普通代理模式使用dnsmasq代替systemd-resolved**  
+*dnsmasq*  
+```bash
+sudo systemctl stop clash
+sudo mv /etc/dnsmasq.d/clash.conf /etc/dnsmasq.d/clash.conf.bak
+sudo mv /etc/dnsmasq.d/local.conf.bak /etc/dnsmasq.d/local.conf
+sudo systemctl restart dnsmasq #重启dnsmasq
+sudo systemctl restart clash@dky
+```
+*local.conf在普通模式下使用*  
+```conf
+no-hosts
+no-resolv
+server=127.0.0.1#1053 #转发到mosdns的1053端口
+```
+*clash.conf在tun模式下使用，文件内容与local.conf相同*  
+  
 **windows**
 ```powershell
 netsh int ip reset
 netsh winsock reset
 ipconfig /flushdns
 ```
-*注：windows系统需要重启才能完成网络重置。*
+*注：windows系统需要重启才能完成网络重置。*  
+  
+**注意：这两天测试fake-ip模式由于获取不到真是ip造成gitlab runner无法连接，正在考虑使用tproxy透明代理。**
