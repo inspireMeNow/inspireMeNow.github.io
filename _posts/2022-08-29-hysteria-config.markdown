@@ -1,5 +1,5 @@
 ---
-title: 自建gitlab
+title: hysteria配置
 tags: network
 key: hysteria-config
 ---

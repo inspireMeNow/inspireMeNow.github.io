@@ -176,6 +176,27 @@
     var searchjson = '[ \
        \
         { \
+          "title"    : "自建gitlab", \
+          "category" : "network", \
+          "url"      : "/2022/08/29/hysteria-config.html", \
+          "date"     : "August 29, 2022" \
+        }, \
+       \
+        { \
+          "title"    : "自建gitlab", \
+          "category" : "git", \
+          "url"      : "/2022/08/28/gitlab-setup.html", \
+          "date"     : "August 28, 2022" \
+        }, \
+       \
+        { \
+          "title"    : "解决dns污染问题", \
+          "category" : "network", \
+          "url"      : "/2022/08/26/dns-config.html", \
+          "date"     : "August 26, 2022" \
+        }, \
+       \
+        { \
           "title"    : "随机数生成", \
           "category" : "linux", \
           "url"      : "/2022/08/21/random-number.html", \
@@ -184,28 +205,28 @@
        \
         { \
           "title"    : "sql server docker镜像配置", \
-          "category" : "linux", \
+          "category" : "database", \
           "url"      : "/2022/08/19/sqlserver-docker.html", \
           "date"     : "August 19, 2022" \
         }, \
        \
         { \
           "title"    : "gpg加密解密", \
-          "category" : "gpg", \
+          "category" : "encrypt", \
           "url"      : "/2022/08/15/gpg-encrypt.html", \
           "date"     : "August 15, 2022" \
         }, \
        \
         { \
           "title"    : "clash tun模式配置", \
-          "category" : "web", \
+          "category" : "network", \
           "url"      : "/2022/08/11/clash-tun-mode.html", \
           "date"     : "August 11, 2022" \
         }, \
        \
         { \
           "title"    : "trojan-go配置", \
-          "category" : "web", \
+          "category" : "network", \
           "url"      : "/2022/08/10/trojan-config.html", \
           "date"     : "August 10, 2022" \
         }, \
@@ -356,6 +377,162 @@
 
       
 
+      <a href="http://localhost:4000/2022/08/29/hysteria-config.html">
+        <h2 class="post-title">自建gitlab</h2>
+
+        
+      </a>
+
+      <p class="post-meta">
+        
+        Posted on August 29, 2022
+      </p>
+
+      
+
+      
+      
+
+      <div class="post-entry">
+        
+        由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。 server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64 编辑配置文件config.json { "listen": ":37658", #监听端口 "protocol": "wechat-video", #流量类型，支持udp，faketcp，wechat-video "cert": "/path/to/fullchain.pem", "key": "/path/to/privkey.pem", "alpn": "h3", "auth": { "mode": "passwords", "config": ["yourpassword"] }, "up_mbps": 100, #限速，建议值不要过高，默认单位：Mbps "down_mbps": 100 } 启动hysteria ./hysteria -c config.json server 注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor...
+        
+        
+          <a href="http://localhost:4000/2022/08/29/hysteria-config.html" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+      
+
+      
+      <div class="blog-tags">
+        <span>Tags:</span>
+        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
+        <ul class="d-inline list-inline" role="list">
+          
+          <li class="list-inline-item">
+            <a href="http://localhost:4000/tags#network">network</a>
+          </li>
+          
+        </ul>
+      </div>
+      
+
+    </article>
+  </li>
+  
+  <li class="post-preview">
+    <article>
+      
+
+      
+
+      <a href="http://localhost:4000/2022/08/28/gitlab-setup.html">
+        <h2 class="post-title">自建gitlab</h2>
+
+        
+      </a>
+
+      <p class="post-meta">
+        
+        Posted on August 28, 2022
+      </p>
+
+      
+
+      
+      
+
+      <div class="post-entry">
+        
+        安装方式 我选的docker镜像，方便管理 1.拉取docker镜像 docker pull gitlab/gitlab-ee:latest 2.设置gitlab存储位置 export GITLAB_HOME=/srv/gitlab #自己设置位置 3.运行docker镜像 sudo docker run --detach \ --hostname gitlab.example.com \ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口 --name gitlab \ --restart always \ #设置自动启动 --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点 --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \ --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \ --shm-size 256m \ gitlab/gitlab-ee:latest 4.查看gitlab运行日志...
+        
+        
+          <a href="http://localhost:4000/2022/08/28/gitlab-setup.html" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+      
+
+      
+      <div class="blog-tags">
+        <span>Tags:</span>
+        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
+        <ul class="d-inline list-inline" role="list">
+          
+          <li class="list-inline-item">
+            <a href="http://localhost:4000/tags#git">git</a>
+          </li>
+          
+        </ul>
+      </div>
+      
+
+    </article>
+  </li>
+  
+  <li class="post-preview">
+    <article>
+      
+
+      
+
+      <a href="http://localhost:4000/2022/08/26/dns-config.html">
+        <h2 class="post-title">解决dns污染问题</h2>
+
+        
+      </a>
+
+      <p class="post-meta">
+        
+        Posted on August 26, 2022
+      </p>
+
+      
+
+      
+      
+
+      <div class="post-entry">
+        
+        起因
+由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
+配置
+dnsmasq
+通过dnsmasq-china-list进行dns分流
+安装
+git clone https://github.com/felixonmars/dnsmasq-china-list
+
+
+
+        
+        
+          <a href="http://localhost:4000/2022/08/26/dns-config.html" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+      
+
+      
+      <div class="blog-tags">
+        <span>Tags:</span>
+        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
+        <ul class="d-inline list-inline" role="list">
+          
+          <li class="list-inline-item">
+            <a href="http://localhost:4000/tags#network">network</a>
+          </li>
+          
+        </ul>
+      </div>
+      
+
+    </article>
+  </li>
+  
+  <li class="post-preview">
+    <article>
+      
+
+      
+
       <a href="http://localhost:4000/2022/08/21/random-number.html">
         <h2 class="post-title">随机数生成</h2>
 
@@ -438,162 +615,7 @@
         <ul class="d-inline list-inline" role="list">
           
           <li class="list-inline-item">
-            <a href="http://localhost:4000/tags#linux">linux</a>
-          </li>
-          
-        </ul>
-      </div>
-      
-
-    </article>
-  </li>
-  
-  <li class="post-preview">
-    <article>
-      
-
-      
-
-      <a href="http://localhost:4000/2022/08/15/gpg-encrypt.html">
-        <h2 class="post-title">gpg加密解密</h2>
-
-        
-      </a>
-
-      <p class="post-meta">
-        
-        Posted on August 15, 2022
-      </p>
-
-      
-
-      
-      
-
-      <div class="post-entry">
-        
-        生成密钥 gpg生成私钥 gpg --gen-key 导出密钥 gpg --export --armor keyID &gt; gpgkey.pub.asc 导入公钥 gpg --import gpgkey.pub.asc 从服务器导入 gpg --keyserver servername --recv-keys keyID 非对称加密解密 加密文件 gpg -e -r username filename 解密文件 gpg -d filename 对称加密解密 加密文件 gpg --symmetric filename 解密文件 gpg -d filename 对文件签名 数字签名 gpg -o filename.sig -s filename 签名+加密 gpg...
-        
-        
-          <a href="http://localhost:4000/2022/08/15/gpg-encrypt.html" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-      
-
-      
-      <div class="blog-tags">
-        <span>Tags:</span>
-        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-        <ul class="d-inline list-inline" role="list">
-          
-          <li class="list-inline-item">
-            <a href="http://localhost:4000/tags#gpg">gpg</a>
-          </li>
-          
-        </ul>
-      </div>
-      
-
-    </article>
-  </li>
-  
-  <li class="post-preview">
-    <article>
-      
-
-      
-
-      <a href="http://localhost:4000/2022/08/11/clash-tun-mode.html">
-        <h2 class="post-title">clash tun模式配置</h2>
-
-        
-      </a>
-
-      <p class="post-meta">
-        
-        Posted on August 11, 2022
-      </p>
-
-      
-
-      
-      
-
-      <div class="post-entry">
-        
-        1. 劫持系统dns
-
-        
-        
-          <a href="http://localhost:4000/2022/08/11/clash-tun-mode.html" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-      
-
-      
-      <div class="blog-tags">
-        <span>Tags:</span>
-        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-        <ul class="d-inline list-inline" role="list">
-          
-          <li class="list-inline-item">
-            <a href="http://localhost:4000/tags#web">web</a>
-          </li>
-          
-        </ul>
-      </div>
-      
-
-    </article>
-  </li>
-  
-  <li class="post-preview">
-    <article>
-      
-
-      
-
-      <a href="http://localhost:4000/2022/08/10/trojan-config.html">
-        <h2 class="post-title">trojan-go配置</h2>
-
-        
-      </a>
-
-      <p class="post-meta">
-        
-        Posted on August 10, 2022
-      </p>
-
-      
-
-      
-      
-
-      <div class="post-entry">
-        
-        1.github下载trojan-go二进制文件
-wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
-
-2.解压trojan-go并放至/usr/bin,赋予其执行权限
-unzip trojan-go-linux-amd64.zip
-
-
-
-        
-        
-          <a href="http://localhost:4000/2022/08/10/trojan-config.html" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-      
-
-      
-      <div class="blog-tags">
-        <span>Tags:</span>
-        <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-        <ul class="d-inline list-inline" role="list">
-          
-          <li class="list-inline-item">
-            <a href="http://localhost:4000/tags#web">web</a>
+            <a href="http://localhost:4000/tags#database">database</a>
           </li>
           
         </ul>
