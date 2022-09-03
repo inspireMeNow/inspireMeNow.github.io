@@ -104,7 +104,41 @@ sudo reboot
 ```bash
 lsmod | grep nvidia //查看模块加载情况
 ```
+## 网卡
+### intel
+*fedora预置了iwlwifi驱动模块，故可以即插即用。*  
+*若其他系统比如debian默认没有预置需要添加non-free源并安装firmware-nonfree包,~~也可以将固件下载下来复制到/lib/firmware~~*    
+*近期我将预置的我将预置的wpa_supplicant换成了iwd，fedora提供了iwd的包*  
+#### 安装
+```bash
+sudo dnf install iwd
+```
+#### 停止并屏蔽wpa_supplicant
+```bash
+sudo systemctl stop wpa_supplicant
 
+sudo systemctl mask wpa_supplicant
+```
+#### 设置自动启动
+```bash
+sudo systemctl enable --now iwd
+```
+### 设置NetworkManager
+*由于NetworkManager默认以wpa_supplicant为后端，因此需要更改后端为iwd*  
+```bash
+sudo vim /etc/NetworkManager/conf.d/iwd.conf
+```
+```conf
+[device]
+wifi.backend=iwd
+wifi.iwd.autoconnect=yes
+```
+### 重启NetworkManager  
+```bash
+sudo systemctl restart NetworkManager
+```
+# realtek
+*你可能需要自己编译驱动，源码请自行寻找。*
 # 3. systemd服务
 
 ```bash
