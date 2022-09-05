@@ -3,7 +3,41 @@ title: vless配置
 tags: network
 key: vless-config 
 ---
-**
+# xray安装
+*注：我使用的是xray内核，v2ray内核应该也可以*  
+```bash
+wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip
+
+unzip Xray-linux-64.zip
+
+cp xray /usr/bin
+
+mkdir /etc/xray
+
+cp *.dat /etc/xray
+```
+# xray systemd服务
+```conf
+[Unit]
+Description=Xray Service
+Documentation=https://github.com/xtls
+After=network.target nss-lookup.target
+[Service]
+ExecStart=/usr/bin/xray run -config /etc/xray/config.json
+Environment="XRAY_LOCATION_ASSET=/etc/xray"
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+[Install]
+WantedBy=multi-user.target
+```
+**注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动**  
+  
+*设置systemd服务自动启动*
+```bash
+sudo systemctl enable --now xray
+```
 # vless+websocket+tls配置
 ## server端
 ### xray配置
