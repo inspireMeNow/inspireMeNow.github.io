@@ -6,7 +6,7 @@ key: vless-config
 **
 # vless+websocket+tls配置
 ## server端
-*config.json*
+### xray配置
 ```conf
 {
     "log": {
@@ -83,6 +83,7 @@ key: vless-config
     ]
 }
 ```
+### nginx配置
 *由于nginx占用443端口。故使用nginx根据sni进行流量转发*  
 *nginx.conf*
 ```conf
@@ -125,4 +126,114 @@ stream {
       ws-opts:
         path: /path
         headers: { Host: yourdomain }
+```
+# vless+nginx+grpc+tls配置
+## server端
+### xray配置
+```conf
+{
+  "log": {
+    "loglevel": "warning" //日志级别
+  },
+  "inbounds": [
+    {
+      "listen": "/dev/shm/Xray-VLESS-gRPC.socket,0666", //监听socket
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "youruuid" // 填写你的 UUID
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "yourservicename" // 填写你的 ServiceName
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs", //域名匹配
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
+```
+### nginx配置
+```conf
+server {
+	listen 10013 ssl http2 so_keepalive=on;
+	server_name yourdomain;
+
+	index index.html;
+	root /var/www/html;
+
+	ssl_certificate /path/to/fullchain.pem;
+	ssl_certificate_key /path/to/privkey.pem;
+	ssl_protocols TLSv1.2 TLSv1.3;
+	ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+	
+	client_header_timeout 52w;
+        keepalive_timeout 52w;
+	# 在 location 后填写 /你的 ServiceName
+	location /yourservicename {
+		if ($content_type !~ "application/grpc") {
+			return 404;
+		}
+		client_max_body_size 0;
+		client_body_buffer_size 512k;
+		grpc_set_header X-Real-IP $remote_addr;
+		client_body_timeout 52w;
+		grpc_read_timeout 52w;
+		grpc_pass unix:/dev/shm/Xray-VLESS-gRPC.socket; #监听socket
+	}
+}
+server {
+    if ($host = yourdomain) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+        listen 80 ;
+        listen [::]:80 ;
+    server_name yourdomain;
+    return 404; # managed by Certbot
+}
+```
+*注：nginx端口转发可参照websocket中的配置*  
+## client端
+*clash meta配置*  
+```yaml
+- name: "vless"
+      type: vless
+      server: yourdomain
+      port: 443
+      uuid: youruuid
+      tls: true
+      udp: true
+      network: grpc
+      servername: yourdomain # priority over wss host
+      # skip-cert-verify: true
+      grpc-opts: 
+        grpc-service-name: yourservicename
 ```
