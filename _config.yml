@@ -20,8 +20,8 @@ author: duan-dky
 ###############################################
 
 navbar-links:
-  About Me: "aboutme"
-  Resources:
+  关于我: "aboutme"
+  资源:
     - 我的网盘: "https://cloud.duan-dky.me"
     - 学习markdown: "https://github.com/Sakiyary/Markdown-Typora-VSCode-Doc"
     - 网络学习: "https://www.cloudflare.com/zh-cn/learning/"
