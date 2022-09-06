@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     
-    <title>My Blogs</title>
+    <title>duan-dky的小站</title>
     
     
     <description>This website is a virtual proof that I&apos;m awesome</description>
@@ -10,6 +10,28 @@
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+      <item>
+        <title>mailgun收发邮件</title>
+        <description>
+          
+          
+        </description>
+        <pubDate>Sat, 03 Sep 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/09/03/mailgun-setup.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/09/03/mailgun-setup.html</guid>
+      </item>
+    
+      <item>
+        <title>vless配置</title>
+        <description>
+          
+          xray安装 注：我使用的是xray内核，v2ray内核应该也可以 wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=&quot;XRAY_LOCATION_ASSET=/etc/xray&quot; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target 注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动 设置systemd服务自动启动 sudo systemctl enable --now xray vless+websocket+tls配置 server端 xray配置 { &quot;log&quot;: { &quot;loglevel&quot;: &quot;warning&quot; //日志级别...
+        </description>
+        <pubDate>Wed, 31 Aug 2022 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2022/08/31/vless-config.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2022/08/31/vless-config.html</guid>
+      </item>
     
       <item>
         <title>hysteria配置</title>
@@ -183,7 +205,7 @@ u32
 
 
 64bit
-i64
+164
 u64
 
 
