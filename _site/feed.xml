@@ -1,261 +1,1035 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    
-    <title>My Website</title>
-    
-    
-    <description>This website is a virtual proof that I&apos;m awesome</description>
-    
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
-      <item>
-        <title>mailgun收发邮件</title>
-        <description>
-          
-          
-        </description>
-        <pubDate>Sat, 03 Sep 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/09/03/mailgun-setup.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/09/03/mailgun-setup.html</guid>
-      </item>
-    
-      <item>
-        <title>vless配置</title>
-        <description>
-          
-          xray安装 注：我使用的是xray内核，v2ray内核应该也可以 wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=&quot;XRAY_LOCATION_ASSET=/etc/xray&quot; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target 注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动 设置systemd服务自动启动 sudo systemctl enable --now xray vless+websocket+tls配置 server端 xray配置 { &quot;log&quot;: { &quot;loglevel&quot;: &quot;warning&quot; //日志级别...
-        </description>
-        <pubDate>Wed, 31 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/31/vless-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/31/vless-config.html</guid>
-      </item>
-    
-      <item>
-        <title>hysteria配置</title>
-        <description>
-          
-          由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。 server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64 编辑配置文件config.json { &quot;listen&quot;: &quot;:37658&quot;, #监听端口 &quot;protocol&quot;: &quot;wechat-video&quot;, #流量类型，支持udp，faketcp，wechat-video &quot;cert&quot;: &quot;/path/to/fullchain.pem&quot;, &quot;key&quot;: &quot;/path/to/privkey.pem&quot;, &quot;alpn&quot;: &quot;h3&quot;, &quot;auth&quot;: { &quot;mode&quot;: &quot;passwords&quot;, &quot;config&quot;: [&quot;yourpassword&quot;] }, &quot;up_mbps&quot;: 100, #限速，建议值不要过高，默认单位：Mbps &quot;down_mbps&quot;: 100 } 启动hysteria ./hysteria -c config.json server 注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor...
-        </description>
-        <pubDate>Mon, 29 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/29/hysteria-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/29/hysteria-config.html</guid>
-      </item>
-    
-      <item>
-        <title>自建gitlab</title>
-        <description>
-          
-          安装方式 我选的docker镜像，方便管理 1.拉取docker镜像 docker pull gitlab/gitlab-ee:latest 2.设置gitlab存储位置 export GITLAB_HOME=/srv/gitlab #自己设置位置 3.运行docker镜像 sudo docker run --detach \ --hostname gitlab.example.com \ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口 --name gitlab \ --restart always \ #设置自动启动 --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点 --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \ --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \ --shm-size 256m \ gitlab/gitlab-ee:latest 4.查看gitlab运行日志...
-        </description>
-        <pubDate>Sun, 28 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/28/gitlab-setup.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/28/gitlab-setup.html</guid>
-      </item>
-    
-      <item>
-        <title>解决dns污染问题</title>
-        <description>
-          
-          起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。 配置 dnsmasq 通过dnsmasq-china-list进行dns分流 安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;amp;&amp;amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq 效果 重启dnsmasq太慢，且解析速度下降 mosdns+dnsmasq 安装 mosdns wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir /etc/mosdns sudo cp mosdns /usr/bin sudo cp config.yaml /etc/mosdns //配置文件 wget --no-check-certificate https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O /etc/mosdns/geosite.dat wget --no-check-certificate https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat -O /etc/mosdns/geoip-only-cn-private.dat //中国ip名单 配置文件...
-        </description>
-        <pubDate>Fri, 26 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/26/dns-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/26/dns-config.html</guid>
-      </item>
-    
-      <item>
-        <title>随机数生成</title>
-        <description>
-          
-          通过系统变量生成 echo $RANDOM 获取特定位数的随机字符,这里为10位 echo $RANDOM |md5sum |cut -c 1-10 获取随机数字,这里为10位 echo $RANDOM |cksum |cut -c 1-10 通过openssl生成 base64编码 openssl rand -base64 10 注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字 通过系统uuid生成 cat /proc/sys/kernel/random/uuid 通过程序实现 C++实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同 # include &amp;lt;iostream&amp;gt; #include&amp;lt;random&amp;gt; #include&amp;lt;time.h&amp;gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout &amp;lt;&amp;lt; (rand() % (b - a...
-        </description>
-        <pubDate>Sun, 21 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/21/random-number.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/21/random-number.html</guid>
-      </item>
-    
-      <item>
-        <title>sql server docker镜像配置</title>
-        <description>
-          
-          1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest 2.创建并运行docker镜像 sudo docker run -e &quot;ACCEPT_EULA=Y&quot; -e &quot;MSSQL_SA_PASSWORD=&amp;lt;YourPassword&amp;gt;&quot; \ -p 1433:1433 --name sql1 --hostname sql1 \ -d \ mcr.microsoft.com/mssql/server:2022-latest 注：开放1433端口以进行数据库连接，docker镜像名称为sql1 3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection 4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \ -S localhost -U SA \...
-        </description>
-        <pubDate>Fri, 19 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/19/sqlserver-docker.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/19/sqlserver-docker.html</guid>
-      </item>
-    
-      <item>
-        <title>gpg加密解密</title>
-        <description>
-          
-          生成密钥 gpg生成私钥 gpg --gen-key 导出密钥 gpg --export --armor keyID &amp;gt; gpgkey.pub.asc 导入公钥 gpg --import gpgkey.pub.asc 从服务器导入 gpg --keyserver servername --recv-keys keyID 非对称加密解密 加密文件 gpg -e -r username filename 解密文件 gpg -d filename 对称加密解密 加密文件 gpg --symmetric filename 解密文件 gpg -d filename 对文件签名 数字签名 gpg -o filename.sig -s filename 签名+加密 gpg...
-        </description>
-        <pubDate>Mon, 15 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/15/gpg-encrypt.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/15/gpg-encrypt.html</guid>
-      </item>
-    
-      <item>
-        <title>clash tun模式配置</title>
-        <description>
-          
-          1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq 删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1 sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf nameserver 127.0.0.1 options edns0 trust-ad search . 注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换 sudo vim /etc/NetworkManager/NetworkManager.conf [main] dns = none 重启networkmanager sudo systemctl restart NetworkManager 编辑dnsmasq配置文件 sudo vim /etc/dnsmasq.d/clash.conf no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash 重新启动dnsmasq sudo systemctl...
-        </description>
-        <pubDate>Thu, 11 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/11/clash-tun-mode.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/11/clash-tun-mode.html</guid>
-      </item>
-    
-      <item>
-        <title>trojan-go配置</title>
-        <description>
-          
-          1.github下载trojan-go二进制文件 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip 2.解压trojan-go并放至/usr/bin,赋予其执行权限 unzip trojan-go-linux-amd64.zip cp trojan-go /usr/bin chmod +x trojan-go 3.将剩余文件放至/etc/trojan-go mkdir /etc/trojan-go cp -r * /etc/trojan-go 4.申请trojan-go的证书 sudo certbot certonly –agree-tos –standalone –no-eff-email -m youremail -d yourdomain 将证书移至/etc/trojan-go中 sudo cp -r /etc/letsencrypt/archive/yourdomain /etc/trojan-go 5.编辑config.json 生成随机uuid cat /proc/sys/kernel/random/uuid config.json { &quot;run_type&quot;: &quot;server&quot;, &quot;local_addr&quot;: &quot;0.0.0.0&quot;, &quot;local_port&quot;: 10010, //与nginx共存时不可填写443端口 &quot;remote_addr&quot;:...
-        </description>
-        <pubDate>Wed, 10 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/10/trojan-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/10/trojan-config.html</guid>
-      </item>
-    
-      <item>
-        <title>nginx配置</title>
-        <description>
-          
-          测试系统：Debian11 1.安装升级系统 sudo apt update 2.安装nginx sudo apt install nginx 3.申请域名 github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn 4.申请证书 zerossl或者letsencrypt即可 80端口验证 sudo apt install python3-certbot-nginx 安装完成后： sudo certbot –nginx 邮箱系统验证 dns验证 泛域名申请 以cloudflare为例： 创建cloudflare api密钥，记下token 创建cloudflare.ini配置文件并放入指定位置 dns_cloudflare_api_token = your_token 申请证书 certbot certonly \ --dns-cloudflare \ --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini \ -d example.com \ -d www.example.com 二级域名申请 sudo certbot...
-        </description>
-        <pubDate>Wed, 10 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/10/nginx-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/10/nginx-config.html</guid>
-      </item>
-    
-      <item>
-        <title>git配置</title>
-        <description>
-          
-          安装git Linux sudo apt install git //Debian sudo dnf install git //Fedora Windows 直接安装 下载链接 winget安装 winget install --id Git.Git -e --source winget git初步配置 git config --global user.name &quot;username&quot; //用户名 git config --list //已有配置信息 git config --global user.email youremail //邮箱 git config --global core.editor nvim //默认文本编辑器 git config --global merge.tool...
-        </description>
-        <pubDate>Fri, 05 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/05/git-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/05/git-config.html</guid>
-      </item>
-    
-      <item>
-        <title>fedora基本配置</title>
-        <description>
-          
-          1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf...
-        </description>
-        <pubDate>Wed, 03 Aug 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/08/03/fedora-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/08/03/fedora-config.html</guid>
-      </item>
-    
-      <item>
-        <title>frp内网穿透</title>
-        <description>
-          
-          1.frp server端配置 [common] # frp监听的端口，默认是7000，可以改成其他的 bind_port = 14823 vhost_http_port = 12345 # 授权码，请改成更复杂的 token = 12345678 # frp管理后台端口，请按自己需求更改 dashboard_port = 7800 # frp管理后台用户名和密码，请改成自己的 dashboard_user = admin dashboard_pwd = admin enable_prometheus = true 2.frp client端配置 [common] server_addr = yourdomain server_port = 14823 #server端bind_port token = 12345678 #授权码 [ssh] #ssh远程链接 type =...
-        </description>
-        <pubDate>Sun, 31 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/07/31/frp-config.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/07/31/frp-config.html</guid>
-      </item>
-    
-      <item>
-        <title>rust学习</title>
-        <description>
-          
-          1.rust函数
-fn main(){ //主函数
- println!(&quot;hello world!&quot;);
-}
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh"><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="zh" /><updated>2022-09-11T17:19:18+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">My Blogs</title><subtitle>My Blogs
+</subtitle><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><entry><title type="html">mailgun收发邮件</title><link href="http://localhost:4000/2022/09/03/mailgun-setup.html" rel="alternate" type="text/html" title="mailgun收发邮件" /><published>2022-09-03T00:00:00+08:00</published><updated>2022-09-03T00:00:00+08:00</updated><id>http://localhost:4000/2022/09/03/mailgun-setup</id><content type="html" xml:base="http://localhost:4000/2022/09/03/mailgun-setup.html"><![CDATA[]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="mail" /></entry><entry><title type="html">vless配置</title><link href="http://localhost:4000/2022/08/31/vless-config.html" rel="alternate" type="text/html" title="vless配置" /><published>2022-08-31T00:00:00+08:00</published><updated>2022-08-31T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/31/vless-config</id><content type="html" xml:base="http://localhost:4000/2022/08/31/vless-config.html"><![CDATA[<h1 id="xray">xray安装</h1>
+<p><em>注：我使用的是xray内核，v2ray内核应该也可以</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip
 
-2.Rust变量
-Rust 是强类型语言，但具有自动判断变量类型的能力。
-声明变量使用let关键字。
-重影:指变量的名称可以被重新使用。
-有符号类型
+unzip Xray-linux-64.zip
 
+<span class="nb">cp </span>xray /usr/bin
 
+<span class="nb">mkdir</span> /etc/xray
 
-长度
-有符号
-无符号
-
-
-
-
-8bit
-i8
-u8
-
-
-16bit
-i16
-u16
-
-
-32bit
-i32
-u32
-
-
-64bit
-164
-u64
-
-
-128bit
-i128
-u128
-
-
-arch
-isize
-usize
-
-
-
-
-        </description>
-        <pubDate>Wed, 27 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/07/27/rust-practice.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/07/27/rust-practice.html</guid>
-      </item>
-    
-      <item>
-        <title>c++链表</title>
-        <description>
-          
-          //查找元素
-std::pair&amp;lt;int, int&amp;gt; getElem(int a,list *l1)
-{
-
-    list *b=l1;
-    int count=0;
-    for(;b-&amp;gt;next!=NULL;b=b-&amp;gt;next){
-        if(a==b-&amp;gt;a){
-            return std::pair&amp;lt;int, int&amp;gt;(a,count); //返回元素和下标
+<span class="nb">cp</span> <span class="k">*</span>.dat /etc/xray
+</code></pre></div></div>
+<h1 id="xray-systemd">xray systemd服务</h1>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">Unit</span>]
+<span class="n">Description</span>=<span class="n">Xray</span> <span class="n">Service</span>
+<span class="n">Documentation</span>=<span class="n">https</span>://<span class="n">github</span>.<span class="n">com</span>/<span class="n">xtls</span>
+<span class="n">After</span>=<span class="n">network</span>.<span class="n">target</span> <span class="n">nss</span>-<span class="n">lookup</span>.<span class="n">target</span>
+[<span class="n">Service</span>]
+<span class="n">ExecStart</span>=/<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">xray</span> <span class="n">run</span> -<span class="n">config</span> /<span class="n">etc</span>/<span class="n">xray</span>/<span class="n">config</span>.<span class="n">json</span>
+<span class="n">Environment</span>=<span class="s2">"XRAY_LOCATION_ASSET=/etc/xray"</span>
+<span class="n">Restart</span>=<span class="n">on</span>-<span class="n">failure</span>
+<span class="n">RestartPreventExitStatus</span>=<span class="m">23</span>
+<span class="n">LimitNPROC</span>=<span class="m">10000</span>
+<span class="n">LimitNOFILE</span>=<span class="m">1000000</span>
+[<span class="n">Install</span>]
+<span class="n">WantedBy</span>=<span class="n">multi</span>-<span class="n">user</span>.<span class="n">target</span>
+</code></pre></div></div>
+<p><strong>注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动</strong></p>
+<p><em>设置systemd服务自动启动</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable</span> <span class="nt">--now</span> xray
+</code></pre></div></div>
+<h1 id="vlesswebsockettls">vless+websocket+tls配置</h1>
+<h2 id="server">server端</h2>
+<h3 id="xray-1">xray配置</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    <span class="s2">"log"</span>: {
+        <span class="s2">"loglevel"</span>: <span class="s2">"warning"</span> //日志级别
+    },
+    <span class="s2">"inbounds"</span>: [
+        {
+            <span class="s2">"port"</span>: <span class="m">10016</span>,
+            <span class="s2">"protocol"</span>: <span class="s2">"vless"</span>,
+            <span class="s2">"settings"</span>: {
+                <span class="s2">"clients"</span>: [
+                    {
+                        <span class="s2">"id"</span>: <span class="s2">"youruuid"</span>, // 填写你的 <span class="n">UUID</span>
+                        <span class="s2">"level"</span>: <span class="m">0</span>,
+                        <span class="s2">"email"</span>: <span class="s2">"youremail"</span>
+                    }
+                ],
+                <span class="s2">"decryption"</span>: <span class="s2">"none"</span>,
+                <span class="s2">"fallbacks"</span>: [
+                    {
+                        <span class="s2">"dest"</span>: <span class="m">80</span> //回落到<span class="n">nginx</span>的<span class="m">80</span>端口
+                    },
+                    {
+                        <span class="s2">"path"</span>: <span class="s2">"/path"</span>, // 必须换成自定义的 <span class="n">PATH</span>
+                        <span class="s2">"dest"</span>: <span class="m">1234</span>,
+                        <span class="s2">"xver"</span>: <span class="m">1</span>
+                    }
+                ]
+            },
+            <span class="s2">"streamSettings"</span>: {
+                <span class="s2">"network"</span>: <span class="s2">"tcp"</span>,
+                <span class="s2">"security"</span>: <span class="s2">"tls"</span>,
+                <span class="s2">"tlsSettings"</span>: {
+                    <span class="s2">"alpn"</span>: [
+                        <span class="s2">"http/1.1"</span>
+                    ],
+                    <span class="s2">"certificates"</span>: [
+                        {
+                            <span class="s2">"certificateFile"</span>: <span class="s2">"/path/to/fullchain.pem"</span>, // 换成你的证书，绝对路径
+                            <span class="s2">"keyFile"</span>: <span class="s2">"/path/to/privkey.pem"</span> // 换成你的私钥，绝对路径
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            <span class="s2">"port"</span>: <span class="m">1234</span>,
+            <span class="s2">"listen"</span>: <span class="s2">"127.0.0.1"</span>,
+            <span class="s2">"protocol"</span>: <span class="s2">"vless"</span>,
+            <span class="s2">"settings"</span>: {
+                <span class="s2">"clients"</span>: [
+                    {
+                        <span class="s2">"id"</span>: <span class="s2">"youruuid"</span>, // 填写你的 <span class="n">UUID</span>
+                        <span class="s2">"level"</span>: <span class="m">0</span>,
+                        <span class="s2">"email"</span>: <span class="s2">"youremail"</span>
+                    }
+                ],
+                <span class="s2">"decryption"</span>: <span class="s2">"none"</span>
+            },
+            <span class="s2">"streamSettings"</span>: {
+                <span class="s2">"network"</span>: <span class="s2">"ws"</span>,
+                <span class="s2">"security"</span>: <span class="s2">"none"</span>,
+                <span class="s2">"wsSettings"</span>: {
+                    <span class="s2">"acceptProxyProtocol"</span>: <span class="n">true</span>, // 若使用 <span class="n">Nginx</span>/<span class="n">Caddy</span> 等反代 <span class="n">WS</span>，需要删掉这行
+                    <span class="s2">"path"</span>: <span class="s2">"/path"</span> // 必须换成自定义的 <span class="n">PATH</span>，需要和上面的一致
+                }
+            }
         }
-        count++;
-    }
-    if(b-&amp;gt;a==a){
-        return std::pair&amp;lt;int, int&amp;gt;(a,count); //未找到返回-1
-    }
-    return std::pair&amp;lt;int, int&amp;gt;(a,-1);
-    
+    ],
+    <span class="s2">"outbounds"</span>: [
+        {
+            <span class="s2">"protocol"</span>: <span class="s2">"freedom"</span>
+        }
+    ]
 }
+</code></pre></div></div>
+<h3 id="nginx">nginx配置</h3>
+<p><em>由于nginx占用443端口。故使用nginx根据sni进行流量转发</em><br />
+<em>nginx.conf</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stream</span> {
+<span class="c"># 这里就是 SNI 识别，将域名映射成一个配置名，请修改自己的一级域名
+</span>  <span class="n">map</span> $<span class="n">ssl_preread_server_name</span> $<span class="n">backend_name</span> {
+    <span class="n">cl</span>.<span class="n">example</span>.<span class="n">com</span> <span class="n">web</span>;
+    <span class="n">blog</span>.<span class="n">example</span>.<span class="n">com</span> <span class="n">xray</span>;
+    <span class="n">default</span> <span class="n">web</span>;
+  }
+<span class="c"># web，配置转发详情
+</span>  <span class="n">upstream</span> <span class="n">web</span> {
+    <span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">10001</span>;
+  }
+<span class="c"># 转发到xray
+</span>  <span class="n">upstream</span> <span class="n">xray</span> {
+    <span class="n">server</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">10016</span>;
+  }
+<span class="c"># 监听 443 并开启 ssl_preread
+</span>  <span class="n">server</span> {
+    <span class="n">listen</span> <span class="m">443</span> <span class="n">reuseport</span>;
+    <span class="n">listen</span> [::]:<span class="m">443</span> <span class="n">reuseport</span>;
+    <span class="n">proxy_pass</span> $<span class="n">backend_name</span>;
+    <span class="n">ssl_preread</span> <span class="n">on</span>;
+  }
+}
+</code></pre></div></div>
+<h2 id="client">client端</h2>
+<p><em>我使用的clash meta核，以下为clash配置</em></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">vless"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">vless</span>
+      <span class="na">server</span><span class="pi">:</span> <span class="s">yourdomain</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">uuid</span><span class="pi">:</span> <span class="s">youruuid</span>
+      <span class="na">tls</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">udp</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">network</span><span class="pi">:</span> <span class="s">ws</span>
+      <span class="na">servername</span><span class="pi">:</span> <span class="s">yourdomain</span> <span class="c1"># priority over wss host</span>
+      <span class="na">ws-opts</span><span class="pi">:</span>
+        <span class="na">path</span><span class="pi">:</span> <span class="s">/path</span>
+        <span class="na">headers</span><span class="pi">:</span> <span class="pi">{</span> <span class="nv">Host</span><span class="pi">:</span> <span class="nv">yourdomain</span> <span class="pi">}</span>
+</code></pre></div></div>
+<h1 id="vlessnginxgrpctls">vless+nginx+grpc+tls配置</h1>
+<h2 id="server-1">server端</h2>
+<h3 id="xray-2">xray配置</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  <span class="s2">"log"</span>: {
+    <span class="s2">"loglevel"</span>: <span class="s2">"warning"</span> //日志级别
+  },
+  <span class="s2">"inbounds"</span>: [
+    {
+      <span class="s2">"listen"</span>: <span class="s2">"/dev/shm/Xray-VLESS-gRPC.socket,0666"</span>, //监听<span class="n">socket</span>
+      <span class="s2">"protocol"</span>: <span class="s2">"vless"</span>,
+      <span class="s2">"settings"</span>: {
+        <span class="s2">"clients"</span>: [
+          {
+            <span class="s2">"id"</span>: <span class="s2">"youruuid"</span> // 填写你的 <span class="n">UUID</span>
+          }
+        ],
+        <span class="s2">"decryption"</span>: <span class="s2">"none"</span>
+      },
+      <span class="s2">"streamSettings"</span>: {
+        <span class="s2">"network"</span>: <span class="s2">"grpc"</span>,
+        <span class="s2">"grpcSettings"</span>: {
+          <span class="s2">"serviceName"</span>: <span class="s2">"yourservicename"</span> // 填写你的 <span class="n">ServiceName</span>
+        }
+      }
+    }
+  ],
+  <span class="s2">"outbounds"</span>: [
+    {
+      <span class="s2">"tag"</span>: <span class="s2">"direct"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"freedom"</span>,
+      <span class="s2">"settings"</span>: {}
+    },
+    {
+      <span class="s2">"tag"</span>: <span class="s2">"blocked"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"blackhole"</span>,
+      <span class="s2">"settings"</span>: {}
+    }
+  ],
+  <span class="s2">"routing"</span>: {
+    <span class="s2">"domainStrategy"</span>: <span class="s2">"AsIs"</span>, //域名匹配
+    <span class="s2">"rules"</span>: [
+      {
+        <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+        <span class="s2">"ip"</span>: [
+          <span class="s2">"geoip:private"</span>
+        ],
+        <span class="s2">"outboundTag"</span>: <span class="s2">"blocked"</span>
+      }
+    ]
+  }
+}
+</code></pre></div></div>
+<h3 id="nginx-1">nginx配置</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
+	<span class="n">listen</span> <span class="m">10013</span> <span class="n">ssl</span> <span class="n">http2</span> <span class="n">so_keepalive</span>=<span class="n">on</span>;
+	<span class="n">server_name</span> <span class="n">yourdomain</span>;
+
+	<span class="n">index</span> <span class="n">index</span>.<span class="n">html</span>;
+	<span class="n">root</span> /<span class="n">var</span>/<span class="n">www</span>/<span class="n">html</span>;
+
+	<span class="n">ssl_certificate</span> /<span class="n">path</span>/<span class="n">to</span>/<span class="n">fullchain</span>.<span class="n">pem</span>;
+	<span class="n">ssl_certificate_key</span> /<span class="n">path</span>/<span class="n">to</span>/<span class="n">privkey</span>.<span class="n">pem</span>;
+	<span class="n">ssl_protocols</span> <span class="n">TLSv1</span>.<span class="m">2</span> <span class="n">TLSv1</span>.<span class="m">3</span>;
+	<span class="n">ssl_ciphers</span> <span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>:<span class="n">ECDHE</span>-<span class="n">ECDSA</span>-<span class="n">CHACHA20</span>-<span class="n">POLY1305</span>:<span class="n">ECDHE</span>-<span class="n">RSA</span>-<span class="n">CHACHA20</span>-<span class="n">POLY1305</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES128</span>-<span class="n">GCM</span>-<span class="n">SHA256</span>:<span class="n">DHE</span>-<span class="n">RSA</span>-<span class="n">AES256</span>-<span class="n">GCM</span>-<span class="n">SHA384</span>;
+	
+	<span class="n">client_header_timeout</span> <span class="m">52</span><span class="n">w</span>;
+        <span class="n">keepalive_timeout</span> <span class="m">52</span><span class="n">w</span>;
+	<span class="c"># 在 location 后填写 /你的 ServiceName
+</span>	<span class="n">location</span> /<span class="n">yourservicename</span> {
+		<span class="n">if</span> ($<span class="n">content_type</span> !~ <span class="s2">"application/grpc"</span>) {
+			<span class="n">return</span> <span class="m">404</span>;
+		}
+		<span class="n">client_max_body_size</span> <span class="m">0</span>;
+		<span class="n">client_body_buffer_size</span> <span class="m">512</span><span class="n">k</span>;
+		<span class="n">grpc_set_header</span> <span class="n">X</span>-<span class="n">Real</span>-<span class="n">IP</span> $<span class="n">remote_addr</span>;
+		<span class="n">client_body_timeout</span> <span class="m">52</span><span class="n">w</span>;
+		<span class="n">grpc_read_timeout</span> <span class="m">52</span><span class="n">w</span>;
+		<span class="n">grpc_pass</span> <span class="n">unix</span>:/<span class="n">dev</span>/<span class="n">shm</span>/<span class="n">Xray</span>-<span class="n">VLESS</span>-<span class="n">gRPC</span>.<span class="n">socket</span>; <span class="c">#监听socket
+</span>	}
+}
+<span class="n">server</span> {
+    <span class="n">if</span> ($<span class="n">host</span> = <span class="n">yourdomain</span>) {
+        <span class="n">return</span> <span class="m">301</span> <span class="n">https</span>://$<span class="n">host</span>$<span class="n">request_uri</span>;
+    } <span class="c"># managed by Certbot
+</span>        <span class="n">listen</span> <span class="m">80</span> ;
+        <span class="n">listen</span> [::]:<span class="m">80</span> ;
+    <span class="n">server_name</span> <span class="n">yourdomain</span>;
+    <span class="n">return</span> <span class="m">404</span>; <span class="c"># managed by Certbot
+</span>}
+</code></pre></div></div>
+<p><em>注：nginx端口转发可参照websocket中的配置</em></p>
+<h2 id="client-1">client端</h2>
+<p><em>clash meta配置</em></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">vless"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">vless</span>
+      <span class="na">server</span><span class="pi">:</span> <span class="s">yourdomain</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">uuid</span><span class="pi">:</span> <span class="s">youruuid</span>
+      <span class="na">tls</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">udp</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="na">network</span><span class="pi">:</span> <span class="s">grpc</span>
+      <span class="na">servername</span><span class="pi">:</span> <span class="s">yourdomain</span> <span class="c1"># priority over wss host</span>
+      <span class="c1"># skip-cert-verify: true</span>
+      <span class="na">grpc-opts</span><span class="pi">:</span> 
+        <span class="na">grpc-service-name</span><span class="pi">:</span> <span class="s">yourservicename</span>
+</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="network" /><summary type="html"><![CDATA[xray安装 注：我使用的是xray内核，v2ray内核应该也可以 wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment="XRAY_LOCATION_ASSET=/etc/xray" Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target 注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动 设置systemd服务自动启动 sudo systemctl enable --now xray vless+websocket+tls配置 server端 xray配置 { "log": { "loglevel": "warning" //日志级别 }, "inbounds": [ { "port": 10016, "protocol": "vless", "settings": { "clients": [ { "id": "youruuid", // 填写你的 UUID "level": 0, "email": "youremail" } ], "decryption": "none", "fallbacks": [ { "dest": 80 //回落到nginx的80端口 }, { "path": "/path", // 必须换成自定义的 PATH "dest": 1234, "xver": 1 } ] }, "streamSettings": { "network": "tcp", "security": "tls", "tlsSettings": { "alpn": [ "http/1.1" ], "certificates": [ { "certificateFile": "/path/to/fullchain.pem", // 换成你的证书，绝对路径 "keyFile": "/path/to/privkey.pem" // 换成你的私钥，绝对路径 } ] } } }, { "port": 1234, "listen": "127.0.0.1", "protocol": "vless", "settings": { "clients": [ { "id": "youruuid", // 填写你的 UUID "level": 0, "email": "youremail" } ], "decryption": "none" }, "streamSettings": { "network": "ws", "security": "none", "wsSettings": { "acceptProxyProtocol": true, // 若使用 Nginx/Caddy 等反代 WS，需要删掉这行 "path": "/path" // 必须换成自定义的 PATH，需要和上面的一致 } } } ], "outbounds": [ { "protocol": "freedom" } ] } nginx配置 由于nginx占用443端口。故使用nginx根据sni进行流量转发 nginx.conf stream { # 这里就是 SNI 识别，将域名映射成一个配置名，请修改自己的一级域名 map $ssl_preread_server_name $backend_name { cl.example.com web; blog.example.com xray; default web; } # web，配置转发详情 upstream web { server 127.0.0.1:10001; } # 转发到xray upstream xray { server 127.0.0.1:10016; } # 监听 443 并开启 ssl_preread server { listen 443 reuseport; listen [::]:443 reuseport; proxy_pass $backend_name; ssl_preread on; } } client端 我使用的clash meta核，以下为clash配置 - name: "vless" type: vless server: yourdomain port: 443 uuid: youruuid tls: true udp: true network: ws servername: yourdomain # priority over wss host ws-opts: path: /path headers: { Host: yourdomain } vless+nginx+grpc+tls配置 server端 xray配置 { "log": { "loglevel": "warning" //日志级别 }, "inbounds": [ { "listen": "/dev/shm/Xray-VLESS-gRPC.socket,0666", //监听socket "protocol": "vless", "settings": { "clients": [ { "id": "youruuid" // 填写你的 UUID } ], "decryption": "none" }, "streamSettings": { "network": "grpc", "grpcSettings": { "serviceName": "yourservicename" // 填写你的 ServiceName } } } ], "outbounds": [ { "tag": "direct", "protocol": "freedom", "settings": {} }, { "tag": "blocked", "protocol": "blackhole", "settings": {} } ], "routing": { "domainStrategy": "AsIs", //域名匹配 "rules": [ { "type": "field", "ip": [ "geoip:private" ], "outboundTag": "blocked" } ] } } nginx配置 server { listen 10013 ssl http2 so_keepalive=on; server_name yourdomain; index index.html; root /var/www/html; ssl_certificate /path/to/fullchain.pem; ssl_certificate_key /path/to/privkey.pem; ssl_protocols TLSv1.2 TLSv1.3; ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384; client_header_timeout 52w; keepalive_timeout 52w; # 在 location 后填写 /你的 ServiceName location /yourservicename { if ($content_type !~ "application/grpc") { return 404; } client_max_body_size 0; client_body_buffer_size 512k; grpc_set_header X-Real-IP $remote_addr; client_body_timeout 52w; grpc_read_timeout 52w; grpc_pass unix:/dev/shm/Xray-VLESS-gRPC.socket; #监听socket } } server { if ($host = yourdomain) { return 301 https://$host$request_uri; } # managed by Certbot listen 80 ; listen [::]:80 ; server_name yourdomain; return 404; # managed by Certbot } 注：nginx端口转发可参照websocket中的配置 client端 clash meta配置 - name: "vless" type: vless server: yourdomain port: 443 uuid: youruuid tls: true udp: true network: grpc servername: yourdomain # priority over wss host # skip-cert-verify: true grpc-opts: grpc-service-name: yourservicename]]></summary></entry><entry><title type="html">hysteria配置</title><link href="http://localhost:4000/2022/08/29/hysteria-config.html" rel="alternate" type="text/html" title="hysteria配置" /><published>2022-08-29T00:00:00+08:00</published><updated>2022-08-29T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/29/hysteria-config</id><content type="html" xml:base="http://localhost:4000/2022/08/29/hysteria-config.html"><![CDATA[<p><strong>由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。</strong></p>
+<h1 id="server">server端</h1>
+<h2 id="section">下载安装</h2>
+<h3 id="section-1">下载</h3>
+<p>wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64</p>
+<h3 id="configjson">编辑配置文件config.json</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  <span class="s2">"listen"</span>: <span class="s2">":37658"</span>, <span class="c">#监听端口
+</span>  <span class="s2">"protocol"</span>: <span class="s2">"wechat-video"</span>, <span class="c">#流量类型，支持udp，faketcp，wechat-video
+</span>  <span class="s2">"cert"</span>: <span class="s2">"/path/to/fullchain.pem"</span>,
+  <span class="s2">"key"</span>: <span class="s2">"/path/to/privkey.pem"</span>,
+  <span class="s2">"alpn"</span>: <span class="s2">"h3"</span>,
+  <span class="s2">"auth"</span>: {
+    <span class="s2">"mode"</span>: <span class="s2">"passwords"</span>,
+    <span class="s2">"config"</span>: [<span class="s2">"yourpassword"</span>] 
+  },
+  <span class="s2">"up_mbps"</span>: <span class="m">100</span>, <span class="c">#限速，建议值不要过高，默认单位：Mbps
+</span>  <span class="s2">"down_mbps"</span>: <span class="m">100</span>
+}
+</code></pre></div></div>
+<h3 id="hysteria">启动hysteria</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./hysteria <span class="nt">-c</span> config.json server
+</code></pre></div></div>
+<h3 id="systemd">注册为systemd服务</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">Unit</span>]
+<span class="n">Description</span>=<span class="n">Hysteria</span>, <span class="n">a</span> <span class="n">feature</span>-<span class="n">packed</span> <span class="n">network</span> <span class="n">utility</span> <span class="n">optimized</span> <span class="n">for</span> <span class="n">networks</span> <span class="n">of</span> <span class="n">poor</span> <span class="n">quality</span>
+<span class="n">Documentation</span>=<span class="n">https</span>://<span class="n">github</span>.<span class="n">com</span>/<span class="n">HyNetwork</span>/<span class="n">hysteria</span>/<span class="n">wiki</span>
+<span class="n">After</span>=<span class="n">network</span>.<span class="n">target</span>
+[<span class="n">Service</span>]
+<span class="n">CapabilityBoundingSet</span>=<span class="n">CAP_NET_BIND_SERVICE</span> <span class="n">CAP_NET_RAW</span>
+<span class="n">AmbientCapabilities</span>=<span class="n">CAP_NET_BIND_SERVICE</span> <span class="n">CAP_NET_RAW</span>
+<span class="n">NoNewPrivileges</span>=<span class="n">true</span>
+<span class="n">WorkingDirectory</span>=/<span class="n">etc</span>/<span class="n">hysteria</span>
+<span class="n">Environment</span>=<span class="n">HYSTERIA_LOG_LEVEL</span>=<span class="n">info</span>
+<span class="n">ExecStart</span>=/<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">hysteria</span> -<span class="n">c</span> /<span class="n">etc</span>/<span class="n">hysteria</span>/<span class="n">config</span>.<span class="n">json</span> <span class="n">server</span>
+<span class="n">Restart</span>=<span class="n">on</span>-<span class="n">failure</span>
+<span class="n">RestartPreventExitStatus</span>=<span class="m">1</span>
+<span class="n">RestartSec</span>=<span class="m">5</span>
+[<span class="n">Install</span>]
+<span class="n">WantedBy</span>=<span class="n">multi</span>-<span class="n">user</span>.<span class="n">target</span>
+</code></pre></div></div>
+<h3 id="systemd-1">重载systemd服务</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl daemon-reload
+<span class="nb">sudo </span>systemctl <span class="nb">enable</span> <span class="nt">--now</span> hysteria
+</code></pre></div></div>
+<h1 id="client">client端</h1>
+<p><em>我是用的clash meta核心，它可以进行分流</em></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">hysteria"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">hysteria</span>
+      <span class="na">server</span><span class="pi">:</span> <span class="s">yourdomain</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="s">yourport</span>
+      <span class="na">auth_str</span><span class="pi">:</span> <span class="s">yourpassword</span>
+      <span class="c1">#obfs: yourpassword</span>
+      <span class="na">alpn</span><span class="pi">:</span> <span class="s">h3</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">wechat-video</span>          <span class="c1">#支持udp/wechat-video/faketcp</span>
+      <span class="na">up</span><span class="pi">:</span> <span class="s1">'</span><span class="s">100</span><span class="nv"> </span><span class="s">Mbps'</span>          <span class="c1">#若不写单位，默认为Mbps</span>
+      <span class="na">down</span><span class="pi">:</span> <span class="s1">'</span><span class="s">100</span><span class="nv"> </span><span class="s">Mbps'</span>       <span class="c1">#若不写单位，默认为Mbps</span>
+</code></pre></div></div>
+<h1 id="section-2">测试</h1>
+<p><em>晚高峰时期确实稳定，过几天看看。</em></p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="network" /><summary type="html"><![CDATA[由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。 server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64 编辑配置文件config.json { "listen": ":37658", #监听端口 "protocol": "wechat-video", #流量类型，支持udp，faketcp，wechat-video "cert": "/path/to/fullchain.pem", "key": "/path/to/privkey.pem", "alpn": "h3", "auth": { "mode": "passwords", "config": ["yourpassword"] }, "up_mbps": 100, #限速，建议值不要过高，默认单位：Mbps "down_mbps": 100 } 启动hysteria ./hysteria -c config.json server 注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https://github.com/HyNetwork/hysteria/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=/etc/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=/usr/bin/hysteria -c /etc/hysteria/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target 重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria client端 我是用的clash meta核心，它可以进行分流 - name: "hysteria" type: hysteria server: yourdomain port: yourport auth_str: yourpassword #obfs: yourpassword alpn: h3 protocol: wechat-video #支持udp/wechat-video/faketcp up: '100 Mbps' #若不写单位，默认为Mbps down: '100 Mbps' #若不写单位，默认为Mbps 测试 晚高峰时期确实稳定，过几天看看。]]></summary></entry><entry><title type="html">自建gitlab</title><link href="http://localhost:4000/2022/08/28/gitlab-setup.html" rel="alternate" type="text/html" title="自建gitlab" /><published>2022-08-28T00:00:00+08:00</published><updated>2022-08-28T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/28/gitlab-setup</id><content type="html" xml:base="http://localhost:4000/2022/08/28/gitlab-setup.html"><![CDATA[<h1 id="section">安装方式</h1>
+<p><em>我选的docker镜像，方便管理</em></p>
+<h2 id="docker">1.拉取docker镜像</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull gitlab/gitlab-ee:latest
+</code></pre></div></div>
+<h2 id="gitlab">2.设置gitlab存储位置</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">GITLAB_HOME</span><span class="o">=</span>/srv/gitlab <span class="c">#自己设置位置</span>
+</code></pre></div></div>
+<h2 id="docker-1">3.运行docker镜像</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker run <span class="nt">--detach</span> <span class="se">\</span>
+  <span class="nt">--hostname</span> gitlab.example.com <span class="se">\ </span><span class="c">#外部url，服务器域名</span>
+  <span class="nt">--publish</span> 443:443 <span class="nt">--publish</span> 80:80 <span class="nt">--publish</span> 22:22 <span class="se">\ </span><span class="c">#换成自己的端口</span>
+  <span class="nt">--name</span> gitlab <span class="se">\</span>
+  <span class="nt">--restart</span> always <span class="se">\ </span><span class="c">#设置自动启动</span>
+  <span class="nt">--volume</span> <span class="nv">$GITLAB_HOME</span>/config:/etc/gitlab:Z <span class="se">\ </span><span class="c">#相当于文件挂载点</span>
+  <span class="nt">--volume</span> <span class="nv">$GITLAB_HOME</span>/logs:/var/log/gitlab:Z <span class="se">\</span>
+  <span class="nt">--volume</span> <span class="nv">$GITLAB_HOME</span>/data:/var/opt/gitlab:Z <span class="se">\</span>
+  <span class="nt">--shm-size</span> 256m <span class="se">\</span>
+  gitlab/gitlab-ee:latest
+</code></pre></div></div>
+<h2 id="gitlab-1">4.查看gitlab运行日志</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker logs <span class="nt">-f</span> gitlab
+</code></pre></div></div>
+<p><em>注：成功后即可打开浏览器输入localhost进入登录界面</em></p>
+<h2 id="section-1">5.获取管理员初始密码</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker <span class="nb">exec</span> <span class="nt">-it</span> gitlab <span class="nb">grep</span> <span class="s1">'Password:'</span> /etc/gitlab/initial_root_password
+</code></pre></div></div>
+<p><strong>注：请在24小时内修改密码，否则密码将会失效</strong></p>
+<h2 id="gitlab-2">6.gitlab配置</h2>
+<p><em>由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx</em></p>
+<h3 id="nginx">禁用内建nginx</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nginx</span>[<span class="s1">'enable'</span>] = <span class="n">false</span>
+</code></pre></div></div>
+<h3 id="web">设置web服务器用户</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">web_server</span>[<span class="s1">'external_users'</span>] = [<span class="s1">'www-data'</span>]
+</code></pre></div></div>
+<h3 id="web-1">将web服务器添加到受信任的代理列表中</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gitlab_rails</span>[<span class="s1">'trusted_proxies'</span>] = [ <span class="s1">'192.168.1.0/24'</span>, <span class="s1">'192.168.2.1'</span>, <span class="s1">'2001:0db8::/32'</span> ]
+</code></pre></div></div>
+<h3 id="gitlab-workhorsetcp">允许GitLab Workhorse监听TCP端口</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gitlab_workhorse</span>[<span class="s1">'listen_network'</span>] = <span class="s2">"tcp"</span>
+<span class="n">gitlab_workhorse</span>[<span class="s1">'listen_addr'</span>] = <span class="s2">"127.0.0.1:8181"</span>
+</code></pre></div></div>
+<h3 id="nginx-1">外部nginx服务器设置反向代理</h3>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
+  <span class="c">## Either remove "default_server" from the listen line below,
+</span>  <span class="c">## or delete the /etc/nginx/sites-enabled/default file. This will cause gitlab
+</span>  <span class="c">## to be served if you visit any address that your server responds to, eg.
+</span>  <span class="c">## the ip address of the server (http://x.x.x.x/)n 0.0.0.0:80 default_server;
+</span>  <span class="n">listen</span> <span class="m">0</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">0</span>:<span class="m">80</span>;
+  <span class="n">listen</span> [::]:<span class="m">80</span>;
+  <span class="n">server_name</span> <span class="err">_</span>; <span class="c">## Replace this with something like gitlab.example.com
+</span>  <span class="n">server_tokens</span> <span class="n">off</span>; <span class="c">## Don't show the nginx version number, a security best practice
+</span>  <span class="c"># root /opt/gitlab/embedded/service/gitlab-rails/public;
+</span>
+  <span class="c">## See app/controllers/application_controller.rb for headers set
+</span>
+  <span class="c">## Individual nginx logs for this GitLab vhost
+</span>  <span class="c"># access_log  /var/log/nginx/gitlab_access.log;
+</span>  <span class="c"># error_log   /var/log/nginx/gitlab_error.log;
+</span>  <span class="n">include</span> /<span class="n">etc</span>/<span class="n">nginx</span>/<span class="n">default</span>.<span class="n">d</span>/*.<span class="n">conf</span>;
+  <span class="n">location</span> / {
+    <span class="n">client_max_body_size</span> <span class="m">0</span>; <span class="c">#不限制上传大小
+</span>    <span class="n">gzip</span> <span class="n">off</span>;
+
+    <span class="c">## https://github.com/gitlabhq/gitlabhq/issues/694
+</span>    <span class="c">## Some requests take more than 30 seconds.
+</span>    <span class="n">proxy_read_timeout</span>      <span class="m">300</span>;
+    <span class="n">proxy_connect_timeout</span>   <span class="m">300</span>;
+    <span class="n">proxy_redirect</span>          <span class="n">off</span>;
+
+    <span class="n">proxy_http_version</span> <span class="m">1</span>.<span class="m">1</span>;
+
+    <span class="n">proxy_set_header</span>    <span class="n">Host</span>                $<span class="n">http_host</span>;
+    <span class="n">proxy_set_header</span>    <span class="n">X</span>-<span class="n">Real</span>-<span class="n">IP</span>           $<span class="n">remote_addr</span>;
+    <span class="n">proxy_set_header</span>    <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">For</span>     $<span class="n">proxy_add_x_forwarded_for</span>;
+    <span class="n">proxy_set_header</span>    <span class="n">X</span>-<span class="n">Forwarded</span>-<span class="n">Proto</span>   $<span class="n">scheme</span>;
+
+    <span class="n">proxy_pass</span> <span class="n">http</span>://<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">8181</span>/; <span class="c"># 转发到8181端口
+</span>  }
+}
+</code></pre></div></div>
+<h1 id="section-2">实际使用</h1>
+<p><em>由于gitlab占用内存太大，故做以下调整</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">puma</span>[<span class="s1">'worker_processes'</span>] = <span class="m">2</span>
+<span class="n">postgresql</span>[<span class="s1">'shared_buffers'</span>] = <span class="s2">"256MB"</span>
+</code></pre></div></div>
+<p><em>其他优化方式可查看<a href="https://docs.gitlab.com/omnibus/settings/memory_constrained_envs.html">Running GitLab in a memory-constrained environment</a></em></p>
+<p><em>效果：实际比之前少了一半内存占用，还行</em></p>
+<h1 id="gitlab-runner">gitlab runner配置</h1>
+<p><em>我是用的是docker镜像</em></p>
+<h2 id="section-3">拉取镜像</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull gitlab/gitlab-runner:latest
+</code></pre></div></div>
+<h2 id="section-4">运行镜像</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">--name</span> gitlab-runner <span class="nt">--restart</span> always <span class="se">\</span>
+  <span class="nt">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="se">\</span>
+  <span class="nt">-v</span> /srv/gitlab-runner/config:/etc/gitlab-runner:Z <span class="se">\</span>
+  gitlab/gitlab-runner:latest
+</code></pre></div></div>
+<h2 id="gitlab-3">设置与gitlab的连接</h2>
+<h3 id="gitlab-ci-token">获取gitlab ci token</h3>
+<h3 id="runner">注册runner</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-it</span> gitlab-runner gitlab-runner register
+</code></pre></div></div>
+<p><strong>注：由于网络环境影响，下载依赖较慢，故为docker镜像配置代理</strong></p>
+<h3 id="docker-2">为docker配置代理</h3>
+<p><em>编辑/etc/systemd/system/docker.service.d/http-proxy.conf文件</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">Service</span>]
+<span class="n">Environment</span>=<span class="s2">"HTTP_PROXY=http://127.0.0.1:7890"</span>
+<span class="n">Environment</span>=<span class="s2">"HTTPS_PROXY=http://127.0.0.1:7890"</span>
+<span class="n">Environment</span>=<span class="s2">"NO_PROXY=localhost,127.0.0.0/8,::1"</span> <span class="c">#局域网直连
+</span></code></pre></div></div>
+<p><em>重载systemd服务</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl daemon-reload
+<span class="nb">sudo </span>systemctl restart docker
+</code></pre></div></div>
+<h3 id="gitlab-runner-1">为gitlab runner配置代理</h3>
+<p>编辑/srv/gitlab-runner/config/config.toml文件，在[[runners]]处加入以下内容</p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pre_clone_script</span> = <span class="s2">"git config --global http.proxy $HTTP_PROXY; git config --global https.proxy $HTTPS_PROXY"</span> <span class="c">#为git配置代理
+</span><span class="n">environment</span> = [<span class="s2">"https_proxy=http://172.17.0.1:7890"</span>, <span class="s2">"http_proxy=http://172.17.0.1:7890"</span>, <span class="s2">"HTTPS_PROXY=172.17.0.1:7890"</span>, <span class="s2">"HTTP_PROXY=172.17.0.1:7890"</span>]
+</code></pre></div></div>
+<h3 id="gitlab-runner-2">测试gitlab runner</h3>
+<p><em>在项目根目录新建.gitlab-ci.yml文件，以下为示例</em></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">image</span><span class="pi">:</span> <span class="s">ruby:latest</span>
+
+<span class="na">variables</span><span class="pi">:</span>
+  <span class="na">JEKYLL_ENV</span><span class="pi">:</span> <span class="s">production</span>
+  <span class="na">LC_ALL</span><span class="pi">:</span> <span class="s">C.UTF-8</span>
+
+<span class="na">before_script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">gem install bundler</span> <span class="c1">#部署之前安装依赖</span>
+  <span class="pi">-</span> <span class="s">bundle install</span>
+
+<span class="na">test</span><span class="pi">:</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">test</span>
+  <span class="na">script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">bundle exec jekyll build -d test</span> <span class="c1">#测试命令</span>
+  <span class="na">artifacts</span><span class="pi">:</span>
+    <span class="na">paths</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">test</span>
+  <span class="na">except</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">master</span>
+
+<span class="na">pages</span><span class="pi">:</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">deploy</span> <span class="c1">#部署命令</span>
+  <span class="na">script</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">bundle exec jekyll build -d public</span>
+  <span class="na">artifacts</span><span class="pi">:</span>
+    <span class="na">paths</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">public</span>
+  <span class="na">only</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">master</span>
+</code></pre></div></div>
+<p><em>在web界面查看部署情况</em></p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="git" /><summary type="html"><![CDATA[安装方式 我选的docker镜像，方便管理 1.拉取docker镜像 docker pull gitlab/gitlab-ee:latest 2.设置gitlab存储位置 export GITLAB_HOME=/srv/gitlab #自己设置位置 3.运行docker镜像 sudo docker run --detach \ --hostname gitlab.example.com \ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口 --name gitlab \ --restart always \ #设置自动启动 --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点 --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \ --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \ --shm-size 256m \ gitlab/gitlab-ee:latest 4.查看gitlab运行日志 sudo docker logs -f gitlab 注：成功后即可打开浏览器输入localhost进入登录界面 5.获取管理员初始密码 sudo docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password 注：请在24小时内修改密码，否则密码将会失效 6.gitlab配置 由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx 禁用内建nginx nginx['enable'] = false 设置web服务器用户 web_server['external_users'] = ['www-data'] 将web服务器添加到受信任的代理列表中 gitlab_rails['trusted_proxies'] = [ '192.168.1.0/24', '192.168.2.1', '2001:0db8::/32' ] 允许GitLab Workhorse监听TCP端口 gitlab_workhorse['listen_network'] = "tcp" gitlab_workhorse['listen_addr'] = "127.0.0.1:8181" 外部nginx服务器设置反向代理 server { ## Either remove "default_server" from the listen line below, ## or delete the /etc/nginx/sites-enabled/default file. This will cause gitlab ## to be served if you visit any address that your server responds to, eg. ## the ip address of the server (http://x.x.x.x/)n 0.0.0.0:80 default_server; listen 0.0.0.0:80; listen [::]:80; server_name _; ## Replace this with something like gitlab.example.com server_tokens off; ## Don't show the nginx version number, a security best practice # root /opt/gitlab/embedded/service/gitlab-rails/public; ## See app/controllers/application_controller.rb for headers set ## Individual nginx logs for this GitLab vhost # access_log /var/log/nginx/gitlab_access.log; # error_log /var/log/nginx/gitlab_error.log; include /etc/nginx/default.d/*.conf; location / { client_max_body_size 0; #不限制上传大小 gzip off; ## https://github.com/gitlabhq/gitlabhq/issues/694 ## Some requests take more than 30 seconds. proxy_read_timeout 300; proxy_connect_timeout 300; proxy_redirect off; proxy_http_version 1.1; proxy_set_header Host $http_host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto $scheme; proxy_pass http://127.0.0.1:8181/; # 转发到8181端口 } } 实际使用 由于gitlab占用内存太大，故做以下调整 puma['worker_processes'] = 2 postgresql['shared_buffers'] = "256MB" 其他优化方式可查看Running GitLab in a memory-constrained environment 效果：实际比之前少了一半内存占用，还行 gitlab runner配置 我是用的是docker镜像 拉取镜像 docker pull gitlab/gitlab-runner:latest 运行镜像 docker run -d --name gitlab-runner --restart always \ -v /var/run/docker.sock:/var/run/docker.sock \ -v /srv/gitlab-runner/config:/etc/gitlab-runner:Z \ gitlab/gitlab-runner:latest 设置与gitlab的连接 获取gitlab ci token 注册runner docker exec -it gitlab-runner gitlab-runner register 注：由于网络环境影响，下载依赖较慢，故为docker镜像配置代理 为docker配置代理 编辑/etc/systemd/system/docker.service.d/http-proxy.conf文件 [Service] Environment="HTTP_PROXY=http://127.0.0.1:7890" Environment="HTTPS_PROXY=http://127.0.0.1:7890" Environment="NO_PROXY=localhost,127.0.0.0/8,::1" #局域网直连 重载systemd服务 sudo systemctl daemon-reload sudo systemctl restart docker 为gitlab runner配置代理 编辑/srv/gitlab-runner/config/config.toml文件，在[[runners]]处加入以下内容 pre_clone_script = "git config --global http.proxy $HTTP_PROXY; git config --global https.proxy $HTTPS_PROXY" #为git配置代理 environment = ["https_proxy=http://172.17.0.1:7890", "http_proxy=http://172.17.0.1:7890", "HTTPS_PROXY=172.17.0.1:7890", "HTTP_PROXY=172.17.0.1:7890"] 测试gitlab runner 在项目根目录新建.gitlab-ci.yml文件，以下为示例 image: ruby:latest variables: JEKYLL_ENV: production LC_ALL: C.UTF-8 before_script: - gem install bundler #部署之前安装依赖 - bundle install test: stage: test script: - bundle exec jekyll build -d test #测试命令 artifacts: paths: - test except: - master pages: stage: deploy #部署命令 script: - bundle exec jekyll build -d public artifacts: paths: - public only: - master 在web界面查看部署情况]]></summary></entry><entry><title type="html">解决dns污染问题</title><link href="http://localhost:4000/2022/08/26/dns-config.html" rel="alternate" type="text/html" title="解决dns污染问题" /><published>2022-08-26T00:00:00+08:00</published><updated>2022-08-26T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/26/dns-config</id><content type="html" xml:base="http://localhost:4000/2022/08/26/dns-config.html"><![CDATA[<h1 id="section">起因</h1>
+<p>由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。</p>
+<h1 id="section-1">配置</h1>
+<h2 id="dnsmasq">dnsmasq</h2>
+<p><em>通过<a href="https://github.com/felixonmars/dnsmasq-china-list">dnsmasq-china-list</a>进行dns分流</em></p>
+<h3 id="section-2">安装</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/felixonmars/dnsmasq-china-list
+
+<span class="nb">cd </span>dnsmasq-china-list&amp;&amp;bash install.sh
+
+<span class="nb">sudo </span>systemctl restart dnsmasq //重启dnsmasq
+</code></pre></div></div>
+<h3 id="section-3">效果</h3>
+<p><em>重启dnsmasq太慢，且解析速度下降</em></p>
+<h2 id="mosdnsdnsmasq">mosdns+dnsmasq</h2>
+<h3 id="section-4">安装</h3>
+<h4 id="mosdns">mosdns</h4>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip
+
+unzip mosdns-linux-amd64.zip
+
+<span class="nb">sudo mkdir</span> /etc/mosdns
+
+<span class="nb">sudo cp </span>mosdns /usr/bin
+
+<span class="nb">sudo cp </span>config.yaml /etc/mosdns //配置文件
+
+wget <span class="nt">--no-check-certificate</span> https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat <span class="nt">-O</span> /etc/mosdns/geosite.dat 
+
+wget <span class="nt">--no-check-certificate</span> https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat <span class="nt">-O</span> /etc/mosdns/geoip-only-cn-private.dat //中国ip名单
+
+</code></pre></div></div>
+<p><em>配置文件</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">log</span>:
+  <span class="n">level</span>: <span class="n">warn</span>
+  <span class="n">file</span>: <span class="s2">"mosdns.log"</span>
+
+<span class="n">data_providers</span>:
+- <span class="n">tag</span>: <span class="n">geosite</span>
+  <span class="n">file</span>: ./<span class="n">geosite</span>.<span class="n">dat</span>
+  <span class="n">auto_reload</span>: <span class="n">true</span>
+- <span class="n">tag</span>: <span class="n">geoip</span>
+  <span class="n">file</span>: ./<span class="n">geoip</span>-<span class="n">only</span>-<span class="n">cn</span>-<span class="n">private</span>.<span class="n">dat</span>
+  <span class="n">auto_reload</span>: <span class="n">true</span>
+
+<span class="n">plugins</span>:
+<span class="c"># 缓存
+</span>- <span class="n">tag</span>: <span class="n">cache</span>
+  <span class="n">type</span>: <span class="n">cache</span>
+  <span class="n">args</span>:
+    <span class="n">size</span>: <span class="m">4096</span>
+    <span class="n">lazy_cache_ttl</span>: <span class="m">172800</span>
+
+<span class="c"># 转发至本地服务器的插件
+</span>- <span class="n">tag</span>: <span class="n">forward_local</span>
+  <span class="n">type</span>: <span class="n">fast_forward</span>
+  <span class="n">args</span>:
+    <span class="n">upstream</span>:
+      - <span class="n">addr</span>: <span class="n">tls</span>://<span class="m">223</span>.<span class="m">6</span>.<span class="m">6</span>.<span class="m">6</span>:<span class="m">853</span> <span class="c">#alidns
+</span>        <span class="n">enable_pipeline</span>: <span class="n">true</span>
+
+      - <span class="n">addr</span>: <span class="n">tls</span>://<span class="m">119</span>.<span class="m">29</span>.<span class="m">29</span>.<span class="m">29</span>:<span class="m">853</span> <span class="c">#dnspod
+</span>        <span class="n">idle_timeout</span>: <span class="m">8</span>
+        <span class="n">trusted</span>: <span class="n">true</span>
+
+<span class="c"># 转发至远程服务器的插件
+</span>- <span class="n">tag</span>: <span class="n">forward_remote</span>
+  <span class="n">type</span>: <span class="n">fast_forward</span>
+  <span class="n">args</span>:
+    <span class="n">upstream</span>:
+      - <span class="n">addr</span>: <span class="n">https</span>://<span class="m">1</span>.<span class="m">1</span>.<span class="m">1</span>.<span class="m">1</span>/<span class="n">dns</span>-<span class="n">query</span> <span class="c">#cloudflare
+</span>        <span class="n">enable_pipeline</span>: <span class="n">true</span>
+
+      - <span class="n">addr</span>: <span class="n">https</span>://<span class="n">dns</span>.<span class="n">google</span>/<span class="n">dns</span>-<span class="n">query</span> <span class="c">#google
+</span>        <span class="n">enable_pipeline</span>: <span class="n">true</span>
+        <span class="n">trusted</span>: <span class="n">true</span>
 
 
-        </description>
-        <pubDate>Sun, 24 Apr 2022 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2022/04/24/c++link.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/04/24/c++link.html</guid>
-      </item>
-    
-  </channel>
-</rss>
+<span class="c"># 匹配本地域名的插件
+</span>- <span class="n">tag</span>: <span class="n">query_is_local_domain</span>
+  <span class="n">type</span>: <span class="n">query_matcher</span>
+  <span class="n">args</span>:
+    <span class="n">domain</span>:
+      - <span class="s1">'provider:geosite:apple-cn'</span>
+      - <span class="s1">'provider:geosite:cn'</span>
+
+<span class="c"># 匹配非本地域名的插件
+</span>- <span class="n">tag</span>: <span class="n">query_is_non_local_domain</span>
+  <span class="n">type</span>: <span class="n">query_matcher</span>
+  <span class="n">args</span>:
+    <span class="n">domain</span>:
+      - <span class="s1">'provider:geosite:geolocation-!cn'</span>
+
+<span class="c"># 匹配广告域名的插件
+</span>- <span class="n">tag</span>: <span class="n">query_is_ad_domain</span>
+  <span class="n">type</span>: <span class="n">query_matcher</span>
+  <span class="n">args</span>:
+    <span class="n">domain</span>:
+      - <span class="s1">'provider:geosite:category-ads-all'</span>
+
+<span class="c"># 匹配本地 IP 的插件
+</span>- <span class="n">tag</span>: <span class="n">response_has_local_ip</span>
+  <span class="n">type</span>: <span class="n">response_matcher</span>
+  <span class="n">args</span>:
+    <span class="n">ip</span>:
+      - <span class="s1">'provider:geoip:cn'</span>
+
+<span class="c"># 主要的运行逻辑插件
+# sequence 插件中调用的插件 tag 必须在 sequence 前定义，
+# 否则 sequence 找不到对应插件。
+</span>- <span class="n">tag</span>: <span class="n">main_sequence</span>
+  <span class="n">type</span>: <span class="n">sequence</span>
+  <span class="n">args</span>:
+    <span class="n">exec</span>:
+      <span class="c"># 缓存
+</span>      - <span class="n">cache</span>
+
+      <span class="c"># 屏蔽广告域名
+</span>      - <span class="n">if</span>: <span class="n">query_is_ad_domain</span>
+        <span class="n">exec</span>:
+          - <span class="err">_</span><span class="n">new_nxdomain_response</span>
+          - <span class="err">_</span><span class="n">return</span>
+
+      <span class="c"># 已知的本地域名用本地服务器解析
+</span>      - <span class="n">if</span>: <span class="n">query_is_local_domain</span>
+        <span class="n">exec</span>:
+          - <span class="n">forward_local</span>
+          - <span class="err">_</span><span class="n">return</span>
+
+      <span class="c"># 已知的非本地域名用远程服务器解析
+</span>      - <span class="n">if</span>: <span class="n">query_is_non_local_domain</span>
+        <span class="n">exec</span>:
+          - <span class="n">forward_remote</span>
+          - <span class="err">_</span><span class="n">return</span>
+
+        <span class="c"># 剩下的未知域名用 IP 分流。
+</span>        <span class="c"># primary 从本地服务器获取应答，丢弃非本地 IP 的结果。
+</span>      - <span class="n">primary</span>:
+          - <span class="n">forward_local</span>
+          - <span class="n">if</span>: <span class="s2">"(! response_has_local_ip) &amp;&amp; [_response_valid_answer]"</span>
+            <span class="n">exec</span>:
+              - <span class="err">_</span><span class="n">drop_response</span>
+        <span class="c"># secondary 从远程服务器获取应答。
+</span>        <span class="n">secondary</span>:
+          - <span class="n">forward_remote</span>
+        <span class="c"># 这里建议设置成 local 服务器正常延时的 2~5 倍。
+</span>        <span class="c"># 这个延时保证了 local 延时偶尔变高时，其结果不会被 remote 抢答。
+</span>        <span class="c"># 如果 local 超过这个延时还没响应，可以假设 local 出现了问题。
+</span>        <span class="c"># 这时用就采用 remote 的应答。单位: 毫秒。
+</span>        <span class="n">fast_fallback</span>: <span class="m">200</span>
+
+<span class="n">servers</span>:
+- <span class="n">exec</span>: <span class="n">main_sequence</span>
+  <span class="n">listeners</span>:
+    - <span class="n">protocol</span>: <span class="n">udp</span>
+      <span class="n">addr</span>: <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">1053</span> //监听<span class="m">1053</span>端口
+    - <span class="n">protocol</span>: <span class="n">tcp</span>
+      <span class="n">addr</span>: <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>:<span class="m">1053</span>
+</code></pre></div></div>
+<p><em>新建systemd服务</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">Unit</span>]
+<span class="n">Description</span>=<span class="n">mosdns</span> <span class="n">Service</span>
+<span class="n">Documentation</span>=<span class="n">https</span>://<span class="n">irine</span>-<span class="n">sistiana</span>.<span class="n">gitbook</span>.<span class="n">io</span>/<span class="n">mosdns</span>-<span class="n">wiki</span>/
+<span class="n">After</span>=<span class="n">network</span>.<span class="n">target</span>
+
+[<span class="n">Service</span>]
+<span class="n">NoNewPrivileges</span>=<span class="n">true</span>
+<span class="n">ExecStart</span>=/<span class="n">usr</span>/<span class="n">bin</span>/<span class="n">mosdns</span> <span class="n">start</span> -<span class="n">c</span> /<span class="n">etc</span>/<span class="n">mosdns</span>/<span class="n">config</span>.<span class="n">yaml</span> -<span class="n">d</span> /<span class="n">etc</span>/<span class="n">mosdns</span>/
+<span class="n">Restart</span>=<span class="n">on</span>-<span class="n">failure</span>
+
+[<span class="n">Install</span>]
+<span class="n">WantedBy</span>=<span class="n">multi</span>-<span class="n">user</span>.<span class="n">target</span>
+</code></pre></div></div>
+<h4 id="dnsmasq-1">dnsmasq</h4>
+<p><em>配置文件</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/dnsmasq.d/local.conf
+</code></pre></div></div>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">no</span>-<span class="n">hosts</span>
+<span class="n">no</span>-<span class="n">resolv</span>
+<span class="n">server</span>=<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span><span class="c">#1053 #将dns请求转发到1053端口
+</span></code></pre></div></div>
+<p><em>重启dnsmasq</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart dnsmasq
+</code></pre></div></div>
+<h3 id="section-5">效果</h3>
+<p><em>还行，过一段时间试试</em></p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="network" /><summary type="html"><![CDATA[起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。 配置 dnsmasq 通过dnsmasq-china-list进行dns分流 安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;&amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq 效果 重启dnsmasq太慢，且解析速度下降 mosdns+dnsmasq 安装 mosdns wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir /etc/mosdns sudo cp mosdns /usr/bin sudo cp config.yaml /etc/mosdns //配置文件 wget --no-check-certificate https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O /etc/mosdns/geosite.dat wget --no-check-certificate https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat -O /etc/mosdns/geoip-only-cn-private.dat //中国ip名单 配置文件 log: level: warn file: "mosdns.log" data_providers: - tag: geosite file: ./geosite.dat auto_reload: true - tag: geoip file: ./geoip-only-cn-private.dat auto_reload: true plugins: # 缓存 - tag: cache type: cache args: size: 4096 lazy_cache_ttl: 172800 # 转发至本地服务器的插件 - tag: forward_local type: fast_forward args: upstream: - addr: tls://223.6.6.6:853 #alidns enable_pipeline: true - addr: tls://119.29.29.29:853 #dnspod idle_timeout: 8 trusted: true # 转发至远程服务器的插件 - tag: forward_remote type: fast_forward args: upstream: - addr: https://1.1.1.1/dns-query #cloudflare enable_pipeline: true - addr: https://dns.google/dns-query #google enable_pipeline: true trusted: true # 匹配本地域名的插件 - tag: query_is_local_domain type: query_matcher args: domain: - 'provider:geosite:apple-cn' - 'provider:geosite:cn' # 匹配非本地域名的插件 - tag: query_is_non_local_domain type: query_matcher args: domain: - 'provider:geosite:geolocation-!cn' # 匹配广告域名的插件 - tag: query_is_ad_domain type: query_matcher args: domain: - 'provider:geosite:category-ads-all' # 匹配本地 IP 的插件 - tag: response_has_local_ip type: response_matcher args: ip: - 'provider:geoip:cn' # 主要的运行逻辑插件 # sequence 插件中调用的插件 tag 必须在 sequence 前定义， # 否则 sequence 找不到对应插件。 - tag: main_sequence type: sequence args: exec: # 缓存 - cache # 屏蔽广告域名 - if: query_is_ad_domain exec: - _new_nxdomain_response - _return # 已知的本地域名用本地服务器解析 - if: query_is_local_domain exec: - forward_local - _return # 已知的非本地域名用远程服务器解析 - if: query_is_non_local_domain exec: - forward_remote - _return # 剩下的未知域名用 IP 分流。 # primary 从本地服务器获取应答，丢弃非本地 IP 的结果。 - primary: - forward_local - if: "(! response_has_local_ip) &amp;&amp; [_response_valid_answer]" exec: - _drop_response # secondary 从远程服务器获取应答。 secondary: - forward_remote # 这里建议设置成 local 服务器正常延时的 2~5 倍。 # 这个延时保证了 local 延时偶尔变高时，其结果不会被 remote 抢答。 # 如果 local 超过这个延时还没响应，可以假设 local 出现了问题。 # 这时用就采用 remote 的应答。单位: 毫秒。 fast_fallback: 200 servers: - exec: main_sequence listeners: - protocol: udp addr: 127.0.0.1:1053 //监听1053端口 - protocol: tcp addr: 127.0.0.1:1053 新建systemd服务 [Unit] Description=mosdns Service Documentation=https://irine-sistiana.gitbook.io/mosdns-wiki/ After=network.target [Service] NoNewPrivileges=true ExecStart=/usr/bin/mosdns start -c /etc/mosdns/config.yaml -d /etc/mosdns/ Restart=on-failure [Install] WantedBy=multi-user.target dnsmasq 配置文件 sudo vim /etc/dnsmasq.d/local.conf no-hosts no-resolv server=127.0.0.1#1053 #将dns请求转发到1053端口 重启dnsmasq sudo systemctl restart dnsmasq 效果 还行，过一段时间试试]]></summary></entry><entry><title type="html">随机数生成</title><link href="http://localhost:4000/2022/08/21/random-number.html" rel="alternate" type="text/html" title="随机数生成" /><published>2022-08-21T00:00:00+08:00</published><updated>2022-08-21T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/21/random-number</id><content type="html" xml:base="http://localhost:4000/2022/08/21/random-number.html"><![CDATA[<h1 id="section">通过系统变量生成</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$RANDOM</span>
+</code></pre></div></div>
+<p><em>获取特定位数的随机字符,这里为10位</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$RANDOM</span> |md5sum |cut <span class="nt">-c</span> 1-10
+</code></pre></div></div>
+<p><em>获取随机数字,这里为10位</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$RANDOM</span> |cksum |cut <span class="nt">-c</span> 1-10
+</code></pre></div></div>
+<h1 id="openssl">通过openssl生成</h1>
+<p><em>base64编码</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rand <span class="nt">-base64</span> 10
+</code></pre></div></div>
+<p><strong>注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字</strong></p>
+<h1 id="uuid">通过系统uuid生成</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /proc/sys/kernel/random/uuid 
+</code></pre></div></div>
+<h1 id="section-1">通过程序实现</h1>
+<h2 id="c">C++实现</h2>
+<h3 id="section-2">随机数</h3>
+<p><em>生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同</em></p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp"># include &lt;iostream&gt;
+#include</span><span class="cpf">&lt;random&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;time.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">srand</span><span class="p">((</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">b</span><span class="o">=</span><span class="mi">100000</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h3 id="section-3">随机字符</h3>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="linux" /><summary type="html"><![CDATA[通过系统变量生成 echo $RANDOM 获取特定位数的随机字符,这里为10位 echo $RANDOM |md5sum |cut -c 1-10 获取随机数字,这里为10位 echo $RANDOM |cksum |cut -c 1-10 通过openssl生成 base64编码 openssl rand -base64 10 注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字 通过系统uuid生成 cat /proc/sys/kernel/random/uuid 通过程序实现 C++实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同 # include &lt;iostream&gt; #include&lt;random&gt; #include&lt;time.h&gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout &lt;&lt; (rand() % (b - a + 1)) + a &lt;&lt; std::endl; return 0; } 随机字符]]></summary></entry><entry><title type="html">sql server docker镜像配置</title><link href="http://localhost:4000/2022/08/19/sqlserver-docker.html" rel="alternate" type="text/html" title="sql server docker镜像配置" /><published>2022-08-19T00:00:00+08:00</published><updated>2022-08-19T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/19/sqlserver-docker</id><content type="html" xml:base="http://localhost:4000/2022/08/19/sqlserver-docker.html"><![CDATA[<h1 id="docker">1.拉取docker镜像</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker pull mcr.microsoft.com/mssql/server:2022-latest
+</code></pre></div></div>
+<h1 id="docker-1">2.创建并运行docker镜像</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker run <span class="nt">-e</span> <span class="s2">"ACCEPT_EULA=Y"</span> <span class="nt">-e</span> <span class="s2">"MSSQL_SA_PASSWORD=&lt;YourPassword&gt;"</span> <span class="se">\</span>
+   <span class="nt">-p</span> 1433:1433 <span class="nt">--name</span> sql1 <span class="nt">--hostname</span> sql1 <span class="se">\</span>
+   <span class="nt">-d</span> <span class="se">\</span>
+   mcr.microsoft.com/mssql/server:2022-latest
+</code></pre></div></div>
+<p>注：开放1433端口以进行数据库连接，docker镜像名称为sql1</p>
+<h1 id="sql-server">3. 查看sql server服务器是否准备好连接</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker <span class="nb">exec</span> <span class="nt">-t</span> sql1 <span class="nb">cat</span> /var/opt/mssql/log/errorlog | <span class="nb">grep </span>connection
+</code></pre></div></div>
+<h1 id="section">4.设置管理员密码</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker <span class="nb">exec</span> <span class="nt">-it</span> sql1 /opt/mssql-tools/bin/sqlcmd <span class="se">\</span>
+<span class="nt">-S</span> localhost <span class="nt">-U</span> SA <span class="se">\</span>
+ <span class="nt">-P</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">read</span> <span class="nt">-sp</span> <span class="s2">"Enter current SA password: "</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">REPLY</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span><span class="s2">"</span> <span class="se">\</span>
+ <span class="nt">-Q</span> <span class="s2">"ALTER LOGIN SA WITH PASSWORD=</span><span class="se">\"</span><span class="si">$(</span><span class="nb">read</span> <span class="nt">-sp</span> <span class="s2">"Enter new SA password: "</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">REPLY</span><span class="k">}</span><span class="s2">"</span><span class="si">)</span><span class="se">\"</span><span class="s2">"</span>
+</code></pre></div></div>
+<h1 id="section-1">5.连接数据库</h1>
+<h2 id="dockerbash">进入docker容器内运行bash并连接数据库</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker <span class="nb">exec</span> <span class="nt">-it</span> sql1 <span class="s2">"bash"</span>
+
+/opt/mssql-tools/bin/sqlcmd <span class="nt">-S</span> localhost <span class="nt">-U</span> SA <span class="nt">-P</span> <span class="s2">"&lt;YourNewStrong@Passw0rd&gt;"</span>
+</code></pre></div></div>
+<h2 id="jdbc">使用jdbc驱动连接数据库</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SQLDatabaseConnection</span> <span class="o">{</span>
+    <span class="c1">// Connect to your database.</span>
+    <span class="c1">// Replace server name, username, and password with your credentials</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">Judge</span><span class="o">(</span><span class="kt">int</span> <span class="n">biao</span><span class="o">,</span><span class="nc">String</span> <span class="n">a</span><span class="o">){</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">biao</span><span class="o">==</span><span class="mi">1</span><span class="o">){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">+</span><span class="s">"成功！"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span><span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">+</span><span class="s">"失败!"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">connectionUrl</span> <span class="o">=</span>
+                <span class="s">"jdbc:sqlserver://yourdomain:1433;"</span>
+                        <span class="o">+</span> <span class="s">"database=yourdatabase;"</span>
+                        <span class="o">+</span> <span class="s">"user=username;"</span>
+                        <span class="o">+</span> <span class="s">"password=yourpassword;"</span>
+                        <span class="o">+</span> <span class="s">"trustServerCertificate=true;"</span>
+
+        <span class="k">try</span> <span class="o">(</span><span class="nc">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">connectionUrl</span><span class="o">);)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"数据库连接成功:"</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"数据库连接失败,请检查您的网络！"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><strong>注意：中文输入请规定数据类型为nvarchar,否则显示中文为问号</strong></p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="database" /><summary type="html"><![CDATA[1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest 2.创建并运行docker镜像 sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=&lt;YourPassword&gt;" \ -p 1433:1433 --name sql1 --hostname sql1 \ -d \ mcr.microsoft.com/mssql/server:2022-latest 注：开放1433端口以进行数据库连接，docker镜像名称为sql1 3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection 4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \ -S localhost -U SA \ -P "$(read -sp "Enter current SA password: "; echo "${REPLY}")" \ -Q "ALTER LOGIN SA WITH PASSWORD=\"$(read -sp "Enter new SA password: "; echo "${REPLY}")\"" 5.连接数据库 进入docker容器内运行bash并连接数据库 sudo docker exec -it sql1 "bash" /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "&lt;YourNewStrong@Passw0rd&gt;" 使用jdbc驱动连接数据库 import java.sql.*; import java.util.Scanner; public class SQLDatabaseConnection { // Connect to your database. // Replace server name, username, and password with your credentials public static void Judge(int biao,String a){ if(biao==1){ System.out.println(a+"成功！"); } else{ System.out.println(a+"失败!"); } } public static void main(String[] args) { String connectionUrl = "jdbc:sqlserver://yourdomain:1433;" + "database=yourdatabase;" + "user=username;" + "password=yourpassword;" + "trustServerCertificate=true;" try (Connection connection = DriverManager.getConnection(connectionUrl);) { System.out.println("数据库连接成功:"); }catch (SQLException e) { e.printStackTrace(); System.out.println("数据库连接失败,请检查您的网络！"); } } } 注意：中文输入请规定数据类型为nvarchar,否则显示中文为问号]]></summary></entry><entry><title type="html">gpg加密解密</title><link href="http://localhost:4000/2022/08/15/gpg-encrypt.html" rel="alternate" type="text/html" title="gpg加密解密" /><published>2022-08-15T00:00:00+08:00</published><updated>2022-08-15T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/15/gpg-encrypt</id><content type="html" xml:base="http://localhost:4000/2022/08/15/gpg-encrypt.html"><![CDATA[<h1 id="section">生成密钥</h1>
+<p><em>gpg生成私钥</em>
+gpg --gen-key
+<em>导出密钥</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--export</span> <span class="nt">--armor</span> keyID <span class="o">&gt;</span> gpgkey.pub.asc
+</code></pre></div></div>
+<p><em>导入公钥</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--import</span> gpgkey.pub.asc
+</code></pre></div></div>
+<p><em>从服务器导入</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--keyserver</span> servername <span class="nt">--recv-keys</span> keyID
+</code></pre></div></div>
+<h1 id="section-1">非对称加密解密</h1>
+<p><em>加密文件</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-e</span> <span class="nt">-r</span> username filename
+</code></pre></div></div>
+<p><em>解密文件</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-d</span> filename
+</code></pre></div></div>
+<h1 id="section-2">对称加密解密</h1>
+<p><em>加密文件</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--symmetric</span> filename
+</code></pre></div></div>
+<p><em>解密文件</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-d</span> filename
+</code></pre></div></div>
+<h1 id="section-3">对文件签名</h1>
+<p><em>数字签名</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-o</span> filename.sig <span class="nt">-s</span> filename
+</code></pre></div></div>
+<p><em>签名+加密</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-o</span> filename.sig <span class="nt">-ser</span> name filename
+</code></pre></div></div>
+<p><em>文本签名</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-o</span> filename.sig <span class="nt">--clearsign</span> filename
+</code></pre></div></div>
+<p><em>分离签名（原文件与签名分开）</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">-o</span> filename.sig <span class="nt">-ab</span> filename
+</code></pre></div></div>
+<p><em>验证签名</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--verify</span> filename.sig filename
+</code></pre></div></div>
+<h1 id="githubgpg">github使用gpg签名提交</h1>
+<p><em>1.在Github的<a href="https://github.com/settings/keys">SSH and GPG keys</a>中，新增一个GPG key。</em></p>
+<p><em>2.设置git使用的gpg key id。</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> user.signingkey <span class="o">{</span>key_id<span class="o">}</span>
+</code></pre></div></div>
+<p><em>3.用gpg key id签名</em></p>
+<h3 id="s">每次提交时加上-S参数</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">-S</span> <span class="nt">-m</span> <span class="s2">"update blogs"</span>
+</code></pre></div></div>
+<h3 id="section-4">全局设置每次提交时使用签名</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> commit.gpgsign <span class="nb">true</span>
+</code></pre></div></div>
+<h3 id="github-web">本地确认github web端提交的签名信息</h3>
+<p><em>导入github的密钥</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://github.com/web-flow.gpg | gpg <span class="nt">--import</span>
+</code></pre></div></div>
+<p><em>用自己的密钥进行签名验证</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg <span class="nt">--sign-key</span> <span class="o">{</span>key_id<span class="o">}</span>
+</code></pre></div></div>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="encrypt" /><summary type="html"><![CDATA[生成密钥 gpg生成私钥 gpg --gen-key 导出密钥 gpg --export --armor keyID &gt; gpgkey.pub.asc 导入公钥 gpg --import gpgkey.pub.asc 从服务器导入 gpg --keyserver servername --recv-keys keyID 非对称加密解密 加密文件 gpg -e -r username filename 解密文件 gpg -d filename 对称加密解密 加密文件 gpg --symmetric filename 解密文件 gpg -d filename 对文件签名 数字签名 gpg -o filename.sig -s filename 签名+加密 gpg -o filename.sig -ser name filename 文本签名 gpg -o filename.sig --clearsign filename 分离签名（原文件与签名分开） gpg -o filename.sig -ab filename 验证签名 gpg --verify filename.sig filename github使用gpg签名提交 1.在Github的SSH and GPG keys中，新增一个GPG key。 2.设置git使用的gpg key id。 git config --global user.signingkey {key_id} 3.用gpg key id签名 每次提交时加上-S参数 git commit -S -m "update blogs" 全局设置每次提交时使用签名 git config --global commit.gpgsign true 本地确认github web端提交的签名信息 导入github的密钥 curl https://github.com/web-flow.gpg | gpg --import 用自己的密钥进行签名验证 gpg --sign-key {key_id}]]></summary></entry><entry><title type="html">clash tun模式配置</title><link href="http://localhost:4000/2022/08/11/clash-tun-mode.html" rel="alternate" type="text/html" title="clash tun模式配置" /><published>2022-08-11T00:00:00+08:00</published><updated>2022-08-11T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/11/clash-tun-mode</id><content type="html" xml:base="http://localhost:4000/2022/08/11/clash-tun-mode.html"><![CDATA[<h1 id="dns">1. 劫持系统dns</h1>
+<h2 id="dnsmasqdnsmasq">安装dnsmasq并启动dnsmasq</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dnf <span class="nb">install </span>dnsmasq
+
+<span class="nb">sudo </span>systemctl start dnsmasq
+</code></pre></div></div>
+<h2 id="resolvconfresolvconfdnsip">删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip</h2>
+<p><em>注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo rm</span> /etc/resolv.conf
+
+<span class="nb">sudo </span>vim /etc/resolv.conf
+</code></pre></div></div>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nameserver</span> <span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span>
+<span class="n">options</span> <span class="n">edns0</span> <span class="n">trust</span>-<span class="n">ad</span>
+<span class="n">search</span> .
+</code></pre></div></div>
+<p><strong>注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/NetworkManager/NetworkManager.conf
+</code></pre></div></div>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">main</span>]
+<span class="n">dns</span> = <span class="n">none</span>
+</code></pre></div></div>
+<p><em>重启networkmanager</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart NetworkManager
+</code></pre></div></div>
+<p><em>编辑dnsmasq配置文件</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/dnsmasq.d/clash.conf
+</code></pre></div></div>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">no</span>-<span class="n">hosts</span>
+<span class="n">no</span>-<span class="n">resolv</span>
+<span class="n">server</span>=<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span><span class="c">#1053 //将dns请求全部转发到clash
+</span></code></pre></div></div>
+<p><em>重新启动dnsmasq</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart dnsmasq
+</code></pre></div></div>
+<p><em>clash的dns服务器配置</em></p>
+<p><em>config.yaml</em></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">dns</span><span class="pi">:</span>
+  <span class="na">enable</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">ipv6</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">listen</span><span class="pi">:</span> <span class="s">:1053</span>
+  <span class="na">enhanced-mode</span><span class="pi">:</span> <span class="s">fake-ip</span>      <span class="c1"># redir-host or fake-ip</span>
+  <span class="na">fake-ip-range</span><span class="pi">:</span> <span class="s">198.18.0.1/16</span>    <span class="c1"># Fake IP addresses pool CIDR</span>
+  <span class="na">use-hosts</span><span class="pi">:</span> <span class="no">true</span>                 <span class="c1"># lookup hosts and return IP record</span>
+  <span class="na">nameserver</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">223.5.5.5</span>         <span class="c1"># 阿里 19ms</span>
+    <span class="pi">-</span> <span class="s">119.29.29.29</span>      <span class="c1"># DNSpod DNS 17ms</span>
+  <span class="c1"># 提供 fallback 时，如果GEOIP非 CN 中国时使用 fallback 解析</span>
+  <span class="na">fallback</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">tls://8.8.8.8:53</span>         <span class="c1"># Google DNS over TLS 50ms</span>
+    <span class="pi">-</span> <span class="s">tls://8.8.4.4:53</span>         <span class="c1"># cloudflare DNS over TLS 50ms</span>
+    <span class="pi">-</span> <span class="s">https://1.1.1.1/dns-query</span> <span class="c1"># cloudflare DNS over HTTPS</span>
+    <span class="pi">-</span> <span class="s">https://dns.google/dns-query</span> <span class="c1"># Google DNS over HTTPS</span>
+
+  <span class="c1"># 强制DNS解析使用`fallback`配置</span>
+  <span class="na">fallback-filter</span><span class="pi">:</span>
+    <span class="c1"># true: CN使用nameserver解析，非CN使用fallback</span>
+    <span class="na">geoip</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="c1"># geoip设置为false时有效： 不匹配`ipcidr`地址时会使用`nameserver`结果，匹配`ipcidr`地址时使用`fallback`结果。</span>
+    <span class="na">ipcidr</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">240.0.0.0/4</span>
+
+</code></pre></div></div>
+<p><em>验证dns是否被劫持成功</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nslookup www.google.com
+</code></pre></div></div>
+<p><em>出现应答结果即为劫持成功</em></p>
+<h1 id="clash-tun">2.clash tun网卡配置</h1>
+<p><em>注：clash需要root权限创建网卡</em>
+<strong>linux/unix</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">tun</span><span class="pi">:</span>
+  <span class="na">enable</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">stack</span><span class="pi">:</span> <span class="s">system</span>
+  <span class="na">auto-route</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">auto-detect-interface</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+<p><strong>windows</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">tun</span><span class="pi">:</span>
+  <span class="na">enable</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">stack</span><span class="pi">:</span> <span class="s">gvisor</span> <span class="c1"># or system</span>
+  <span class="na">dns-hijack</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">198.18.0.2:53</span> <span class="c1"># when `fake-ip-range` is 198.18.0.1/16, should hijack 198.18.0.2:53</span>
+  <span class="na">auto-route</span><span class="pi">:</span> <span class="no">true</span> <span class="c1"># auto set global route for Windows</span>
+  <span class="c1"># It is recommended to use `interface-name`</span>
+  <span class="na">auto-detect-interface</span><span class="pi">:</span> <span class="no">true</span> <span class="c1"># auto detect interface, conflict with `interface-name`</span>
+</code></pre></div></div>
+<p>最后重启clash</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart clash
+</code></pre></div></div>
+<p>查看clash运行状态</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl status clash
+</code></pre></div></div>
+<h1 id="tun">3.tun模式退出后网络遇到问题</h1>
+<p><strong>linux/unix</strong><br />
+<em>dnsmasq</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl stop clash
+<span class="nb">sudo </span>systemctl stop dnsmasq
+<span class="nb">sudo </span>systemctl start systemd-resolved
+<span class="nb">sudo </span>resolvectl flush-caches
+<span class="nb">sudo sed</span> <span class="nt">-i</span> <span class="s1">'s/127.0.0.1/127.0.0.53/g'</span> /etc/resolv.conf
+<span class="nb">sudo </span>systemctl restart clash@dky
+</code></pre></div></div>
+<p><strong>注意：由于dns污染问题，正在考虑普通代理模式使用dnsmasq代替systemd-resolved</strong><br />
+<em>dnsmasq</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl stop clash
+<span class="nb">sudo mv</span> /etc/dnsmasq.d/clash.conf /etc/dnsmasq.d/clash.conf.bak
+<span class="nb">sudo mv</span> /etc/dnsmasq.d/local.conf.bak /etc/dnsmasq.d/local.conf
+<span class="nb">sudo </span>systemctl restart dnsmasq <span class="c">#重启dnsmasq</span>
+<span class="nb">sudo </span>systemctl restart clash@dky
+</code></pre></div></div>
+<p><em>local.conf在普通模式下使用</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">no</span>-<span class="n">hosts</span>
+<span class="n">no</span>-<span class="n">resolv</span>
+<span class="n">server</span>=<span class="m">127</span>.<span class="m">0</span>.<span class="m">0</span>.<span class="m">1</span><span class="c">#1053 #转发到mosdns的1053端口
+</span></code></pre></div></div>
+<p><em>clash.conf在tun模式下使用，文件内容与local.conf相同</em></p>
+<p><strong>windows</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">netsh</span><span class="w"> </span><span class="nx">int</span><span class="w"> </span><span class="nx">ip</span><span class="w"> </span><span class="nx">reset</span><span class="w">
+</span><span class="n">netsh</span><span class="w"> </span><span class="nx">winsock</span><span class="w"> </span><span class="nx">reset</span><span class="w">
+</span><span class="n">ipconfig</span><span class="w"> </span><span class="nx">/flushdns</span><span class="w">
+</span></code></pre></div></div>
+<p><em>注：windows系统需要重启才能完成网络重置。</em></p>
+<p><strong>注意：这两天测试fake-ip模式由于获取不到真是ip造成gitlab runner无法连接，正在考虑使用tproxy透明代理。</strong></p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="network" /><summary type="html"><![CDATA[1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq 删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1 sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf nameserver 127.0.0.1 options edns0 trust-ad search . 注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换 sudo vim /etc/NetworkManager/NetworkManager.conf [main] dns = none 重启networkmanager sudo systemctl restart NetworkManager 编辑dnsmasq配置文件 sudo vim /etc/dnsmasq.d/clash.conf no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash 重新启动dnsmasq sudo systemctl restart dnsmasq clash的dns服务器配置 config.yaml dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host or fake-ip fake-ip-range: 198.18.0.1/16 # Fake IP addresses pool CIDR use-hosts: true # lookup hosts and return IP record nameserver: - 223.5.5.5 # 阿里 19ms - 119.29.29.29 # DNSpod DNS 17ms # 提供 fallback 时，如果GEOIP非 CN 中国时使用 fallback 解析 fallback: - tls://8.8.8.8:53 # Google DNS over TLS 50ms - tls://8.8.4.4:53 # cloudflare DNS over TLS 50ms - https://1.1.1.1/dns-query # cloudflare DNS over HTTPS - https://dns.google/dns-query # Google DNS over HTTPS # 强制DNS解析使用`fallback`配置 fallback-filter: # true: CN使用nameserver解析，非CN使用fallback geoip: true # geoip设置为false时有效： 不匹配`ipcidr`地址时会使用`nameserver`结果，匹配`ipcidr`地址时使用`fallback`结果。 ipcidr: - 240.0.0.0/4 验证dns是否被劫持成功 nslookup www.google.com 出现应答结果即为劫持成功 2.clash tun网卡配置 注：clash需要root权限创建网卡 linux/unix tun: enable: true stack: system auto-route: true auto-detect-interface: true windows tun: enable: true stack: gvisor # or system dns-hijack: - 198.18.0.2:53 # when `fake-ip-range` is 198.18.0.1/16, should hijack 198.18.0.2:53 auto-route: true # auto set global route for Windows # It is recommended to use `interface-name` auto-detect-interface: true # auto detect interface, conflict with `interface-name` 最后重启clash sudo systemctl restart clash 查看clash运行状态 sudo systemctl status clash 3.tun模式退出后网络遇到问题 linux/unix dnsmasq sudo systemctl stop clash sudo systemctl stop dnsmasq sudo systemctl start systemd-resolved sudo resolvectl flush-caches sudo sed -i 's/127.0.0.1/127.0.0.53/g' /etc/resolv.conf sudo systemctl restart clash@dky 注意：由于dns污染问题，正在考虑普通代理模式使用dnsmasq代替systemd-resolved dnsmasq sudo systemctl stop clash sudo mv /etc/dnsmasq.d/clash.conf /etc/dnsmasq.d/clash.conf.bak sudo mv /etc/dnsmasq.d/local.conf.bak /etc/dnsmasq.d/local.conf sudo systemctl restart dnsmasq #重启dnsmasq sudo systemctl restart clash@dky local.conf在普通模式下使用 no-hosts no-resolv server=127.0.0.1#1053 #转发到mosdns的1053端口 clash.conf在tun模式下使用，文件内容与local.conf相同 windows netsh int ip reset netsh winsock reset ipconfig /flushdns 注：windows系统需要重启才能完成网络重置。 注意：这两天测试fake-ip模式由于获取不到真是ip造成gitlab runner无法连接，正在考虑使用tproxy透明代理。]]></summary></entry><entry><title type="html">nginx配置</title><link href="http://localhost:4000/2022/08/10/nginx-config.html" rel="alternate" type="text/html" title="nginx配置" /><published>2022-08-10T00:00:00+08:00</published><updated>2022-08-10T00:00:00+08:00</updated><id>http://localhost:4000/2022/08/10/nginx-config</id><content type="html" xml:base="http://localhost:4000/2022/08/10/nginx-config.html"><![CDATA[<p><em>测试系统：Debian11</em></p>
+<h1 id="section">1.安装升级系统</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+</code></pre></div></div>
+<h1 id="nginx">2.安装nginx</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>nginx
+</code></pre></div></div>
+<h1 id="section-1">3.申请域名</h1>
+<p><em>github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn</em></p>
+<h1 id="section-2">4.申请证书</h1>
+<p><em>zerossl或者letsencrypt即可</em></p>
+<h2 id="section-3">80端口验证</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>python3-certbot-nginx
+</code></pre></div></div>
+<p>安装完成后：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>certbot –nginx
+</code></pre></div></div>
+<h2 id="section-4">邮箱系统验证</h2>
+<h2 id="dns">dns验证</h2>
+<h3 id="section-5">泛域名申请</h3>
+<p><em>以cloudflare为例：</em></p>
+<p><em>创建cloudflare api密钥，记下token</em></p>
+<p><em>创建cloudflare.ini配置文件并放入指定位置</em></p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dns_cloudflare_api_token</span> = <span class="n">your_token</span>
+</code></pre></div></div>
+<p><em>申请证书</em></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certbot certonly <span class="se">\</span>
+  <span class="nt">--dns-cloudflare</span> <span class="se">\</span>
+  <span class="nt">--dns-cloudflare-credentials</span> ~/.secrets/certbot/cloudflare.ini <span class="se">\</span>
+  <span class="nt">-d</span> example.com <span class="se">\</span>
+  <span class="nt">-d</span> www.example.com
+</code></pre></div></div>
+<h3 id="section-6">二级域名申请</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>certbot <span class="nt">-d</span> my.example.com <span class="nt">--manual</span> <span class="nt">--preferred-challenges</span> dns certonly
+</code></pre></div></div>
+<p><em>注：根据提示添加txt域名映射记录，待域名生效后即可回车</em></p>
+<h1 id="nginx-1">5.编辑nginx配置文件</h1>
+<p>编辑/etc/nginx/sites-enabled/default文件</p>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
+
+	<span class="c"># SSL configuration
+</span>	<span class="c">#
+</span>	<span class="c"># listen 443 ssl default_server;
+</span>	<span class="c"># listen [::]:443 ssl default_server;
+</span>	<span class="c">#
+</span>	<span class="c"># Note: You should disable gzip for SSL traffic.
+</span>	<span class="c"># See: https://bugs.debian.org/773332
+</span>	<span class="c">#
+</span>	<span class="c"># Read up on ssl_ciphers to ensure a secure configuration.
+</span>	<span class="c"># See: https://bugs.debian.org/765782
+</span>	<span class="c">#
+</span>	<span class="c"># Self signed certs generated by the ssl-cert package
+</span>	<span class="c"># Don't use them in a production server!
+</span>	<span class="c">#
+</span>	<span class="c"># include snippets/snakeoil.conf;
+</span>
+	<span class="n">root</span> /<span class="n">var</span>/<span class="n">www</span>/<span class="n">html</span>;
+
+	<span class="c"># Add index.php to the list if you are using PHP
+</span>	<span class="n">index</span> <span class="n">index</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">htm</span> <span class="n">index</span>.<span class="n">nginx</span>-<span class="n">debian</span>.<span class="n">html</span> <span class="n">index</span>.<span class="n">php</span>;
+    <span class="n">server_name</span> <span class="n">yourdomain</span>;
+        
+        <span class="n">location</span> / {
+                <span class="n">try_files</span> $<span class="n">uri</span> $<span class="n">uri</span>/ =<span class="m">404</span>;
+        }
+	<span class="c"># pass PHP scripts to FastCGI server
+</span>	<span class="c">#
+</span>	<span class="n">location</span> ~ \.<span class="n">php</span>$ {
+		<span class="n">include</span> <span class="n">snippets</span>/<span class="n">fastcgi</span>-<span class="n">php</span>.<span class="n">conf</span>;
+	
+		<span class="c"># With php-fpm (or other unix sockets):
+</span>		<span class="n">fastcgi_pass</span> <span class="n">unix</span>:/<span class="n">run</span>/<span class="n">php</span>/<span class="n">php7</span>.<span class="m">4</span>-<span class="n">fpm</span>.<span class="n">sock</span>;
+		<span class="c"># With php-cgi (or other tcp sockets):
+</span>		<span class="c"># fastcgi_pass 127.0.0.1:9000;
+</span>	}
+
+	<span class="c"># deny access to .htaccess files, if Apache's document root
+</span>	<span class="c"># concurs with nginx's one
+</span>	<span class="c">#
+</span>	<span class="c">#location ~ /\.ht {
+</span>	<span class="c">#	deny all;
+</span>	<span class="c">#}
+</span>
+    <span class="n">listen</span> [::]:<span class="m">10005</span> <span class="n">ssl</span> <span class="n">ipv6only</span>=<span class="n">on</span>; <span class="c"># managed by Certbot
+</span>    <span class="n">listen</span> <span class="m">10005</span> <span class="n">ssl</span>; <span class="c"># managed by Certbot
+</span>    <span class="n">ssl_certificate</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/<span class="n">yourdomain</span>/<span class="n">fullchain</span>.<span class="n">pem</span>; <span class="c"># managed by Certbot
+</span>    <span class="n">ssl_certificate_key</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">live</span>/<span class="n">yourdomain</span>/<span class="n">privkey</span>.<span class="n">pem</span>; <span class="c"># managed by Certbot
+</span>    <span class="n">include</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">options</span>-<span class="n">ssl</span>-<span class="n">nginx</span>.<span class="n">conf</span>; <span class="c"># managed by Certbot
+</span>    <span class="n">ssl_dhparam</span> /<span class="n">etc</span>/<span class="n">letsencrypt</span>/<span class="n">ssl</span>-<span class="n">dhparams</span>.<span class="n">pem</span>; <span class="c"># managed by Certbot
+</span>
+}
+<span class="n">server</span> {
+    <span class="n">if</span> ($<span class="n">host</span> = <span class="n">yourdomain</span> ) { //<span class="n">http</span>强制跳转至<span class="n">https</span>
+        <span class="n">return</span> <span class="m">301</span> <span class="n">https</span>://$<span class="n">host</span>$<span class="n">request_uri</span>;
+    } <span class="c"># managed by Certbot
+</span>
+
+	<span class="n">listen</span> <span class="m">80</span> ;
+	<span class="n">listen</span> [::]:<span class="m">80</span> ;
+    <span class="n">server_name</span> <span class="n">yourdomain</span>;
+    <span class="n">return</span> <span class="m">404</span>; <span class="c"># managed by Certbot
+</span>
+
+}
+</code></pre></div></div>
+<p>6.启用nginx服务</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl <span class="nb">enable</span> –now nginx
+</code></pre></div></div>
+<p>7.浏览器查看网页</p>]]></content><author><name>duan-dky</name><email>courage159357@gmail.com</email></author><category term="web" /><summary type="html"><![CDATA[测试系统：Debian11 1.安装升级系统 sudo apt update 2.安装nginx sudo apt install nginx 3.申请域名 github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn 4.申请证书 zerossl或者letsencrypt即可 80端口验证 sudo apt install python3-certbot-nginx 安装完成后： sudo certbot –nginx 邮箱系统验证 dns验证 泛域名申请 以cloudflare为例： 创建cloudflare api密钥，记下token 创建cloudflare.ini配置文件并放入指定位置 dns_cloudflare_api_token = your_token 申请证书 certbot certonly \ --dns-cloudflare \ --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini \ -d example.com \ -d www.example.com 二级域名申请 sudo certbot -d my.example.com --manual --preferred-challenges dns certonly 注：根据提示添加txt域名映射记录，待域名生效后即可回车 5.编辑nginx配置文件 编辑/etc/nginx/sites-enabled/default文件 server { # SSL configuration # # listen 443 ssl default_server; # listen [::]:443 ssl default_server; # # Note: You should disable gzip for SSL traffic. # See: https://bugs.debian.org/773332 # # Read up on ssl_ciphers to ensure a secure configuration. # See: https://bugs.debian.org/765782 # # Self signed certs generated by the ssl-cert package # Don't use them in a production server! # # include snippets/snakeoil.conf; root /var/www/html; # Add index.php to the list if you are using PHP index index.html index.htm index.nginx-debian.html index.php; server_name yourdomain; location / { try_files $uri $uri/ =404; } # pass PHP scripts to FastCGI server # location ~ \.php$ { include snippets/fastcgi-php.conf; # With php-fpm (or other unix sockets): fastcgi_pass unix:/run/php/php7.4-fpm.sock; # With php-cgi (or other tcp sockets): # fastcgi_pass 127.0.0.1:9000; } # deny access to .htaccess files, if Apache's document root # concurs with nginx's one # #location ~ /\.ht { # deny all; #} listen [::]:10005 ssl ipv6only=on; # managed by Certbot listen 10005 ssl; # managed by Certbot ssl_certificate /etc/letsencrypt/live/yourdomain/fullchain.pem; # managed by Certbot ssl_certificate_key /etc/letsencrypt/live/yourdomain/privkey.pem; # managed by Certbot include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot } server { if ($host = yourdomain ) { //http强制跳转至https return 301 https://$host$request_uri; } # managed by Certbot listen 80 ; listen [::]:80 ; server_name yourdomain; return 404; # managed by Certbot } 6.启用nginx服务 sudo systemctl enable –now nginx 7.浏览器查看网页]]></summary></entry></feed>
