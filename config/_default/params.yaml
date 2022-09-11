@@ -43,7 +43,6 @@ math:
   #   leqno:
 
 comment:
-  enable: true 
   # Options: disqus, commento, valine and utterances.
   handler:
 
@@ -53,6 +52,7 @@ comment:
   utterances:
     # Browse https://utteranc.es/ to see the options available.
     # If you want the color scheme of utterances to follow eureka's, you can set `theme: eureka`.
+    enable: true 
     repo: duan-dky/duan-dky.github.io
     issue-term: pathname
     theme: eureka
