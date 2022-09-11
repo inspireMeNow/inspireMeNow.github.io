@@ -43,6 +43,7 @@ math:
   #   leqno:
 
 comment:
+  enable: true 
   # Options: disqus, commento, valine and utterances.
   handler:
 
