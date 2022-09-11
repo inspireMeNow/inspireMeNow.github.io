@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>network on 我的博客</title>
+    <link>/zh/tags/network/</link>
+    <description>Recent content in network on 我的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;WANG Chucheng&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;MA Ruiqi&lt;/a&gt;
+</copyright>
+    <lastBuildDate>Wed, 31 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vless配置</title>
+      <link>/zh/posts/2022-08-31-vless-config/</link>
+      <pubDate>Wed, 31 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/posts/2022-08-31-vless-config/</guid>
+      <description>xray安装 注：我使用的是xray内核，v2ray内核应该也可以
+wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray  xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=&amp;quot;XRAY_LOCATION_ASSET=/etc/xray&amp;quot; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target  注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动
+设置systemd服务自动启动
+sudo systemctl enable --now xray  vless+websocket+tls配置 server端 xray配置 { &amp;quot;log&amp;quot;: { &amp;quot;loglevel&amp;quot;: &amp;quot;warning&amp;quot; //日志级别 }, &amp;quot;inbounds&amp;quot;: [ { &amp;quot;port&amp;quot;: 10016, &amp;quot;protocol&amp;quot;: &amp;quot;vless&amp;quot;, &amp;quot;settings&amp;quot;: { &amp;quot;clients&amp;quot;: [ { &amp;quot;id&amp;quot;: &amp;quot;youruuid&amp;quot;, // 填写你的 UUID &amp;quot;level&amp;quot;: 0, &amp;quot;email&amp;quot;: &amp;quot;youremail&amp;quot; } ], &amp;quot;decryption&amp;quot;: &amp;quot;none&amp;quot;, &amp;quot;fallbacks&amp;quot;: [ { &amp;quot;dest&amp;quot;: 80 //回落到nginx的80端口 }, { &amp;quot;path&amp;quot;: &amp;quot;/path&amp;quot;, // 必须换成自定义的 PATH &amp;quot;dest&amp;quot;: 1234, &amp;quot;xver&amp;quot;: 1 } ] }, &amp;quot;streamSettings&amp;quot;: { &amp;quot;network&amp;quot;: &amp;quot;tcp&amp;quot;, &amp;quot;security&amp;quot;: &amp;quot;tls&amp;quot;, &amp;quot;tlsSettings&amp;quot;: { &amp;quot;alpn&amp;quot;: [ &amp;quot;http/1.</description>
+    </item>
+    
+    <item>
+      <title>hysteria配置</title>
+      <link>/zh/posts/2022-08-29-hysteria-config/</link>
+      <pubDate>Mon, 29 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/posts/2022-08-29-hysteria-config/</guid>
+      <description>由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。
+server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64
+编辑配置文件config.json { &amp;quot;listen&amp;quot;: &amp;quot;:37658&amp;quot;, #监听端口 &amp;quot;protocol&amp;quot;: &amp;quot;wechat-video&amp;quot;, #流量类型，支持udp，faketcp，wechat-video &amp;quot;cert&amp;quot;: &amp;quot;/path/to/fullchain.pem&amp;quot;, &amp;quot;key&amp;quot;: &amp;quot;/path/to/privkey.pem&amp;quot;, &amp;quot;alpn&amp;quot;: &amp;quot;h3&amp;quot;, &amp;quot;auth&amp;quot;: { &amp;quot;mode&amp;quot;: &amp;quot;passwords&amp;quot;, &amp;quot;config&amp;quot;: [&amp;quot;yourpassword&amp;quot;] }, &amp;quot;up_mbps&amp;quot;: 100, #限速，建议值不要过高，默认单位：Mbps &amp;quot;down_mbps&amp;quot;: 100 }  启动hysteria ./hysteria -c config.json server  注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https://github.com/HyNetwork/hysteria/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=/etc/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=/usr/bin/hysteria -c /etc/hysteria/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target  重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria  client端 我是用的clash meta核心，它可以进行分流</description>
+    </item>
+    
+    <item>
+      <title>解决dns污染问题</title>
+      <link>/zh/posts/2022-08-26-dns-config/</link>
+      <pubDate>Fri, 26 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/posts/2022-08-26-dns-config/</guid>
+      <description>起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
+配置 dnsmasq 通过dnsmasq-china-list进行dns分流
+安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;amp;&amp;amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降
+mosdns+dnsmasq 安装 mosdns wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir /etc/mosdns sudo cp mosdns /usr/bin sudo cp config.yaml /etc/mosdns //配置文件 wget --no-check-certificate https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O /etc/mosdns/geosite.dat wget --no-check-certificate https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat -O /etc/mosdns/geoip-only-cn-private.dat //中国ip名单  配置文件
+log: level: warn file: &amp;quot;mosdns.log&amp;quot; data_providers: - tag: geosite file: ./geosite.dat auto_reload: true - tag: geoip file: ./geoip-only-cn-private.dat auto_reload: true plugins: # 缓存 - tag: cache type: cache args: size: 4096 lazy_cache_ttl: 172800 # 转发至本地服务器的插件 - tag: forward_local type: fast_forward args: upstream: - addr: tls://223.</description>
+    </item>
+    
+    <item>
+      <title>clash tun模式配置</title>
+      <link>/zh/posts/2022-08-11-clash-tun-mode/</link>
+      <pubDate>Thu, 11 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/posts/2022-08-11-clash-tun-mode/</guid>
+      <description>1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq  删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1
+sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf  nameserver 127.0.0.1 options edns0 trust-ad search .  注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换
+sudo vim /etc/NetworkManager/NetworkManager.conf  [main] dns = none  重启networkmanager
+sudo systemctl restart NetworkManager  编辑dnsmasq配置文件
+sudo vim /etc/dnsmasq.d/clash.conf  no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash  重新启动dnsmasq
+sudo systemctl restart dnsmasq  clash的dns服务器配置
+config.yaml
+dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host or fake-ip fake-ip-range: 198.</description>
+    </item>
+    
+    <item>
+      <title>trojan-go配置</title>
+      <link>/zh/posts/2022-08-10-trojan-config/</link>
+      <pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/zh/posts/2022-08-10-trojan-config/</guid>
+      <description>1.github下载trojan-go二进制文件
+wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip  2.解压trojan-go并放至/usr/bin,赋予其执行权限
+unzip trojan-go-linux-amd64.zip cp trojan-go /usr/bin chmod +x trojan-go  3.将剩余文件放至/etc/trojan-go
+mkdir /etc/trojan-go cp -r * /etc/trojan-go  4.申请trojan-go的证书
+sudo certbot certonly –agree-tos –standalone –no-eff-email -m youremail -d yourdomain  将证书移至/etc/trojan-go中
+sudo cp -r /etc/letsencrypt/archive/yourdomain /etc/trojan-go  5.编辑config.json
+生成随机uuid
+cat /proc/sys/kernel/random/uuid  config.json
+{ &amp;quot;run_type&amp;quot;: &amp;quot;server&amp;quot;, &amp;quot;local_addr&amp;quot;: &amp;quot;0.0.0.0&amp;quot;, &amp;quot;local_port&amp;quot;: 10010, //与nginx共存时不可填写443端口 &amp;quot;remote_addr&amp;quot;: &amp;quot;127.0.0.1&amp;quot;, &amp;quot;remote_port&amp;quot;: 80, //默认返回网页 &amp;quot;password&amp;quot;: [ &amp;quot;yourpassword&amp;quot; //填写自己密码 ], &amp;quot;ssl&amp;quot;: { &amp;quot;cert&amp;quot;: &amp;quot;/etc/trojan-go/yourdomain/fullchain1.pem&amp;quot;, //网站的证书 &amp;quot;key&amp;quot;: &amp;quot;/etc/trojan-go/yourdomain/privkey1.pem&amp;quot;, &amp;quot;fallback&amp;quot;: 10005, //回程默认网页 &amp;quot;sni&amp;quot;: &amp;quot;yourdomain&amp;quot; }, &amp;quot;websocket&amp;quot;: { //ws模式伪装path &amp;quot;enabled&amp;quot;: true, &amp;quot;path&amp;quot;: &amp;quot;/yourpath&amp;quot;, //建议填写随机值 &amp;quot;host&amp;quot;: &amp;quot;yourdomain&amp;quot; } }  6.</description>
+    </item>
+    
+  </channel>
+</rss>

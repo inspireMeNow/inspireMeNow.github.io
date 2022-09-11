@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>fedora基本配置 | My Blogs</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.3" />
+<link rel="stylesheet" href="/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
+<script defer src="/js/eureka.min.fa9a6bf6d7a50bb635b4cca7d2ba5cf3dfb095ae3798773f1328f7950028b48c17d06276594e1b5f244a25a6c969a705.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&amp;family=Noto&#43;Serif&#43;SC:wght@400;600;700&amp;display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/base16/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+<link rel="stylesheet" href="/css/highlightjs.min.2958991528e43eb6fc9b8c4f2b8e052f79c4010718e1d1e888a777620e9ee63021c2c57ec7417a3108019bb8c41943e6.css" media="print" onload="this.media='all';this.onload=null">
+
+
+<script defer type="text/javascript" src="/js/fontawesome.min.5326a287e2fe3a6337c56a59d553a5185a42f32a225d8218eed88c123cf8414ffa5e4bf72982ce3f2ec34aa03959d3b1.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides &quot;*bin/named&quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"fedora基本配置",
+      "item":"/posts/2022-08-03-fedora-config/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/posts/2022-08-03-fedora-config/"
+    },
+    "headline": "fedora基本配置 | My Blogs","datePublished": "2022-08-03T00:00:00+00:00",
+    "dateModified": "2022-08-03T00:00:00+00:00",
+    "wordCount":  409 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "WANG Chucheng",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "1.软件包管理工具 dnf命令 sudo dnf makecache \/\/建立软件包缓存 sudo dnf upgrade \/\/进行软件包更新 sudo dnf upgrade package_name \/\/更新单个软件包 sudo dnf install https:\/\/mirrors.ustc.edu.cn\/rpmfusion\/free\/fedora\/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https:\/\/mirrors.ustc.edu.cn\/rpmfusion\/nonfree\/fedora\/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm \/\/启用rpmfusion软件仓库 dnf search package_name \/\/搜索软件包 dnf list kernel-* \/\/查找软件包，使用通配符 dnf list all \/\/列出所有软件包 dnf list installed package_name \/\/列出已安装软件包 dnf group list \/\/列出所有包组 dnf repolist \/\/列出已启用的软件仓库 dnf repository-packages fedora list \/\/列出来自单个软件仓库的软件包 dnf info package_name \/\/显示单个软件包的信息 dnf repoquery package_name --info \/\/列出具体软件包的所有信息 dnf provides \u0026quot;*bin\/named\u0026quot; \/\/列出哪个软件包提供了该二进制文件 dnf -v group list group_name \/\/列出某个软件包组的详细信息 sudo dnf install package_name \/\/安装单个软件包 sudo dnf install \/usr\/sbin\/named \/\/不知道包名的情况下使用 sudo dnf groupinstall group_nane \/\/安装软件包组 sudo dnf remove package _name \/\/卸载软件包 sudo dnf group remove group_name \/\/卸载软件包组 dnf history list \/\/列出所有事务  2."
+}
+</script><meta property="og:title" content="fedora基本配置 | My Blogs" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/posts/2022-08-03-fedora-config/" />
+
+
+
+
+<meta property="og:description" content="1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides &quot;*bin/named&quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+<meta property="og:locale:alternate" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="My Blogs" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-08-03T00:00:00&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2022-08-03T00:00:00&#43;00:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="linux" />
+
+
+
+
+
+<meta property="og:see_also" content="/zh/posts/2022-08-03-fedora-config/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+            <div class="relative pt-4 ps-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="languageMode">
+                    <i class="fas fa-globe"></i>
+                    <span class="ps-1">English</span>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='languageOptions'>
+                    <a class="px-4 py-1 hover:text-eureka" href="/posts/2022-08-03-fedora-config/">English</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="/zh/posts/2022-08-03-fedora-config/">简体中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+        switchLanguage()
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">fedora基本配置</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-08-03</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h1 id="1软件包管理工具">1.软件包管理工具</h1>
+<h2 id="dnf命令">dnf命令</h2>
+<pre><code class="language-bash">sudo dnf makecache //建立软件包缓存
+
+sudo dnf upgrade //进行软件包更新
+
+sudo dnf upgrade package_name //更新单个软件包
+
+sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库
+
+dnf search package_name //搜索软件包
+
+dnf list kernel-* //查找软件包，使用通配符
+
+dnf list all //列出所有软件包
+
+dnf list installed package_name //列出已安装软件包
+
+dnf group list //列出所有包组
+
+dnf repolist //列出已启用的软件仓库
+
+dnf repository-packages fedora list //列出来自单个软件仓库的软件包
+
+dnf info package_name //显示单个软件包的信息
+
+dnf repoquery package_name --info //列出具体软件包的所有信息
+
+dnf provides &quot;*bin/named&quot; //列出哪个软件包提供了该二进制文件
+
+dnf -v group list group_name //列出某个软件包组的详细信息
+
+sudo dnf install package_name //安装单个软件包
+
+sudo dnf install /usr/sbin/named //不知道包名的情况下使用
+
+sudo dnf groupinstall group_nane //安装软件包组
+
+sudo dnf remove package _name //卸载软件包
+
+sudo dnf group remove group_name //卸载软件包组
+
+dnf history list //列出所有事务
+</code></pre>
+<h1 id="2驱动安装">2.驱动安装</h1>
+<h2 id="显卡">显卡</h2>
+<pre><code class="language-bash">lspci -k | grep -EA3 'VGA|3D|Display' //查看显卡型号
+</code></pre>
+<h3 id="amd-intel显卡免驱">AMD, Intel显卡免驱</h3>
+<pre><code class="language-bash">lsmod|grep amdgpu //查看模块加载情况
+</code></pre>
+<h3 id="nvidia-显卡驱动安装">NVIDIA 显卡驱动安装</h3>
+<h4 id="1进行软件包更新">1.进行软件包更新</h4>
+<pre><code class="language-bash">sudo dnf update  --refresh
+</code></pre>
+<h4 id="2-安装驱动程序及其依赖">2. 安装驱动程序及其依赖</h4>
+<pre><code class="language-bash">sudo dnf install gcc kernel-headers kernel-devel akmod-nvidia xorg-x11-drv-nvidia xorg-x11-drv-nvidia-libs xorg-x11-drv-nvidia-libs.i686
+</code></pre>
+<h4 id="3等待驱动模块加载过程需要510分钟">3.等待驱动模块加载，过程需要5~10分钟</h4>
+<pre><code class="language-bash">ps -e | grep akmods //执行命令无输出说明模块安装完成
+</code></pre>
+<h4 id="4强制从更新的内核模块中读取配置">4.强制从更新的内核模块中读取配置</h4>
+<pre><code class="language-bash">sudo akmods --force
+
+sudo dracut --force
+</code></pre>
+<h4 id="5命令完成后重新启动系统">5.命令完成后重新启动系统</h4>
+<pre><code class="language-bash">sudo reboot
+</code></pre>
+<pre><code class="language-bash">lsmod | grep nvidia //查看模块加载情况
+</code></pre>
+<h2 id="网卡">网卡</h2>
+<h3 id="intel">intel</h3>
+<p><em>fedora预置了iwlwifi驱动模块，故可以即插即用。</em><br>
+<em>若其他系统比如debian默认没有预置需要添加non-free源并安装firmware-nonfree包,<del>也可以将固件下载下来复制到/lib/firmware</del></em> <br>
+<em>近期我将预置的我将预置的wpa_supplicant换成了iwd，fedora提供了iwd的包</em></p>
+<h4 id="安装">安装</h4>
+<pre><code class="language-bash">sudo dnf install iwd
+</code></pre>
+<h4 id="停止并屏蔽wpa_supplicant">停止并屏蔽wpa_supplicant</h4>
+<pre><code class="language-bash">sudo systemctl stop wpa_supplicant
+
+sudo systemctl mask wpa_supplicant
+</code></pre>
+<h4 id="设置自动启动">设置自动启动</h4>
+<pre><code class="language-bash">sudo systemctl enable --now iwd
+</code></pre>
+<h3 id="设置networkmanager">设置NetworkManager</h3>
+<p><em>由于NetworkManager默认以wpa_supplicant为后端，因此需要更改后端为iwd</em></p>
+<pre><code class="language-bash">sudo vim /etc/NetworkManager/conf.d/iwd.conf
+</code></pre>
+<pre><code class="language-conf">[device]
+wifi.backend=iwd
+wifi.iwd.autoconnect=yes
+</code></pre>
+<h3 id="重启networkmanager">重启NetworkManager</h3>
+<pre><code class="language-bash">sudo systemctl restart NetworkManager
+</code></pre>
+<h1 id="realtek">realtek</h1>
+<p><em>你可能需要自己编译驱动，源码请自行寻找。</em></p>
+<h1 id="3-systemd服务">3. systemd服务</h1>
+<pre><code class="language-bash">systemctl start service_name //启动服务
+
+systemctl restart service_name //重启服务
+
+systemctl enable service_name //服务自动启动
+
+systemctl disable service_name //服务取消自动启动
+
+systemctl mask service_name //屏蔽服务
+
+systemctl is-enabled service_name //查看服务是否自动启动
+
+systemctl edit httpd.service //编辑服务
+</code></pre>
+<pre><code class="language-bash">vim /etc/systemd/system/foo.service //新建服务
+</code></pre>
+<pre><code class="language-conf">//示例
+[Unit]
+Description=frpc //服务描述
+After=network.target //在网络连接激活后启动
+
+[Service]
+Type=simple //服务类型
+ExecStart=/usr/bin/frpc -c frp.ini //命令
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<pre><code class="language-bash">systemctl status service_name //查看服务运行状态
+
+journalctl -u service_name //查看服务运行日志
+
+journalctl --vacuum-size=1M //清理运行日志
+</code></pre>
+<h1 id="4vim命令">4.vim命令</h1>
+<h2 id="命令模式">命令模式</h2>
+<dl>
+<dt>i 进入编辑模式</dt>
+<dt>x 删除当前光标所在处的字符</dt>
+<dd>切换到底线命令模式</dd>
+</dl>
+<h2 id="输入模式">输入模式</h2>
+<p><em>回车键换行</em><br>
+<em>退格键删除光标前一个字符</em><br>
+*删除键删除光标后一个字符 *
+<em>方向键在文本中移动光标</em><br>
+<em>HOME/END移动光标到行首/行尾</em>
+<em>Page Up/Page Down上/下翻页</em><br>
+<em>Insert切换光标为输入/替换模式，光标将变成竖线/下划线</em><br>
+<em>ESC退出输入模式，切换到命令模式</em></p>
+<p><em>输入“/”搜索字符串，回车后跳转到对应字符串位置</em></p>
+<h1 id="5kvm虚拟化">5.KVM虚拟化</h1>
+<pre><code class="language-bash">egrep '^flags.*(vmx|svm)' /proc/cpuinfo //查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化
+
+sudo dnf install @virtualization //安装虚拟化包组
+
+sudo systemctl enable --now libvirtd //设置libvirtd自动启动并启动服务
+
+lsmod | grep kvm //查看KVM内核模块是否加载
+</code></pre>
+<h2 id="使用virsh-install配置">使用virsh-install配置</h2>
+<pre><code class="language-bash">sudo virt-install --name Fedora \
+--description 'Fedora' \
+--ram 4096 \
+--vcpus 4 \
+--disk path=/var/lib/libvirt/images/linux.qcow2,size=20 \
+--os-type linux \
+--os-variant fedora36 \
+--network bridge=virbr0 \
+--graphics vnc,listen=127.0.0.1,port=5901 \
+--cdrom Fedora-Workstation-Live-x86-64-36-1.1.iso \
+--noautoconsole
+</code></pre>
+<h2 id="使用virt-manager配置">使用virt-manager配置</h2>
+<h3 id="根据gui界面管理">根据gui界面管理</h3>
+<h2 id="使用virsh配置">使用virsh配置</h2>
+<pre><code class="language-bash">virsh create machine_name //创建虚拟机
+
+virsh list --all //列出所有虚拟机
+
+virsh dumpxml &lt;virtual machine (name | id | uuid) //导出配置文件
+
+virsh shutdown machine_name //虚拟机关机
+
+virsh destroy machine_name //虚拟机强制关机
+</code></pre>
+<h1 id="6启用flathub软件仓库">6.启用flathub软件仓库</h1>
+<p><em>添加软件源</em></p>
+<pre><code class="language-bash">flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+</code></pre>
+<p><em>搜索软件包</em></p>
+<pre><code class="language-bash">flatpak --user search package_name
+</code></pre>
+<p><em>安装软件包</em></p>
+<pre><code class="language-bash">flatpak --user install package_name
+</code></pre>
+<p><em>删除软件包</em></p>
+<pre><code class="language-bash">flatpak --user remove package_name
+</code></pre>
+<h1 id="7端口被占用解决方法">7.端口被占用解决方法</h1>
+<h2 id="查看占用端口的程序">查看占用端口的程序</h2>
+<p><em>lsof命令</em></p>
+<pre><code class="language-bash">lsof -i:port_number
+</code></pre>
+<p><em>netstat命令</em></p>
+<pre><code class="language-bash">netstat -tunlp | grep port_number
+</code></pre>
+<h2 id="杀死占用端口的程序">杀死占用端口的程序</h2>
+<pre><code class="language-bash">kill -9 PID
+</code></pre>
+<h1 id="8开启sysrq">8.开启sysrq</h1>
+<pre><code class="language-bash">sudo vim /etc/sysctl.d/90-sysrq.conf
+</code></pre>
+<pre><code class="language-conf">kernel.sysrq = 1
+</code></pre>
+<p>注：需重启电脑或<del>sysctl -p</del>生效</p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="/tags/linux/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#linux</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="/posts/2022-08-05-git-config/" class="block">git配置</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="/posts/2022-07-31-frp-config/" class="block">frp内网穿透</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="/zh/posts/2022-08-03-fedora-config/" class="no-underline">fedora基本配置</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.highlightAll();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">WANG Chucheng</a> and <a href="https://www.ruiqima.com/">MA Ruiqi</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

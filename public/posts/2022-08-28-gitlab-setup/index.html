@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>自建gitlab | My Blogs</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.3" />
+<link rel="stylesheet" href="/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
+<script defer src="/js/eureka.min.fa9a6bf6d7a50bb635b4cca7d2ba5cf3dfb095ae3798773f1328f7950028b48c17d06276594e1b5f244a25a6c969a705.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&amp;family=Noto&#43;Serif&#43;SC:wght@400;600;700&amp;display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/base16/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+<link rel="stylesheet" href="/css/highlightjs.min.2958991528e43eb6fc9b8c4f2b8e052f79c4010718e1d1e888a777620e9ee63021c2c57ec7417a3108019bb8c41943e6.css" media="print" onload="this.media='all';this.onload=null">
+
+
+<script defer type="text/javascript" src="/js/fontawesome.min.5326a287e2fe3a6337c56a59d553a5185a42f32a225d8218eed88c123cf8414ffa5e4bf72982ce3f2ec34aa03959d3b1.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="安装方式 我选的docker镜像，方便管理
+1.拉取docker镜像 docker pull gitlab/gitlab-ee:latest  2.设置gitlab存储位置 export GITLAB_HOME=/srv/gitlab #自己设置位置  3.运行docker镜像 sudo docker run --detach \ --hostname gitlab.example.com \ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口 --name gitlab \ --restart always \ #设置自动启动 --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点 --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \ --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \ --shm-size 256m \ gitlab/gitlab-ee:latest  4.查看gitlab运行日志 sudo docker logs -f gitlab  注：成功后即可打开浏览器输入localhost进入登录界面
+5.获取管理员初始密码 sudo docker exec -it gitlab grep &#39;Password:&#39; /etc/gitlab/initial_root_password  注：请在24小时内修改密码，否则密码将会失效
+6.gitlab配置 由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx
+禁用内建nginx nginx[&#39;enable&#39;] = false  设置web服务器用户 web_server[&#39;external_users&#39;] = [&#39;www-data&#39;]  将web服务器添加到受信任的代理列表中 gitlab_rails[&#39;trusted_proxies&#39;] = [ &#39;192.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"自建gitlab",
+      "item":"/posts/2022-08-28-gitlab-setup/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "/posts/2022-08-28-gitlab-setup/"
+    },
+    "headline": "自建gitlab | My Blogs","datePublished": "2022-08-28T00:00:00+00:00",
+    "dateModified": "2022-08-28T00:00:00+00:00",
+    "wordCount":  379 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "WANG Chucheng",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "/images/icon.png"
+        }
+        },
+    "description": "安装方式 我选的docker镜像，方便管理\n1.拉取docker镜像 docker pull gitlab\/gitlab-ee:latest  2.设置gitlab存储位置 export GITLAB_HOME=\/srv\/gitlab #自己设置位置  3.运行docker镜像 sudo docker run --detach \\ --hostname gitlab.example.com \\ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \\ #换成自己的端口 --name gitlab \\ --restart always \\ #设置自动启动 --volume $GITLAB_HOME\/config:\/etc\/gitlab:Z \\ #相当于文件挂载点 --volume $GITLAB_HOME\/logs:\/var\/log\/gitlab:Z \\ --volume $GITLAB_HOME\/data:\/var\/opt\/gitlab:Z \\ --shm-size 256m \\ gitlab\/gitlab-ee:latest  4.查看gitlab运行日志 sudo docker logs -f gitlab  注：成功后即可打开浏览器输入localhost进入登录界面\n5.获取管理员初始密码 sudo docker exec -it gitlab grep \u0027Password:\u0027 \/etc\/gitlab\/initial_root_password  注：请在24小时内修改密码，否则密码将会失效\n6.gitlab配置 由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx\n禁用内建nginx nginx[\u0027enable\u0027] = false  设置web服务器用户 web_server[\u0027external_users\u0027] = [\u0027www-data\u0027]  将web服务器添加到受信任的代理列表中 gitlab_rails[\u0027trusted_proxies\u0027] = [ \u0027192."
+}
+</script><meta property="og:title" content="自建gitlab | My Blogs" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="/images/icon.png">
+
+
+<meta property="og:url" content="/posts/2022-08-28-gitlab-setup/" />
+
+
+
+
+<meta property="og:description" content="安装方式 我选的docker镜像，方便管理
+1.拉取docker镜像 docker pull gitlab/gitlab-ee:latest  2.设置gitlab存储位置 export GITLAB_HOME=/srv/gitlab #自己设置位置  3.运行docker镜像 sudo docker run --detach \ --hostname gitlab.example.com \ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口 --name gitlab \ --restart always \ #设置自动启动 --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点 --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \ --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \ --shm-size 256m \ gitlab/gitlab-ee:latest  4.查看gitlab运行日志 sudo docker logs -f gitlab  注：成功后即可打开浏览器输入localhost进入登录界面
+5.获取管理员初始密码 sudo docker exec -it gitlab grep &#39;Password:&#39; /etc/gitlab/initial_root_password  注：请在24小时内修改密码，否则密码将会失效
+6.gitlab配置 由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx
+禁用内建nginx nginx[&#39;enable&#39;] = false  设置web服务器用户 web_server[&#39;external_users&#39;] = [&#39;www-data&#39;]  将web服务器添加到受信任的代理列表中 gitlab_rails[&#39;trusted_proxies&#39;] = [ &#39;192." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+<meta property="og:locale:alternate" content="zh" />
+
+
+
+
+<meta property="og:site_name" content="My Blogs" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-08-28T00:00:00&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2022-08-28T00:00:00&#43;00:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="git" />
+
+
+
+
+
+<meta property="og:see_also" content="/zh/posts/2022-08-28-gitlab-setup/" />
+
+<meta property="og:see_also" content="/zh/posts/2022-08-05-git-config/" />
+
+<meta property="og:see_also" content="/posts/2022-08-05-git-config/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+            <div class="relative pt-4 ps-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="languageMode">
+                    <i class="fas fa-globe"></i>
+                    <span class="ps-1">English</span>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='languageOptions'>
+                    <a class="px-4 py-1 hover:text-eureka" href="/posts/2022-08-28-gitlab-setup/">English</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="/zh/posts/2022-08-28-gitlab-setup/">简体中文</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+        switchLanguage()
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">自建gitlab</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-08-28</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h1 id="安装方式">安装方式</h1>
+<p><em>我选的docker镜像，方便管理</em></p>
+<h2 id="1拉取docker镜像">1.拉取docker镜像</h2>
+<pre><code class="language-bash">docker pull gitlab/gitlab-ee:latest
+</code></pre>
+<h2 id="2设置gitlab存储位置">2.设置gitlab存储位置</h2>
+<pre><code class="language-bash">export GITLAB_HOME=/srv/gitlab #自己设置位置
+</code></pre>
+<h2 id="3运行docker镜像">3.运行docker镜像</h2>
+<pre><code class="language-bash">sudo docker run --detach \
+  --hostname gitlab.example.com \ #外部url，服务器域名
+  --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口
+  --name gitlab \
+  --restart always \ #设置自动启动
+  --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点
+  --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \
+  --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \
+  --shm-size 256m \
+  gitlab/gitlab-ee:latest
+</code></pre>
+<h2 id="4查看gitlab运行日志">4.查看gitlab运行日志</h2>
+<pre><code class="language-bash">sudo docker logs -f gitlab
+</code></pre>
+<p><em>注：成功后即可打开浏览器输入localhost进入登录界面</em></p>
+<h2 id="5获取管理员初始密码">5.获取管理员初始密码</h2>
+<pre><code class="language-bash">sudo docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+</code></pre>
+<p><strong>注：请在24小时内修改密码，否则密码将会失效</strong></p>
+<h2 id="6gitlab配置">6.gitlab配置</h2>
+<p><em>由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx</em></p>
+<h3 id="禁用内建nginx">禁用内建nginx</h3>
+<pre><code class="language-conf">nginx['enable'] = false
+</code></pre>
+<h3 id="设置web服务器用户">设置web服务器用户</h3>
+<pre><code class="language-conf">web_server['external_users'] = ['www-data']
+</code></pre>
+<h3 id="将web服务器添加到受信任的代理列表中">将web服务器添加到受信任的代理列表中</h3>
+<pre><code class="language-conf">gitlab_rails['trusted_proxies'] = [ '192.168.1.0/24', '192.168.2.1', '2001:0db8::/32' ]
+</code></pre>
+<h3 id="允许gitlab-workhorse监听tcp端口">允许GitLab Workhorse监听TCP端口</h3>
+<pre><code class="language-conf">gitlab_workhorse['listen_network'] = &quot;tcp&quot;
+gitlab_workhorse['listen_addr'] = &quot;127.0.0.1:8181&quot;
+</code></pre>
+<h3 id="外部nginx服务器设置反向代理">外部nginx服务器设置反向代理</h3>
+<pre><code class="language-conf">server {
+  ## Either remove &quot;default_server&quot; from the listen line below,
+  ## or delete the /etc/nginx/sites-enabled/default file. This will cause gitlab
+  ## to be served if you visit any address that your server responds to, eg.
+  ## the ip address of the server (http://x.x.x.x/)n 0.0.0.0:80 default_server;
+  listen 0.0.0.0:80;
+  listen [::]:80;
+  server_name _; ## Replace this with something like gitlab.example.com
+  server_tokens off; ## Don't show the nginx version number, a security best practice
+  # root /opt/gitlab/embedded/service/gitlab-rails/public;
+
+  ## See app/controllers/application_controller.rb for headers set
+
+  ## Individual nginx logs for this GitLab vhost
+  # access_log  /var/log/nginx/gitlab_access.log;
+  # error_log   /var/log/nginx/gitlab_error.log;
+  include /etc/nginx/default.d/*.conf;
+  location / {
+    client_max_body_size 0; #不限制上传大小
+    gzip off;
+
+    ## https://github.com/gitlabhq/gitlabhq/issues/694
+    ## Some requests take more than 30 seconds.
+    proxy_read_timeout      300;
+    proxy_connect_timeout   300;
+    proxy_redirect          off;
+
+    proxy_http_version 1.1;
+
+    proxy_set_header    Host                $http_host;
+    proxy_set_header    X-Real-IP           $remote_addr;
+    proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+    proxy_set_header    X-Forwarded-Proto   $scheme;
+
+    proxy_pass http://127.0.0.1:8181/; # 转发到8181端口
+  }
+}
+</code></pre>
+<h1 id="实际使用">实际使用</h1>
+<p><em>由于gitlab占用内存太大，故做以下调整</em></p>
+<pre><code class="language-conf">puma['worker_processes'] = 2
+postgresql['shared_buffers'] = &quot;256MB&quot;
+</code></pre>
+<p><em>其他优化方式可查看<a href="https://docs.gitlab.com/omnibus/settings/memory_constrained_envs.html">Running GitLab in a memory-constrained environment</a></em></p>
+<p><em>效果：实际比之前少了一半内存占用，还行</em></p>
+<h1 id="gitlab-runner配置">gitlab runner配置</h1>
+<p><em>我是用的是docker镜像</em></p>
+<h2 id="拉取镜像">拉取镜像</h2>
+<pre><code class="language-bash">docker pull gitlab/gitlab-runner:latest
+</code></pre>
+<h2 id="运行镜像">运行镜像</h2>
+<pre><code class="language-bash">docker run -d --name gitlab-runner --restart always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner:Z \
+  gitlab/gitlab-runner:latest
+</code></pre>
+<h2 id="设置与gitlab的连接">设置与gitlab的连接</h2>
+<h3 id="获取gitlab-ci-token">获取gitlab ci token</h3>
+<h3 id="注册runner">注册runner</h3>
+<pre><code class="language-bash">docker exec -it gitlab-runner gitlab-runner register
+</code></pre>
+<p><strong>注：由于网络环境影响，下载依赖较慢，故为docker镜像配置代理</strong></p>
+<h3 id="为docker配置代理">为docker配置代理</h3>
+<p><em>编辑/etc/systemd/system/docker.service.d/http-proxy.conf文件</em></p>
+<pre><code class="language-conf">[Service]
+Environment=&quot;HTTP_PROXY=http://127.0.0.1:7890&quot;
+Environment=&quot;HTTPS_PROXY=http://127.0.0.1:7890&quot;
+Environment=&quot;NO_PROXY=localhost,127.0.0.0/8,::1&quot; #局域网直连
+</code></pre>
+<p><em>重载systemd服务</em></p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre>
+<h3 id="为gitlab-runner配置代理">为gitlab runner配置代理</h3>
+<p>编辑/srv/gitlab-runner/config/config.toml文件，在[[runners]]处加入以下内容</p>
+<pre><code class="language-conf">pre_clone_script = &quot;git config --global http.proxy $HTTP_PROXY; git config --global https.proxy $HTTPS_PROXY&quot; #为git配置代理
+environment = [&quot;https_proxy=http://172.17.0.1:7890&quot;, &quot;http_proxy=http://172.17.0.1:7890&quot;, &quot;HTTPS_PROXY=172.17.0.1:7890&quot;, &quot;HTTP_PROXY=172.17.0.1:7890&quot;]
+</code></pre>
+<h3 id="测试gitlab-runner">测试gitlab runner</h3>
+<p><em>在项目根目录新建.gitlab-ci.yml文件，以下为示例</em></p>
+<pre><code class="language-yaml">image: ruby:latest
+
+variables:
+  JEKYLL_ENV: production
+  LC_ALL: C.UTF-8
+
+before_script:
+  - gem install bundler #部署之前安装依赖
+  - bundle install
+
+test:
+  stage: test
+  script:
+  - bundle exec jekyll build -d test #测试命令
+  artifacts:
+    paths:
+    - test
+  except:
+  - master
+
+pages:
+  stage: deploy #部署命令
+  script:
+  - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+</code></pre>
+<p><em>在web界面查看部署情况</em></p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="/tags/git/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#git</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="/posts/2022-08-29-hysteria-config/" class="block">hysteria配置</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="/posts/2022-08-26-dns-config/" class="block">解决dns污染问题</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="/zh/posts/2022-08-28-gitlab-setup/" class="no-underline">自建gitlab</a>
+          <br />
+        
+          <a href="/zh/posts/2022-08-05-git-config/" class="no-underline">git配置</a>
+          <br />
+        
+          <a href="/posts/2022-08-05-git-config/" class="no-underline">git配置</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.highlightAll();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">WANG Chucheng</a> and <a href="https://www.ruiqima.com/">MA Ruiqi</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+title: c++链表
+tags: 
+  - c++
+key: c++link
+date: '2022-04-24'
+lastmod: '2022-04-24'
+---
+//查找元素
+```c++
+std::pair<int, int> getElem(int a,list *l1)
+{
+
+    list *b=l1;
+    int count=0;
+    for(;b->next!=NULL;b=b->next){
+        if(a==b->a){
+            return std::pair<int, int>(a,count); //返回元素和下标
+        }
+        count++;
+    }
+    if(b->a==a){
+        return std::pair<int, int>(a,count); //未找到返回-1
+    }
+    return std::pair<int, int>(a,-1);
+    
+}
+```
