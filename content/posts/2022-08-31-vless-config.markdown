@@ -5,6 +5,7 @@ tags:
 key: vless-config 
 date: '2022-08-31'
 lastmod: '2022-08-31'
+enableComment: true
 ---
 # xray安装
 *注：我使用的是xray内核，v2ray内核应该也可以*  
