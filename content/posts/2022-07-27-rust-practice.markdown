@@ -5,9 +5,6 @@ tags:
 key: rust-learning
 date: '2022-07-27'
 lastmod: '2022-07-27'
-toc: true
-draft: false
-enableComment: true
 ---
 
 1.rust函数
