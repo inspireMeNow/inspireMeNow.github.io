@@ -7,7 +7,6 @@ section: posts
 count: 5
 # Options: card, plain and masonry.
 style: plain
-enableComment: true
 weight: 2
 widget:
   handler: pages

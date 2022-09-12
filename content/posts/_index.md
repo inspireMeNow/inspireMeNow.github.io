@@ -1,4 +1,3 @@
 ---
 title: Posts
-enableComment: true
 ---
