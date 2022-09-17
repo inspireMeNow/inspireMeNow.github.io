@@ -46,9 +46,9 @@ widget:
     attachment: 
 ---
 
-## Self Introduction
+## 自我介绍
 
 我是大学CS本科生，主要学习linux和网络安全相关知识。
 
-## Details  
+## 项目 
 
