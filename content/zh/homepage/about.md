@@ -3,7 +3,7 @@ title: Duan Dky
 draft: false
 role: 在校大学生
 avatar: images/icon.png
-bio: Aenean vel bibendum quam. Aliquam at mollis quam. Proin efficitur.
+bio: 做最好的自己
 organization:
   name: 大学
   url: https://duan-dky.me/

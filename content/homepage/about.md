@@ -3,7 +3,7 @@ title: Duan Dky
 draft: false
 role: CS Undergraduate
 avatar: images/icon.png
-bio: Aenean vel bibendum quam. Aliquam at mollis quam. Proin efficitur.
+bio: Be the best you can be.
 organization:
   name: University
   url: https://duan-dky.me/
