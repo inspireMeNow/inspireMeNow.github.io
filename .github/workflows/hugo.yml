@@ -32,8 +32,6 @@ jobs:
     env:
       HUGO_VERSION: 0.102.3
     steps:
-      - name: Install rsync
-        run: sudo apt -y install rsync
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb \
@@ -71,6 +69,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v1
       - name: Deploy to Server
+        run: sudo apt -y install rsync
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
