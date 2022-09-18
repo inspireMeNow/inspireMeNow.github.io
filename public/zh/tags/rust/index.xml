@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rust on 我的博客</title>
-    <link>/zh/tags/rust/</link>
+    <link>https://duan-dky.me/zh/tags/rust/</link>
     <description>Recent content in rust on 我的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;WANG Chucheng&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;MA Ruiqi&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Wed, 27 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://duan-dky.me/zh/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>rust学习</title>
-      <link>/zh/posts/2022-07-27-rust-practice/</link>
+      <link>https://duan-dky.me/zh/posts/2022-07-27-rust-practice/</link>
       <pubDate>Wed, 27 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-07-27-rust-practice/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-07-27-rust-practice/</guid>
       <description>1.rust函数
 fn main(){ //主函数 println!(&amp;quot;hello world!&amp;quot;); }  2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。
 声明变量使用let关键字。

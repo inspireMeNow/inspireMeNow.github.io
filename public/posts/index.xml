@@ -2,28 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on My Blogs</title>
-    <link>/posts/</link>
+    <link>https://duan-dky.me/posts/</link>
     <description>Recent content in Posts on My Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;WANG Chucheng&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;MA Ruiqi&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Sat, 03 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://duan-dky.me/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>mailgun收发邮件</title>
-      <link>/posts/2022-09-03-mailgun-setup/</link>
-      <pubDate>Sat, 03 Sep 2022 00:00:00 +0000</pubDate>
+      <link>https://duan-dky.me/posts/2022-09-14-mailgun-setup/</link>
+      <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-09-03-mailgun-setup/</guid>
-      <description></description>
+      <guid>https://duan-dky.me/posts/2022-09-14-mailgun-setup/</guid>
+      <description>暑假小组合作做的项目java-gradesystem需要做邮箱验证，申请了mailgun帐号，准备用java实现一个发送邮件的功能
+发送邮件 使用mailgun api java MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(apikey) .createApi(MailgunMessagesApi.class); Message message = Message.builder() .from(&amp;quot;STD成绩管理系统 &amp;lt;postmaster@yourdomain&amp;gt;&amp;quot;) .to(email) .subject(subject) .text(post) .build(); MessageResponse messageResponse = mailgunMessagesApi.sendMessage(&amp;quot;yourdomain&amp;quot;, message);  注：apikey和yourdomain填成自己的
+python def send_simple_message(): return requests.post( &amp;quot;https://api.mailgun.net/v3/duan-dky.me/messages&amp;quot;, auth=(&amp;quot;api&amp;quot;, &amp;quot;apikey&amp;quot;), data={&amp;quot;from&amp;quot;: &amp;quot;postmaster@yourdomain&amp;quot;, &amp;quot;to&amp;quot;: [&amp;quot;mail@example.com&amp;quot;, &amp;quot;postmaster@yourdomain&amp;quot;], &amp;quot;subject&amp;quot;: subject, &amp;quot;text&amp;quot;: post})  javascript const apiKey = &#39;apikey&#39;; const domain = &#39;yourdomain&#39;; const mailgun = require(&#39;mailgun-js&#39;)({ domain, apiKey }); mailgun. messages(). send({ from: `test@${domain}`, to: email, subject: subject, text: post }). then(res =&amp;gt; console.</description>
+    </item>
+    
+    <item>
+      <title>记录一次jsp与servlet之间传递表单时遇到的问题</title>
+      <link>https://duan-dky.me/posts/2022-09-14-servet-post/</link>
+      <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://duan-dky.me/posts/2022-09-14-servet-post/</guid>
+      <description>jsp提交表单时遇到一个问题，我需要提交两个表单，但是其中一个表单嵌套在另外一个表单中，尝试了嵌套表单，但是提交失败，servlet获取不到对应的参数于是尝试了js生成一个表单提交
+&amp;lt;div class=&amp;quot;body-content-list&amp;quot;&amp;gt; &amp;lt;span class=&amp;quot;input-name&amp;quot;&amp;gt;电子邮件:&amp;lt;/span&amp;gt; &amp;lt;input type=&amp;quot;text&amp;quot; class=&amp;quot;input-style&amp;quot; id=&amp;quot;email&amp;quot; name=&amp;quot;email&amp;quot; value=&amp;quot;${requestScope.email}&amp;quot; placeholder=&amp;quot;请填写电子邮箱地址&amp;quot; onchange=&amp;quot;checkEmail()&amp;quot; onkeyup=&amp;quot;value=value.replace(/[^\w\@\_\.]/ig,&#39;&#39;)&amp;quot;/&amp;gt; &amp;lt;div id=&amp;quot;chkEmail&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;quot;body-content-list2&amp;quot;&amp;gt; &amp;lt;span class=&amp;quot;input-name&amp;quot;&amp;gt;邮箱验证:&amp;lt;/span&amp;gt; &amp;lt;input type=&amp;quot;text&amp;quot; class=&amp;quot;input-style&amp;quot; id=&amp;quot;confirmId&amp;quot; name=&amp;quot;confirmId&amp;quot; value=&amp;quot;${requestScope.confirmId}&amp;quot; placeholder=&amp;quot;请填写邮箱验证码&amp;quot;/&amp;gt; &amp;lt;div class=&amp;quot;last-info&amp;quot;&amp;gt; &amp;lt;span id=&amp;quot;confirmEmail&amp;quot;&amp;gt;&amp;lt;button type=&amp;quot;button&amp;quot; class=&amp;quot;btn btn-blue&amp;quot; id=&amp;quot;confirm&amp;quot; style=&amp;quot;min-width: 45px;text-align: center;font-size: 30px;background-color:#2a66e1;color: white;&amp;quot; onclick=&amp;quot;sendEmail()&amp;quot;&amp;gt;获取验证码&amp;lt;/button&amp;gt;&amp;lt;/span&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div id=&amp;quot;chksend&amp;quot; style=&amp;quot;font-size:12px;&amp;quot;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt;  注：button的type需要设置成button，阻止提交表单，鼠标点击事件执行js代码，requestScope用于获取servlet提交的参数。
+function sendEmail(){ var email=document.getElementById(&amp;quot;email&amp;quot;).value; var universityId=document.getElementById(&amp;quot;universityId&amp;quot;).value; var Urole=document.getElementById(&amp;quot;Urole&amp;quot;).value; let form=document.createElement(&#39;form&#39;); //创建表单 form.action = &amp;quot;userServlet?action=sendEmail&amp;quot;; //跳转到servlet form.method = &amp;quot;POST&amp;quot;; //设置POST请求 form.innerHTML = &#39;&amp;lt;input name=&amp;quot;email&amp;quot; value=&amp;quot;&#39;+email+&#39;&amp;quot;&amp;gt;&#39;+&#39;\n&#39;+&#39;&amp;lt;input name=&amp;quot;universityId&amp;quot; value=&amp;quot;&#39;+universityId+&#39;&amp;quot;&amp;gt;&#39;+&#39;\n&#39;+&#39;&amp;lt;input name=&amp;quot;Urole&amp;quot; value=&amp;quot;&#39;+Urole+&#39;&amp;quot;&amp;gt;&#39;; //表单内容 document.</description>
     </item>
     
     <item>
       <title>vless配置</title>
-      <link>/posts/2022-08-31-vless-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-31-vless-config/</link>
       <pubDate>Wed, 31 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-31-vless-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-31-vless-config/</guid>
       <description>xray安装 注：我使用的是xray内核，v2ray内核应该也可以
 wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray  xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=&amp;quot;XRAY_LOCATION_ASSET=/etc/xray&amp;quot; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target  注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动
 设置systemd服务自动启动
@@ -32,10 +45,10 @@ sudo systemctl enable --now xray  vless+websocket+tls配置 server端 xray配置
     
     <item>
       <title>hysteria配置</title>
-      <link>/posts/2022-08-29-hysteria-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-29-hysteria-config/</link>
       <pubDate>Mon, 29 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-29-hysteria-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-29-hysteria-config/</guid>
       <description>由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。
 server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64
 编辑配置文件config.json { &amp;quot;listen&amp;quot;: &amp;quot;:37658&amp;quot;, #监听端口 &amp;quot;protocol&amp;quot;: &amp;quot;wechat-video&amp;quot;, #流量类型，支持udp，faketcp，wechat-video &amp;quot;cert&amp;quot;: &amp;quot;/path/to/fullchain.pem&amp;quot;, &amp;quot;key&amp;quot;: &amp;quot;/path/to/privkey.pem&amp;quot;, &amp;quot;alpn&amp;quot;: &amp;quot;h3&amp;quot;, &amp;quot;auth&amp;quot;: { &amp;quot;mode&amp;quot;: &amp;quot;passwords&amp;quot;, &amp;quot;config&amp;quot;: [&amp;quot;yourpassword&amp;quot;] }, &amp;quot;up_mbps&amp;quot;: 100, #限速，建议值不要过高，默认单位：Mbps &amp;quot;down_mbps&amp;quot;: 100 }  启动hysteria ./hysteria -c config.json server  注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https://github.com/HyNetwork/hysteria/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=/etc/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=/usr/bin/hysteria -c /etc/hysteria/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target  重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria  client端 我是用的clash meta核心，它可以进行分流</description>
@@ -43,10 +56,10 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
     
     <item>
       <title>自建gitlab</title>
-      <link>/posts/2022-08-28-gitlab-setup/</link>
+      <link>https://duan-dky.me/posts/2022-08-28-gitlab-setup/</link>
       <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-28-gitlab-setup/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-28-gitlab-setup/</guid>
       <description>安装方式 我选的docker镜像，方便管理
 1.拉取docker镜像 docker pull gitlab/gitlab-ee:latest  2.设置gitlab存储位置 export GITLAB_HOME=/srv/gitlab #自己设置位置  3.运行docker镜像 sudo docker run --detach \ --hostname gitlab.example.com \ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \ #换成自己的端口 --name gitlab \ --restart always \ #设置自动启动 --volume $GITLAB_HOME/config:/etc/gitlab:Z \ #相当于文件挂载点 --volume $GITLAB_HOME/logs:/var/log/gitlab:Z \ --volume $GITLAB_HOME/data:/var/opt/gitlab:Z \ --shm-size 256m \ gitlab/gitlab-ee:latest  4.查看gitlab运行日志 sudo docker logs -f gitlab  注：成功后即可打开浏览器输入localhost进入登录界面
 5.获取管理员初始密码 sudo docker exec -it gitlab grep &#39;Password:&#39; /etc/gitlab/initial_root_password  注：请在24小时内修改密码，否则密码将会失效
@@ -56,10 +69,10 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
     
     <item>
       <title>解决dns污染问题</title>
-      <link>/posts/2022-08-26-dns-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-26-dns-config/</link>
       <pubDate>Fri, 26 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-26-dns-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-26-dns-config/</guid>
       <description>起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
 配置 dnsmasq 通过dnsmasq-china-list进行dns分流
 安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;amp;&amp;amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降
@@ -69,10 +82,10 @@ log: level: warn file: &amp;quot;mosdns.log&amp;quot; data_providers: - tag: geo
     
     <item>
       <title>随机数生成</title>
-      <link>/posts/2022-08-21-random-number/</link>
+      <link>https://duan-dky.me/posts/2022-08-21-random-number/</link>
       <pubDate>Sun, 21 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-21-random-number/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-21-random-number/</guid>
       <description>通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位
 echo $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位
 echo $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码
@@ -83,20 +96,20 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
     
     <item>
       <title>sql server docker镜像配置</title>
-      <link>/posts/2022-08-19-sqlserver-docker/</link>
+      <link>https://duan-dky.me/posts/2022-08-19-sqlserver-docker/</link>
       <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-19-sqlserver-docker/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-19-sqlserver-docker/</guid>
       <description>1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest  2.创建并运行docker镜像 sudo docker run -e &amp;quot;ACCEPT_EULA=Y&amp;quot; -e &amp;quot;MSSQL_SA_PASSWORD=&amp;lt;YourPassword&amp;gt;&amp;quot; \ -p 1433:1433 --name sql1 --hostname sql1 \ -d \ mcr.microsoft.com/mssql/server:2022-latest  注：开放1433端口以进行数据库连接，docker镜像名称为sql1
 3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection  4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \ -S localhost -U SA \ -P &amp;quot;$(read -sp &amp;quot;Enter current SA password: &amp;quot;; echo &amp;quot;${REPLY}&amp;quot;)&amp;quot; \ -Q &amp;quot;ALTER LOGIN SA WITH PASSWORD=\&amp;quot;$(read -sp &amp;quot;Enter new SA password: &amp;quot;; echo &amp;quot;${REPLY}&amp;quot;)\&amp;quot;&amp;quot;  5.</description>
     </item>
     
     <item>
       <title>gpg加密解密</title>
-      <link>/posts/2022-08-15-gpg-encrypt/</link>
+      <link>https://duan-dky.me/posts/2022-08-15-gpg-encrypt/</link>
       <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-15-gpg-encrypt/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-15-gpg-encrypt/</guid>
       <description>生成密钥 gpg生成私钥 gpg &amp;ndash;gen-key 导出密钥
 gpg --export --armor keyID &amp;gt; gpgkey.pub.asc  导入公钥
 gpg --import gpgkey.pub.asc  从服务器导入
@@ -113,10 +126,10 @@ gpg -o filename.sig -ab filename  验证签名</description>
     
     <item>
       <title>clash tun模式配置</title>
-      <link>/posts/2022-08-11-clash-tun-mode/</link>
+      <link>https://duan-dky.me/posts/2022-08-11-clash-tun-mode/</link>
       <pubDate>Thu, 11 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-11-clash-tun-mode/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-11-clash-tun-mode/</guid>
       <description>1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq  删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1
 sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf  nameserver 127.0.0.1 options edns0 trust-ad search .  注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换
 sudo vim /etc/NetworkManager/NetworkManager.conf  [main] dns = none  重启networkmanager
@@ -129,10 +142,10 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
     
     <item>
       <title>nginx配置</title>
-      <link>/posts/2022-08-10-nginx-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-10-nginx-config/</link>
       <pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-10-nginx-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-10-nginx-config/</guid>
       <description>测试系统：Debian11
 1.安装升级系统 sudo apt update  2.安装nginx sudo apt install nginx  3.申请域名 github学生包或者freenom免费域名，添加域名解析，使用nslookup命令查看是否解析成功，注意先不要使用cdn
 4.申请证书 zerossl或者letsencrypt即可
@@ -148,10 +161,10 @@ server { # SSL configuration # # listen 443 ssl default_server; # listen [::]:44
     
     <item>
       <title>trojan-go配置</title>
-      <link>/posts/2022-08-10-trojan-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-10-trojan-config/</link>
       <pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-10-trojan-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-10-trojan-config/</guid>
       <description>1.github下载trojan-go二进制文件
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip  2.解压trojan-go并放至/usr/bin,赋予其执行权限
 unzip trojan-go-linux-amd64.zip cp trojan-go /usr/bin chmod +x trojan-go  3.将剩余文件放至/etc/trojan-go
@@ -165,10 +178,10 @@ cat /proc/sys/kernel/random/uuid  config.json
     
     <item>
       <title>git配置</title>
-      <link>/posts/2022-08-05-git-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-05-git-config/</link>
       <pubDate>Fri, 05 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-05-git-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-05-git-config/</guid>
       <description>安装git Linux sudo apt install git //Debian sudo dnf install git //Fedora  Windows 直接安装 下载链接
 winget安装 winget install --id Git.Git -e --source winget  git初步配置 git config --global user.name &amp;quot;username&amp;quot; //用户名 git config --list //已有配置信息 git config --global user.email youremail //邮箱 git config --global core.editor nvim //默认文本编辑器 git config --global merge.tool vimdiff //差异分析工具  git使用 概念:
 工作区：就是你在电脑里能看到的目录。
@@ -179,28 +192,28 @@ winget安装 winget install --id Git.Git -e --source winget  git初步配置 git
     
     <item>
       <title>fedora基本配置</title>
-      <link>/posts/2022-08-03-fedora-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-03-fedora-config/</link>
       <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-03-fedora-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-03-fedora-config/</guid>
       <description>1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides &amp;quot;*bin/named&amp;quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2.</description>
     </item>
     
     <item>
       <title>frp内网穿透</title>
-      <link>/posts/2022-07-31-frp-config/</link>
+      <link>https://duan-dky.me/posts/2022-07-31-frp-config/</link>
       <pubDate>Sun, 31 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-07-31-frp-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-07-31-frp-config/</guid>
       <description>1.frp server端配置 [common] # frp监听的端口，默认是7000，可以改成其他的 bind_port = 14823 vhost_http_port = 12345 # 授权码，请改成更复杂的 token = 12345678 # frp管理后台端口，请按自己需求更改 dashboard_port = 7800 # frp管理后台用户名和密码，请改成自己的 dashboard_user = admin dashboard_pwd = admin enable_prometheus = true  2.frp client端配置 [common] server_addr = yourdomain server_port = 14823 #server端bind_port token = 12345678 #授权码 [ssh] #ssh远程链接 type = tcp local_ip = 127.0.0.1 local_port = 22 #本地ssh端口 remote_port = 6000 #远程ssh连接端口 [web1] type = http #http服务 local_port = 80 custom_domains = yourdomain  3.</description>
     </item>
     
     <item>
       <title>rust学习</title>
-      <link>/posts/2022-07-27-rust-practice/</link>
+      <link>https://duan-dky.me/posts/2022-07-27-rust-practice/</link>
       <pubDate>Wed, 27 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-07-27-rust-practice/</guid>
+      <guid>https://duan-dky.me/posts/2022-07-27-rust-practice/</guid>
       <description>1.rust函数
 fn main(){ //主函数 println!(&amp;quot;hello world!&amp;quot;); }  2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。
 声明变量使用let关键字。
@@ -211,10 +224,10 @@ fn main(){ //主函数 println!(&amp;quot;hello world!&amp;quot;); }  2.Rust变�
     
     <item>
       <title>c&#43;&#43;链表</title>
-      <link>/posts/2022-04-24-c&#43;&#43;link/</link>
+      <link>https://duan-dky.me/posts/2022-04-24-c&#43;&#43;link/</link>
       <pubDate>Sun, 24 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-04-24-c&#43;&#43;link/</guid>
+      <guid>https://duan-dky.me/posts/2022-04-24-c&#43;&#43;link/</guid>
       <description>//查找元素
 std::pair&amp;lt;int, int&amp;gt; getElem(int a,list *l1) { list *b=l1; int count=0; for(;b-&amp;gt;next!=NULL;b=b-&amp;gt;next){ if(a==b-&amp;gt;a){ return std::pair&amp;lt;int, int&amp;gt;(a,count); //返回元素和下标 } count++; } if(b-&amp;gt;a==a){ return std::pair&amp;lt;int, int&amp;gt;(a,count); //未找到返回-1 } return std::pair&amp;lt;int, int&amp;gt;(a,-1); }  </description>
     </item>

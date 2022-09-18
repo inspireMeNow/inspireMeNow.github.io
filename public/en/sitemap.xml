@@ -2,485 +2,572 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/tags/mail/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
+    <loc>https://duan-dky.me/tags/form/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/tags/mail/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/mail/"
+                href="https://duan-dky.me/zh/tags/mail/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/mail/"
+                href="https://duan-dky.me/tags/mail/"
                 />
   </url><url>
-    <loc>/posts/2022-09-03-mailgun-setup/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
+    <loc>https://duan-dky.me/posts/2022-09-14-mailgun-setup/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-09-03-mailgun-setup/"
+                href="https://duan-dky.me/zh/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-09-03-mailgun-setup/"
+                href="https://duan-dky.me/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-09-03-mailgun-setup/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
+    <loc>https://duan-dky.me/posts/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/"
+                href="https://duan-dky.me/zh/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/"
+                href="https://duan-dky.me/posts/"
                 />
   </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
+    <loc>https://duan-dky.me/tags/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/"
+                href="https://duan-dky.me/zh/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/"
+                href="https://duan-dky.me/tags/"
                 />
   </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/zh/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/tags/"
-                />
+    <loc>https://duan-dky.me/posts/2022-09-14-servet-post/</loc>
+    <lastmod>2022-09-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/zh/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-09-03-mailgun-setup/</loc>
     <lastmod>2022-09-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/zh/posts/</loc>
+    <loc>https://duan-dky.me/zh/</loc>
     <lastmod>2022-09-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/network/</loc>
+    <loc>https://duan-dky.me/zh/posts/</loc>
+    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/tags/network/</loc>
     <lastmod>2022-08-31T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/network/"
+                href="https://duan-dky.me/zh/tags/network/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/network/"
+                href="https://duan-dky.me/tags/network/"
                 />
   </url><url>
-    <loc>/posts/2022-08-31-vless-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-31-vless-config/</loc>
     <lastmod>2022-08-31T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-31-vless-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-31-vless-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-31-vless-config/"
+                href="https://duan-dky.me/posts/2022-08-31-vless-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-31-vless-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-31-vless-config/</loc>
     <lastmod>2022-08-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-08-29-hysteria-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-29-hysteria-config/</loc>
     <lastmod>2022-08-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-29-hysteria-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-29-hysteria-config/"
+                href="https://duan-dky.me/posts/2022-08-29-hysteria-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-29-hysteria-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/</loc>
     <lastmod>2022-08-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/git/</loc>
+    <loc>https://duan-dky.me/tags/git/</loc>
     <lastmod>2022-08-28T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/git/"
+                href="https://duan-dky.me/zh/tags/git/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/git/"
+                href="https://duan-dky.me/tags/git/"
                 />
   </url><url>
-    <loc>/posts/2022-08-28-gitlab-setup/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-28-gitlab-setup/</loc>
     <lastmod>2022-08-28T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-28-gitlab-setup/"
+                href="https://duan-dky.me/zh/posts/2022-08-28-gitlab-setup/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-28-gitlab-setup/"
+                href="https://duan-dky.me/posts/2022-08-28-gitlab-setup/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-28-gitlab-setup/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-28-gitlab-setup/</loc>
     <lastmod>2022-08-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-08-26-dns-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-26-dns-config/</loc>
     <lastmod>2022-08-26T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-26-dns-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-26-dns-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-26-dns-config/"
+                href="https://duan-dky.me/posts/2022-08-26-dns-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-26-dns-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-26-dns-config/</loc>
     <lastmod>2022-08-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/linux/</loc>
+    <loc>https://duan-dky.me/tags/linux/</loc>
     <lastmod>2022-08-21T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/linux/"
+                href="https://duan-dky.me/zh/tags/linux/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/linux/"
+                href="https://duan-dky.me/tags/linux/"
                 />
   </url><url>
-    <loc>/posts/2022-08-21-random-number/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-21-random-number/</loc>
     <lastmod>2022-08-21T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-21-random-number/"
+                href="https://duan-dky.me/zh/posts/2022-08-21-random-number/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-21-random-number/"
+                href="https://duan-dky.me/posts/2022-08-21-random-number/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-21-random-number/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-21-random-number/</loc>
     <lastmod>2022-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/database/</loc>
+    <loc>https://duan-dky.me/tags/database/</loc>
     <lastmod>2022-08-19T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/database/"
+                href="https://duan-dky.me/zh/tags/database/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/database/"
+                href="https://duan-dky.me/tags/database/"
                 />
   </url><url>
-    <loc>/posts/2022-08-19-sqlserver-docker/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-19-sqlserver-docker/</loc>
     <lastmod>2022-08-19T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-19-sqlserver-docker/"
+                href="https://duan-dky.me/zh/posts/2022-08-19-sqlserver-docker/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-19-sqlserver-docker/"
+                href="https://duan-dky.me/posts/2022-08-19-sqlserver-docker/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-19-sqlserver-docker/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-19-sqlserver-docker/</loc>
     <lastmod>2022-08-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/encrypt/</loc>
+    <loc>https://duan-dky.me/tags/encrypt/</loc>
     <lastmod>2022-08-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/encrypt/"
+                href="https://duan-dky.me/zh/tags/encrypt/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/encrypt/"
+                href="https://duan-dky.me/tags/encrypt/"
                 />
   </url><url>
-    <loc>/posts/2022-08-15-gpg-encrypt/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-15-gpg-encrypt/</loc>
     <lastmod>2022-08-15T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-15-gpg-encrypt/"
+                href="https://duan-dky.me/zh/posts/2022-08-15-gpg-encrypt/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-15-gpg-encrypt/"
+                href="https://duan-dky.me/posts/2022-08-15-gpg-encrypt/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-15-gpg-encrypt/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-15-gpg-encrypt/</loc>
     <lastmod>2022-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-08-11-clash-tun-mode/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-11-clash-tun-mode/</loc>
     <lastmod>2022-08-11T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-11-clash-tun-mode/"
+                href="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-11-clash-tun-mode/"
+                href="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-11-clash-tun-mode/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/</loc>
     <lastmod>2022-08-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-08-10-nginx-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-10-nginx-config/</loc>
     <lastmod>2022-08-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-10-nginx-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-10-nginx-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-10-nginx-config/"
+                href="https://duan-dky.me/posts/2022-08-10-nginx-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-10-nginx-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-10-nginx-config/</loc>
     <lastmod>2022-08-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-08-10-trojan-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-10-trojan-config/</loc>
     <lastmod>2022-08-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-10-trojan-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-10-trojan-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-10-trojan-config/"
+                href="https://duan-dky.me/posts/2022-08-10-trojan-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-10-trojan-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-10-trojan-config/</loc>
     <lastmod>2022-08-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/web/</loc>
+    <loc>https://duan-dky.me/tags/web/</loc>
     <lastmod>2022-08-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/web/"
+                href="https://duan-dky.me/zh/tags/web/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/web/"
+                href="https://duan-dky.me/tags/web/"
                 />
   </url><url>
-    <loc>/posts/2022-08-05-git-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-05-git-config/</loc>
     <lastmod>2022-08-05T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-05-git-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-05-git-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-05-git-config/"
+                href="https://duan-dky.me/posts/2022-08-05-git-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-05-git-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-05-git-config/</loc>
     <lastmod>2022-08-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-08-03-fedora-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-08-03-fedora-config/</loc>
     <lastmod>2022-08-03T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-08-03-fedora-config/"
+                href="https://duan-dky.me/zh/posts/2022-08-03-fedora-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-08-03-fedora-config/"
+                href="https://duan-dky.me/posts/2022-08-03-fedora-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-08-03-fedora-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-08-03-fedora-config/</loc>
     <lastmod>2022-08-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/posts/2022-07-31-frp-config/</loc>
+    <loc>https://duan-dky.me/posts/2022-07-31-frp-config/</loc>
     <lastmod>2022-07-31T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-07-31-frp-config/"
+                href="https://duan-dky.me/zh/posts/2022-07-31-frp-config/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-07-31-frp-config/"
+                href="https://duan-dky.me/posts/2022-07-31-frp-config/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-07-31-frp-config/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-07-31-frp-config/</loc>
     <lastmod>2022-07-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/rust/</loc>
+    <loc>https://duan-dky.me/tags/rust/</loc>
     <lastmod>2022-07-27T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/rust/"
+                href="https://duan-dky.me/zh/tags/rust/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/rust/"
+                href="https://duan-dky.me/tags/rust/"
                 />
   </url><url>
-    <loc>/posts/2022-07-27-rust-practice/</loc>
+    <loc>https://duan-dky.me/posts/2022-07-27-rust-practice/</loc>
     <lastmod>2022-07-27T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-07-27-rust-practice/"
+                href="https://duan-dky.me/zh/posts/2022-07-27-rust-practice/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-07-27-rust-practice/"
+                href="https://duan-dky.me/posts/2022-07-27-rust-practice/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-07-27-rust-practice/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-07-27-rust-practice/</loc>
     <lastmod>2022-07-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/c&#43;&#43;/</loc>
+    <loc>https://duan-dky.me/tags/c&#43;&#43;/</loc>
     <lastmod>2022-04-24T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/tags/c&#43;&#43;/"
+                href="https://duan-dky.me/zh/tags/c&#43;&#43;/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/tags/c&#43;&#43;/"
+                href="https://duan-dky.me/tags/c&#43;&#43;/"
                 />
   </url><url>
-    <loc>/posts/2022-04-24-c&#43;&#43;link/</loc>
+    <loc>https://duan-dky.me/posts/2022-04-24-c&#43;&#43;link/</loc>
     <lastmod>2022-04-24T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/posts/2022-04-24-c&#43;&#43;link/"
+                href="https://duan-dky.me/zh/posts/2022-04-24-c&#43;&#43;link/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/posts/2022-04-24-c&#43;&#43;link/"
+                href="https://duan-dky.me/posts/2022-04-24-c&#43;&#43;link/"
                 />
   </url><url>
-    <loc>/zh/posts/2022-04-24-c&#43;&#43;link/</loc>
+    <loc>https://duan-dky.me/zh/posts/2022-04-24-c&#43;&#43;link/</loc>
     <lastmod>2022-04-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/docs/example-doc/chapter-1/</loc>
+    <loc>https://duan-dky.me/docs/example-doc/chapter-1/</loc>
     <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/docs/example-doc/nested-chapter/chapter-1/</loc>
-    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/docs/example-doc/chapter-2/</loc>
-    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/docs/example-doc/nested-chapter/chapter-2/</loc>
-    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/docs/</loc>
-    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/docs/example-doc/</loc>
-    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/docs/example-doc/nested-chapter/</loc>
-    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/authors/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/authors/"
+                href="https://duan-dky.me/zh/docs/example-doc/chapter-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/authors/"
+                href="https://duan-dky.me/docs/example-doc/chapter-1/"
                 />
   </url><url>
-    <loc>/categories/</loc>
+    <loc>https://duan-dky.me/docs/example-doc/nested-chapter/chapter-1/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/categories/"
+                href="https://duan-dky.me/zh/docs/example-doc/nested-chapter/chapter-1/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/categories/"
+                href="https://duan-dky.me/docs/example-doc/nested-chapter/chapter-1/"
                 />
   </url><url>
-    <loc>/zh/authors/duan-dky/</loc>
+    <loc>https://duan-dky.me/zh/docs/example-doc/chapter-1/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/example-author/</loc>
+    <loc>https://duan-dky.me/zh/docs/example-doc/nested-chapter/chapter-1/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/hugo-authors/</loc>
-  </url><url>
-    <loc>/series/</loc>
+    <loc>https://duan-dky.me/docs/example-doc/chapter-2/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/zh/series/"
+                href="https://duan-dky.me/zh/docs/example-doc/chapter-2/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/series/"
+                href="https://duan-dky.me/docs/example-doc/chapter-2/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/docs/example-doc/nested-chapter/chapter-2/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/docs/example-doc/nested-chapter/chapter-2/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/docs/example-doc/nested-chapter/chapter-2/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/zh/docs/example-doc/chapter-2/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/zh/docs/example-doc/nested-chapter/chapter-2/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/docs/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/docs/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/docs/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/docs/example-doc/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/docs/example-doc/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/docs/example-doc/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/zh/docs/example-doc/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/docs/example-doc/nested-chapter/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/docs/example-doc/nested-chapter/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/docs/example-doc/nested-chapter/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/zh/docs/example-doc/nested-chapter/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/zh/docs/</loc>
+    <lastmod>2020-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://duan-dky.me/authors/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/authors/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/authors/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/categories/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/categories/"
+                />
+  </url><url>
+    <loc>https://duan-dky.me/zh/authors/duan-dky/</loc>
+  </url><url>
+    <loc>https://duan-dky.me/authors/example-author/</loc>
+  </url><url>
+    <loc>https://duan-dky.me/authors/hugo-authors/</loc>
+  </url><url>
+    <loc>https://duan-dky.me/series/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://duan-dky.me/zh/series/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://duan-dky.me/series/"
                 />
   </url>
 </urlset>

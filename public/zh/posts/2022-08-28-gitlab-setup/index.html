@@ -10,8 +10,8 @@
 <title>自建gitlab | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
-<link rel="stylesheet" href="/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
-<script defer src="/js/eureka.min.fa9a6bf6d7a50bb635b4cca7d2ba5cf3dfb095ae3798773f1328f7950028b48c17d06276594e1b5f244a25a6c969a705.js"></script>
+<link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
+<script defer src="https://duan-dky.me/js/eureka.min.e8043b71b627e3cfd9b2a5de56adf007f5af83dee672ca0c186aa2e29a10d6f648632064d0c00b2fa4d1b11e0f196af3.js"></script>
 
 
 
@@ -40,10 +40,10 @@
    crossorigin></script>
   <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
      crossorigin></script>
-<link rel="stylesheet" href="/css/highlightjs.min.2958991528e43eb6fc9b8c4f2b8e052f79c4010718e1d1e888a777620e9ee63021c2c57ec7417a3108019bb8c41943e6.css" media="print" onload="this.media='all';this.onload=null">
+<link rel="stylesheet" href="https://duan-dky.me/css/highlightjs.min.2958991528e43eb6fc9b8c4f2b8e052f79c4010718e1d1e888a777620e9ee63021c2c57ec7417a3108019bb8c41943e6.css" media="print" onload="this.media='all';this.onload=null">
 
 
-<script defer type="text/javascript" src="/js/fontawesome.min.5326a287e2fe3a6337c56a59d553a5185a42f32a225d8218eed88c123cf8414ffa5e4bf72982ce3f2ec34aa03959d3b1.js"></script>
+<script defer type="text/javascript" src="https://duan-dky.me/js/fontawesome.min.5326a287e2fe3a6337c56a59d553a5185a42f32a225d8218eed88c123cf8414ffa5e4bf72982ce3f2ec34aa03959d3b1.js"></script>
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
@@ -71,8 +71,8 @@
   integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
 
 
-<link rel="icon" type="image/png" sizes="32x32" href="/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icon_hu64421c6c7700f606f0ad45d807017b09_5843_180x180_fill_box_center_3.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://duan-dky.me/images/icon_huc0856a219d224d72fe548f9d046a899c_13532_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://duan-dky.me/images/icon_huc0856a219d224d72fe548f9d046a899c_13532_180x180_fill_box_center_3.png">
 
 <meta name="description"
   content="安装方式 我选的docker镜像，方便管理
@@ -88,11 +88,11 @@
       "@type": "ListItem",
       "position": 1 ,
       "name":"博客",
-      "item":"/zh/posts/"},{
+      "item":"https://duan-dky.me/zh/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
       "name":"自建gitlab",
-      "item":"/zh/posts/2022-08-28-gitlab-setup/"}]
+      "item":"https://duan-dky.me/zh/posts/2022-08-28-gitlab-setup/"}]
 }
 </script>
 
@@ -104,7 +104,7 @@
     "@type": "Article",
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "/zh/posts/2022-08-28-gitlab-setup/"
+        "@id": "https://duan-dky.me/zh/posts/2022-08-28-gitlab-setup/"
     },
     "headline": "自建gitlab | 我的博客","datePublished": "2022-08-28T00:00:00+00:00",
     "dateModified": "2022-08-28T00:00:00+00:00",
@@ -114,7 +114,7 @@
         "name": "WANG Chucheng",
         "logo": {
             "@type": "ImageObject",
-            "url": "/images/icon.png"
+            "url": "https://duan-dky.me/images/icon.png"
         }
         },
     "description": "安装方式 我选的docker镜像，方便管理\n1.拉取docker镜像 docker pull gitlab\/gitlab-ee:latest  2.设置gitlab存储位置 export GITLAB_HOME=\/srv\/gitlab #自己设置位置  3.运行docker镜像 sudo docker run --detach \\ --hostname gitlab.example.com \\ #外部url，服务器域名 --publish 443:443 --publish 80:80 --publish 22:22 \\ #换成自己的端口 --name gitlab \\ --restart always \\ #设置自动启动 --volume $GITLAB_HOME\/config:\/etc\/gitlab:Z \\ #相当于文件挂载点 --volume $GITLAB_HOME\/logs:\/var\/log\/gitlab:Z \\ --volume $GITLAB_HOME\/data:\/var\/opt\/gitlab:Z \\ --shm-size 256m \\ gitlab\/gitlab-ee:latest  4.查看gitlab运行日志 sudo docker logs -f gitlab  注：成功后即可打开浏览器输入localhost进入登录界面\n5.获取管理员初始密码 sudo docker exec -it gitlab grep \u0027Password:\u0027 \/etc\/gitlab\/initial_root_password  注：请在24小时内修改密码，否则密码将会失效\n6.gitlab配置 由于我这台服务器有nginx，需要监听80端口，因此禁用gitlab的内建nginx\n禁用内建nginx nginx[\u0027enable\u0027] = false  设置web服务器用户 web_server[\u0027external_users\u0027] = [\u0027www-data\u0027]  将web服务器添加到受信任的代理列表中 gitlab_rails[\u0027trusted_proxies\u0027] = [ \u0027192."
@@ -123,10 +123,10 @@
 <meta property="og:type" content="article" />
 
 
-<meta property="og:image" content="/images/icon.png">
+<meta property="og:image" content="https://duan-dky.me/images/icon.png">
 
 
-<meta property="og:url" content="/zh/posts/2022-08-28-gitlab-setup/" />
+<meta property="og:url" content="https://duan-dky.me/zh/posts/2022-08-28-gitlab-setup/" />
 
 
 
@@ -172,7 +172,7 @@
 
 
 
-<meta property="og:see_also" content="/zh/posts/2022-08-05-git-config/" />
+<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-05-git-config/" />
 
 
 
@@ -188,7 +188,7 @@
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/zh" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
+    <a href="/zh/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -224,8 +224,8 @@
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="/zh/posts/2022-08-28-gitlab-setup/">简体中文</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="/posts/2022-08-28-gitlab-setup/">English</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/2022-08-28-gitlab-setup/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-28-gitlab-setup/">English</a>
                 </div>
             </div>
         </div>
@@ -457,7 +457,7 @@ pages:
       
         <div class="my-4">
     
-    <a href="/zh/tags/git/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#git</a>
+    <a href="https://duan-dky.me/zh/tags/git/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#git</a>
     
 </div>
       
@@ -477,13 +477,13 @@ pages:
         <span class="text-primary-text block font-bold"
           >上一页</span
         >
-        <a href="/zh/posts/2022-08-29-hysteria-config/" class="block">hysteria配置</a>
+        <a href="https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/" class="block">hysteria配置</a>
       
     </div>
     <div class="mt-4 md:mt-0 md:text-right">
       
         <span class="text-primary-text block font-bold">下一页</span>
-        <a href="/zh/posts/2022-08-26-dns-config/" class="block">解决dns污染问题</a>
+        <a href="https://duan-dky.me/zh/posts/2022-08-26-dns-config/" class="block">解决dns污染问题</a>
       
     </div>
   </div>
@@ -492,6 +492,21 @@ pages:
       
 
 
+
+  <script id="utterances" src="https://utteranc.es/client.js"
+            issue-term=pathname
+            repo=duan-dky/duan-dky.github.io
+              theme=preferred-color-scheme
+        crossorigin="anonymous"
+        async>
+</script>
+<script>
+    if (storageColorScheme == "Light") {
+      document.getElementById('utterances').setAttribute('theme', 'github-light')
+    } else if (storageColorScheme == "Dark") {
+      document.getElementById('utterances').setAttribute('theme', 'github-dark')
+    }
+</script>
 
     </div>
     
@@ -503,7 +518,7 @@ pages:
       >
         <h3>相关</h3>
         
-          <a href="/zh/posts/2022-08-05-git-config/" class="no-underline">git配置</a>
+          <a href="https://duan-dky.me/zh/posts/2022-08-05-git-config/" class="no-underline">git配置</a>
           <br />
         
       </div>

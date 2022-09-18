@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>network on 我的博客</title>
-    <link>/zh/tags/network/</link>
+    <link>https://duan-dky.me/zh/tags/network/</link>
     <description>Recent content in network on 我的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;WANG Chucheng&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;MA Ruiqi&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Wed, 31 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/zh/tags/network/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 31 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://duan-dky.me/zh/tags/network/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>vless配置</title>
-      <link>/zh/posts/2022-08-31-vless-config/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-31-vless-config/</link>
       <pubDate>Wed, 31 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-31-vless-config/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-31-vless-config/</guid>
       <description>xray安装 注：我使用的是xray内核，v2ray内核应该也可以
 wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray  xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=&amp;quot;XRAY_LOCATION_ASSET=/etc/xray&amp;quot; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target  注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动
 设置systemd服务自动启动
@@ -23,10 +23,10 @@ sudo systemctl enable --now xray  vless+websocket+tls配置 server端 xray配置
     
     <item>
       <title>hysteria配置</title>
-      <link>/zh/posts/2022-08-29-hysteria-config/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/</link>
       <pubDate>Mon, 29 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-29-hysteria-config/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/</guid>
       <description>由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。
 server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64
 编辑配置文件config.json { &amp;quot;listen&amp;quot;: &amp;quot;:37658&amp;quot;, #监听端口 &amp;quot;protocol&amp;quot;: &amp;quot;wechat-video&amp;quot;, #流量类型，支持udp，faketcp，wechat-video &amp;quot;cert&amp;quot;: &amp;quot;/path/to/fullchain.pem&amp;quot;, &amp;quot;key&amp;quot;: &amp;quot;/path/to/privkey.pem&amp;quot;, &amp;quot;alpn&amp;quot;: &amp;quot;h3&amp;quot;, &amp;quot;auth&amp;quot;: { &amp;quot;mode&amp;quot;: &amp;quot;passwords&amp;quot;, &amp;quot;config&amp;quot;: [&amp;quot;yourpassword&amp;quot;] }, &amp;quot;up_mbps&amp;quot;: 100, #限速，建议值不要过高，默认单位：Mbps &amp;quot;down_mbps&amp;quot;: 100 }  启动hysteria ./hysteria -c config.json server  注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https://github.com/HyNetwork/hysteria/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=/etc/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=/usr/bin/hysteria -c /etc/hysteria/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target  重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria  client端 我是用的clash meta核心，它可以进行分流</description>
@@ -34,10 +34,10 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
     
     <item>
       <title>解决dns污染问题</title>
-      <link>/zh/posts/2022-08-26-dns-config/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-26-dns-config/</link>
       <pubDate>Fri, 26 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-26-dns-config/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-26-dns-config/</guid>
       <description>起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
 配置 dnsmasq 通过dnsmasq-china-list进行dns分流
 安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;amp;&amp;amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降
@@ -47,10 +47,10 @@ log: level: warn file: &amp;quot;mosdns.log&amp;quot; data_providers: - tag: geo
     
     <item>
       <title>clash tun模式配置</title>
-      <link>/zh/posts/2022-08-11-clash-tun-mode/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/</link>
       <pubDate>Thu, 11 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-11-clash-tun-mode/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/</guid>
       <description>1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq  删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1
 sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf  nameserver 127.0.0.1 options edns0 trust-ad search .  注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换
 sudo vim /etc/NetworkManager/NetworkManager.conf  [main] dns = none  重启networkmanager
@@ -63,10 +63,10 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
     
     <item>
       <title>trojan-go配置</title>
-      <link>/zh/posts/2022-08-10-trojan-config/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-10-trojan-config/</link>
       <pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-10-trojan-config/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-10-trojan-config/</guid>
       <description>1.github下载trojan-go二进制文件
 wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip  2.解压trojan-go并放至/usr/bin,赋予其执行权限
 unzip trojan-go-linux-amd64.zip cp trojan-go /usr/bin chmod +x trojan-go  3.将剩余文件放至/etc/trojan-go

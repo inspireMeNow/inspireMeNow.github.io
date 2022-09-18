@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>database on My Blogs</title>
-    <link>/tags/database/</link>
+    <link>https://duan-dky.me/tags/database/</link>
     <description>Recent content in database on My Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;WANG Chucheng&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;MA Ruiqi&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Fri, 19 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://duan-dky.me/tags/database/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>sql server docker镜像配置</title>
-      <link>/posts/2022-08-19-sqlserver-docker/</link>
+      <link>https://duan-dky.me/posts/2022-08-19-sqlserver-docker/</link>
       <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-19-sqlserver-docker/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-19-sqlserver-docker/</guid>
       <description>1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest  2.创建并运行docker镜像 sudo docker run -e &amp;quot;ACCEPT_EULA=Y&amp;quot; -e &amp;quot;MSSQL_SA_PASSWORD=&amp;lt;YourPassword&amp;gt;&amp;quot; \ -p 1433:1433 --name sql1 --hostname sql1 \ -d \ mcr.microsoft.com/mssql/server:2022-latest  注：开放1433端口以进行数据库连接，docker镜像名称为sql1
 3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection  4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \ -S localhost -U SA \ -P &amp;quot;$(read -sp &amp;quot;Enter current SA password: &amp;quot;; echo &amp;quot;${REPLY}&amp;quot;)&amp;quot; \ -Q &amp;quot;ALTER LOGIN SA WITH PASSWORD=\&amp;quot;$(read -sp &amp;quot;Enter new SA password: &amp;quot;; echo &amp;quot;${REPLY}&amp;quot;)\&amp;quot;&amp;quot;  5.</description>
     </item>
     
     <item>
       <title>sql server docker镜像配置</title>
-      <link>/zh/posts/2022-08-19-sqlserver-docker/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-19-sqlserver-docker/</link>
       <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-19-sqlserver-docker/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-19-sqlserver-docker/</guid>
       <description>1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest  2.创建并运行docker镜像 sudo docker run -e &amp;quot;ACCEPT_EULA=Y&amp;quot; -e &amp;quot;MSSQL_SA_PASSWORD=&amp;lt;YourPassword&amp;gt;&amp;quot; \ -p 1433:1433 --name sql1 --hostname sql1 \ -d \ mcr.microsoft.com/mssql/server:2022-latest  注：开放1433端口以进行数据库连接，docker镜像名称为sql1
 3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection  4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \ -S localhost -U SA \ -P &amp;quot;$(read -sp &amp;quot;Enter current SA password: &amp;quot;; echo &amp;quot;${REPLY}&amp;quot;)&amp;quot; \ -Q &amp;quot;ALTER LOGIN SA WITH PASSWORD=\&amp;quot;$(read -sp &amp;quot;Enter new SA password: &amp;quot;; echo &amp;quot;${REPLY}&amp;quot;)\&amp;quot;&amp;quot;  5.</description>
     </item>

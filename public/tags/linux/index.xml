@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>linux on My Blogs</title>
-    <link>/tags/linux/</link>
+    <link>https://duan-dky.me/tags/linux/</link>
     <description>Recent content in linux on My Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; 2021 &lt;a href=&#34;https://www.wangchucheng.com/&#34;&gt;WANG Chucheng&lt;/a&gt; and &lt;a href=&#34;https://www.ruiqima.com/&#34;&gt;MA Ruiqi&lt;/a&gt;
 </copyright>
-    <lastBuildDate>Sun, 21 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 21 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://duan-dky.me/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>随机数生成</title>
-      <link>/posts/2022-08-21-random-number/</link>
+      <link>https://duan-dky.me/posts/2022-08-21-random-number/</link>
       <pubDate>Sun, 21 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-21-random-number/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-21-random-number/</guid>
       <description>通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位
 echo $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位
 echo $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码
@@ -25,10 +25,10 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
     
     <item>
       <title>随机数生成</title>
-      <link>/zh/posts/2022-08-21-random-number/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-21-random-number/</link>
       <pubDate>Sun, 21 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-21-random-number/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-21-random-number/</guid>
       <description>通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位
 echo $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位
 echo $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码
@@ -39,19 +39,19 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
     
     <item>
       <title>fedora基本配置</title>
-      <link>/posts/2022-08-03-fedora-config/</link>
+      <link>https://duan-dky.me/posts/2022-08-03-fedora-config/</link>
       <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/posts/2022-08-03-fedora-config/</guid>
+      <guid>https://duan-dky.me/posts/2022-08-03-fedora-config/</guid>
       <description>1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides &amp;quot;*bin/named&amp;quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2.</description>
     </item>
     
     <item>
       <title>fedora基本配置</title>
-      <link>/zh/posts/2022-08-03-fedora-config/</link>
+      <link>https://duan-dky.me/zh/posts/2022-08-03-fedora-config/</link>
       <pubDate>Wed, 03 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>/zh/posts/2022-08-03-fedora-config/</guid>
+      <guid>https://duan-dky.me/zh/posts/2022-08-03-fedora-config/</guid>
       <description>1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides &amp;quot;*bin/named&amp;quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2.</description>
     </item>
     
