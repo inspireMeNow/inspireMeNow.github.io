@@ -69,4 +69,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v1
       - name: Deploy to Server
-        run: echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && scp -i ${{ secrets.KEY }} -o StrictHostKeyChecking=no -r ../public/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }} && rm ${{ secrets.KEY }}
+        run: pwd && ls -la ../duan-dky.github.io && echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && scp -i ${{ secrets.KEY }} -o StrictHostKeyChecking=no -r ../public/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }} && rm ${{ secrets.KEY }}
