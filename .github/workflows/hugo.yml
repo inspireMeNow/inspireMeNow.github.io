@@ -77,4 +77,4 @@ jobs:
           FOLDER: ./public # 要推送的文件夹，路径相对于代码仓库的根目录
           SERVER_IP: ${{ secrets.REMOTE_HOST }} # 引用配置，服务器的host名（IP或者域名domain.com）
           USERNAME: ${{ secrets.REMOTE_USER }} # 引用配置，服务器登录名
-          SERVER_DESTINATION: {{ secrets.TARGET }}
+          SERVER_DESTINATION: ${{ secrets.TARGET }}
