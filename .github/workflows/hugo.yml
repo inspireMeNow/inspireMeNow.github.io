@@ -71,10 +71,4 @@ jobs:
       - name: Install rsync
         run: sudo apt -y install rsync
       - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-          SOURCE: "public/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.TARGET }}
+        run: echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && scp -i ${{ secrets.KEY }} -o StrictHostKeyChecking=no -r ./public/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }} && rm ${{ secrets.KEY }}
