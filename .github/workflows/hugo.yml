@@ -68,8 +68,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-      - name: Deploy to Server
+      - name: Install rsync
         run: sudo apt -y install rsync
+      - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
