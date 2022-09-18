@@ -52,6 +52,10 @@ jobs:
           hugo \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Deploy to server 
+        run:  echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && scp -i ${{ secrets.KEY }} -o StrictHostKeyChecking=no -r public/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }} && rm ${{ secrets.KEY }}
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
