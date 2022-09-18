@@ -68,5 +68,13 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-      - name: Deploy to Server
-        run: echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && scp -i ${{ secrets.KEY }} -o StrictHostKeyChecking=no -r public/* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }}
+      - name: Deploy to Server # 第二步，rsync推文件
+        uses: AEnterprise/rsync-deploy@v1.0 # 使用别人包装好的步骤镜像
+        env:
+          DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }} # 引用配置，SSH私钥
+          ARGS: -avz --delete
+          SERVER_PORT: '22' # SSH端口
+          FOLDER: ./public # 要推送的文件夹，路径相对于代码仓库的根目录
+          SERVER_IP: ${{ secrets.REMOTE_HOST }} # 引用配置，服务器的host名（IP或者域名domain.com）
+          USERNAME: ${{ secrets.REMOTE_USER }} # 引用配置，服务器登录名
+          SERVER_DESTINATION: {{ secrets.TARGET }}
