@@ -54,7 +54,7 @@ jobs:
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
       - name: Deploy to server 
-        run:  echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && rsync -av public -e "ssh -o StrictHostKeyChecking=no -i ${{ secrets.KEY }}" ${{ secrets.REMOTE_USER }} @ ${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }}  && rm ${{ secrets.KEY }}
+        run:  echo "${{ secrets.ACCESS_TOKEN }}" >> ${{ secrets.KEY }} && chmod 400 ${{ secrets.KEY }} && rsync -av -e "ssh -o StrictHostKeyChecking=no -i ${{ secrets.KEY }}" public/* ${{ secrets.REMOTE_USER }} @ ${{ secrets.REMOTE_HOST }}:${{ secrets.TARGET }}  && rm ${{ secrets.KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
