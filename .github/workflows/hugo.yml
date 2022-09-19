@@ -56,13 +56,11 @@ jobs:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: "-rltgoDzvO"
-          SOURCE: "dist/"
+          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+          SOURCE: "public/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/dist/, /node_modules/"
+          TARGET: ${{ secrets.TARGET }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
