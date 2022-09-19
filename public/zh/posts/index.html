@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html
+  lang="zh"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>博客 | 我的博客</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.3" />
+<link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
+<script defer src="https://duan-dky.me/js/eureka.min.e8043b71b627e3cfd9b2a5de56adf007f5af83dee672ca0c186aa2e29a10d6f648632064d0c00b2fa4d1b11e0f196af3.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&amp;family=Noto&#43;Serif&#43;SC:wght@400;600;700&amp;display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/base16/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+<link rel="stylesheet" href="https://duan-dky.me/css/highlightjs.min.2958991528e43eb6fc9b8c4f2b8e052f79c4010718e1d1e888a777620e9ee63021c2c57ec7417a3108019bb8c41943e6.css" media="print" onload="this.media='all';this.onload=null">
+
+
+<script defer type="text/javascript" src="https://duan-dky.me/js/fontawesome.min.5326a287e2fe3a6337c56a59d553a5185a42f32a225d8218eed88c123cf8414ffa5e4bf72982ce3f2ec34aa03959d3b1.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://duan-dky.me/images/icon_huc0856a219d224d72fe548f9d046a899c_13532_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://duan-dky.me/images/icon_huc0856a219d224d72fe548f9d046a899c_13532_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Eureka is a elegant and powerful theme for Hugo.">
+
+
+
+
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "itemListElement":[{
+            "@type":"ListItem",
+            "position":  1 ,
+            "name": "mailgun收发邮件",
+            "description": "Eureka is a elegant and powerful theme for Hugo.",
+            "url": "https://duan-dky.me/zh/posts/2022-09-03-mailgun-setup/"
+        },{
+            "@type":"ListItem",
+            "position":  2 ,
+            "name": "vless配置",
+            "description": "xray安装 注：我使用的是xray内核，v2ray内核应该也可以\nwget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray  xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=\u0026quot;XRAY_LOCATION_ASSET=/etc/xray\u0026quot; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target  注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动\n设置systemd服务自动启动\nsudo systemctl enable --now xray  vless+websocket+tls配置 server端 xray配置 { \u0026quot;log\u0026quot;: { \u0026quot;loglevel\u0026quot;: \u0026quot;warning\u0026quot; //日志级别 }, \u0026quot;inbounds\u0026quot;: [ { \u0026quot;port\u0026quot;: 10016, \u0026quot;protocol\u0026quot;: \u0026quot;vless\u0026quot;, \u0026quot;settings\u0026quot;: { \u0026quot;clients\u0026quot;: [ { \u0026quot;id\u0026quot;: \u0026quot;youruuid\u0026quot;, // 填写你的 UUID \u0026quot;level\u0026quot;: 0, \u0026quot;email\u0026quot;: \u0026quot;youremail\u0026quot; } ], \u0026quot;decryption\u0026quot;: \u0026quot;none\u0026quot;, \u0026quot;fallbacks\u0026quot;: [ { \u0026quot;dest\u0026quot;: 80 //回落到nginx的80端口 }, { \u0026quot;path\u0026quot;: \u0026quot;/path\u0026quot;, // 必须换成自定义的 PATH \u0026quot;dest\u0026quot;: 1234, \u0026quot;xver\u0026quot;: 1 } ] }, \u0026quot;streamSettings\u0026quot;: { \u0026quot;network\u0026quot;: \u0026quot;tcp\u0026quot;, \u0026quot;security\u0026quot;: \u0026quot;tls\u0026quot;, \u0026quot;tlsSettings\u0026quot;: { \u0026quot;alpn\u0026quot;: [ \u0026quot;http/1.",
+            "url": "https://duan-dky.me/zh/posts/2022-08-31-vless-config/"
+        },{
+            "@type":"ListItem",
+            "position":  3 ,
+            "name": "hysteria配置",
+            "description": "由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。\nserver端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64\n编辑配置文件config.json { \u0026quot;listen\u0026quot;: \u0026quot;:37658\u0026quot;, #监听端口 \u0026quot;protocol\u0026quot;: \u0026quot;wechat-video\u0026quot;, #流量类型，支持udp，faketcp，wechat-video \u0026quot;cert\u0026quot;: \u0026quot;/path/to/fullchain.pem\u0026quot;, \u0026quot;key\u0026quot;: \u0026quot;/path/to/privkey.pem\u0026quot;, \u0026quot;alpn\u0026quot;: \u0026quot;h3\u0026quot;, \u0026quot;auth\u0026quot;: { \u0026quot;mode\u0026quot;: \u0026quot;passwords\u0026quot;, \u0026quot;config\u0026quot;: [\u0026quot;yourpassword\u0026quot;] }, \u0026quot;up_mbps\u0026quot;: 100, #限速，建议值不要过高，默认单位：Mbps \u0026quot;down_mbps\u0026quot;: 100 }  启动hysteria ./hysteria -c config.json server  注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https://github.com/HyNetwork/hysteria/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=/etc/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=/usr/bin/hysteria -c /etc/hysteria/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target  重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria  client端 我是用的clash meta核心，它可以进行分流",
+            "url": "https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/"
+        }
+    ]
+}
+</script><meta property="og:title" content="博客 | 我的博客" />
+<meta property="og:type" content="website" />
+
+
+<meta property="og:image" content="https://duan-dky.me/images/icon.png">
+
+
+<meta property="og:url" content="https://duan-dky.me/zh/posts/" />
+
+
+
+
+
+<meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo." />
+
+
+
+
+
+<meta property="og:locale" content="zh" />
+
+
+
+<meta property="og:locale:alternate" content="en" />
+
+
+
+
+<meta property="og:site_name" content="我的博客" />
+
+
+
+
+
+
+<meta property="og:updated_time" content="2022-09-03T00:00:00&#43;00:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/zh/posts/index.xml" title="我的博客" />
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/zh/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/zh/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/zh/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">博客</a>
+            <a href="/zh/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
+                </div>
+            </div>
+            <div class="relative pt-4 ps-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="languageMode">
+                    <i class="fas fa-globe"></i>
+                    <span class="ps-1">简体中文</span>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='languageOptions'>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/">English</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+        switchLanguage()
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  <article class="prose mx-6 my-8">
+  <h1>博客</h1>
+  
+</article>
+
+  <div class="bg-secondary-bg rounded px-6">
+    <div class="overflow-hidden divide-y">
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://duan-dky.me/zh/posts/2022-09-03-mailgun-setup/" class="no-underline">
+    <h3 class="mt-0">mailgun收发邮件</h3>
+  </a>
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-09-03</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>0分钟阅读时长</span>
+  </div>
+
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://duan-dky.me/zh/posts/2022-08-31-vless-config/" class="no-underline">
+    <h3 class="mt-0">vless配置</h3>
+  </a>
+  
+    xray安装 注：我使用的是xray内核，v2ray内核应该也可以
+wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip unzip Xray-linux-64.zip cp xray /usr/bin mkdir /etc/xray cp *.dat /etc/xray  xray systemd服务 [Unit] Description=Xray Service Documentation=https://github.com/xtls After=network.target nss-lookup.target [Service] ExecStart=/usr/bin/xray run -config /etc/xray/config.json Environment=&#34;XRAY_LOCATION_ASSET=/etc/xray&#34; Restart=on-failure RestartPreventExitStatus=23 LimitNPROC=10000 LimitNOFILE=1000000 [Install] WantedBy=multi-user.target  注意：若xray所在目录和geosite.dat所在目录不一致，需要设置环境变量XRAY_LOCATION_ASSET，不设置此环境变量会导致默认将geosite.dat定位至/use/bin，此目录无geosite.dat，因此服务会报错无法启动
+设置systemd服务自动启动
+sudo systemctl enable --now xray  vless&#43;websocket&#43;tls配置 server端 xray配置 { &#34;log&#34;: { &#34;loglevel&#34;: &#34;warning&#34; //日志级别 }, &#34;inbounds&#34;: [ { &#34;port&#34;: 10016, &#34;protocol&#34;: &#34;vless&#34;, &#34;settings&#34;: { &#34;clients&#34;: [ { &#34;id&#34;: &#34;youruuid&#34;, // 填写你的 UUID &#34;level&#34;: 0, &#34;email&#34;: &#34;youremail&#34; } ], &#34;decryption&#34;: &#34;none&#34;, &#34;fallbacks&#34;: [ { &#34;dest&#34;: 80 //回落到nginx的80端口 }, { &#34;path&#34;: &#34;/path&#34;, // 必须换成自定义的 PATH &#34;dest&#34;: 1234, &#34;xver&#34;: 1 } ] }, &#34;streamSettings&#34;: { &#34;network&#34;: &#34;tcp&#34;, &#34;security&#34;: &#34;tls&#34;, &#34;tlsSettings&#34;: { &#34;alpn&#34;: [ &#34;http/1.
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-08-31</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>3分钟阅读时长</span>
+  </div>
+
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/" class="no-underline">
+    <h3 class="mt-0">hysteria配置</h3>
+  </a>
+  
+    由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。
+server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/releases/download/v1.2.0/hysteria-linux-amd64
+编辑配置文件config.json { &#34;listen&#34;: &#34;:37658&#34;, #监听端口 &#34;protocol&#34;: &#34;wechat-video&#34;, #流量类型，支持udp，faketcp，wechat-video &#34;cert&#34;: &#34;/path/to/fullchain.pem&#34;, &#34;key&#34;: &#34;/path/to/privkey.pem&#34;, &#34;alpn&#34;: &#34;h3&#34;, &#34;auth&#34;: { &#34;mode&#34;: &#34;passwords&#34;, &#34;config&#34;: [&#34;yourpassword&#34;] }, &#34;up_mbps&#34;: 100, #限速，建议值不要过高，默认单位：Mbps &#34;down_mbps&#34;: 100 }  启动hysteria ./hysteria -c config.json server  注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https://github.com/HyNetwork/hysteria/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=/etc/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=/usr/bin/hysteria -c /etc/hysteria/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target  重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria  client端 我是用的clash meta核心，它可以进行分流
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-08-29</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>1分钟阅读时长</span>
+  </div>
+
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+</div>
+
+
+  </div>
+  
+    <ul class="pagination pagination-default">
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="First" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Previous" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item">
+        <a href="/zh/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/zh/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/zh/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/zh/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/zh/posts/page/2/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/zh/posts/page/6/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">WANG Chucheng</a> and <a href="https://www.ruiqima.com/">MA Ruiqi</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>
