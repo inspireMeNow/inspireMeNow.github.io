@@ -4,7 +4,7 @@ tags:
   - linux
 key: fedora-setting 
 date: '2022-08-03'
-lastmod: '2022-08-03'
+lastmod: '2022-09-23'
 ---
 
 # 1.软件包管理工具
@@ -290,6 +290,9 @@ netstat -tunlp | grep port_number
 kill -9 PID
 ```
 # 8.开启sysrq
+
+**由于某个服务卡死或者kernel loop导致无法关机时使用**
+
 ```bash
 sudo vim /etc/sysctl.d/90-sysrq.conf
 ```
@@ -297,3 +300,69 @@ sudo vim /etc/sysctl.d/90-sysrq.conf
 kernel.sysrq = 1
 ```
 注：需重启电脑或~~sysctl -p~~生效
+
+# 9.迁移/var目录遇到的问题
+
+*由于我的好多docker镜像存储在/var目录，导致根目录可用空间越来越小，于是考虑将/var目录迁移到新分区。*
+
+## 迁移过程
+
+###  备份
+
+#### pigz打包
+
+```bash
+sudo tar --use-compress-program=pigz -cvpf linux-backup.tgz /var
+```
+
+#### zstd打包
+
+```bash
+sudo tar -z -c -T0 -18 -v -p -f - linux-backup.zstd/var
+```
+
+### 恢复
+
+#### 切换到LiveCD
+
+*BIOS设置为LiveCD启动，然后重启电脑*
+
+#### 挂载磁盘
+
+```bash
+sudo mount /dev/nvme0n1p3 /mnt/var
+```
+
+#### 解包备份文件
+
+##### pigz解包
+
+```bash
+sudo tar --use-compress-program=pigz -cvpf linux-backup.tgz -C /mnt/
+```
+
+##### zstd解包
+
+```bash
+sudo tar -z -c -T0 -18 -v -p -f - linux-backup.zstd -C /mnt/
+```
+
+#### 重启电脑
+
+## 遇到的问题
+
+~~最初不知道为啥不开机，发现可进入shell，进入shell后发现/var/log/audit/audit.log中有大量denied字段，猜测可能是selinux问题，于是把selinux设置为disabled重启电脑发现正常，重新开启后就不开机，发现文件的label可能已经错乱。~~
+
+*由于文件的selinux标识不正确导致无法开机，google了很多资料，重新标记文件标识才解决。*
+
+## 解决方法
+
+*设置开机后重新标记文件*
+
+```bash
+sudo fixfiles -F -B onboot
+```
+
+## 最终结果
+
+*重启后selinux重新relabel有一堆警告，可以无视，重启后即可正常开机，log中也没有大量denied字段。*
