@@ -320,7 +320,7 @@ sudo tar --use-compress-program=pigz -cvpf linux-backup.tgz /var
 #### zstd打包
 
 ```bash
-sudo tar -z -c -T0 -18 -v -p -f - linux-backup.zstd/var
+sudo tar -z -c -T0 -18 -v -p -f - linux-backup.zstd /var
 ```
 
 ### 恢复
