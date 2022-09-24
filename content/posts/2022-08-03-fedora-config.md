@@ -309,6 +309,8 @@ kernel.sysrq = 1
 
 ###  备份
 
+**注：若要备份整个系统，则需要排除目录/proc,/lost+found,/mnt,/sys,/run/media,/dev,/tmp，若备份输出的包本身在备份目录则还要排除包本身，可以使用--exclude命令进行排除**
+
 #### pigz打包
 
 ```bash
