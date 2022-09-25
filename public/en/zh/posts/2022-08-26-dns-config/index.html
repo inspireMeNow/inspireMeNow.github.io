@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  
+><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>解决dns污染问题 | My Blogs</title>
+
+<meta name="generator" content="Hugo Eureka 0.9.3" />
+<link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
+<script defer src="https://duan-dky.me/js/eureka.min.e8043b71b627e3cfd9b2a5de56adf007f5af83dee672ca0c186aa2e29a10d6f648632064d0c00b2fa4d1b11e0f196af3.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&amp;family=Noto&#43;Serif&#43;SC:wght@400;600;700&amp;display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/base16/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.min.js"
+   crossorigin></script>
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/languages/dart.min.js"
+     crossorigin></script>
+<link rel="stylesheet" href="https://duan-dky.me/css/highlightjs.min.2958991528e43eb6fc9b8c4f2b8e052f79c4010718e1d1e888a777620e9ee63021c2c57ec7417a3108019bb8c41943e6.css" media="print" onload="this.media='all';this.onload=null">
+
+
+<script defer type="text/javascript" src="https://duan-dky.me/js/fontawesome.min.5326a287e2fe3a6337c56a59d553a5185a42f32a225d8218eed88c123cf8414ffa5e4bf72982ce3f2ec34aa03959d3b1.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+   integrity="sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js" 
+  integrity="sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js"
+   integrity="sha384-&#43;XBljXPPiv&#43;OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js" 
+  integrity="sha384-atOyb0FxAgN9LyAc6PEf9BjgwLISyansgdH8/VXQH8p2o5vfrRgmGIJ2Sg22L0A0"  crossorigin></script>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://duan-dky.me/images/icon_huc0856a219d224d72fe548f9d046a899c_13532_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://duan-dky.me/images/icon_huc0856a219d224d72fe548f9d046a899c_13532_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
+配置 dnsmasq 通过dnsmasq-china-list进行dns分流
+安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;&amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降
+mosdns&#43;dnsmasq 安装 mosdns wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir /etc/mosdns sudo cp mosdns /usr/bin sudo cp config.yaml /etc/mosdns //配置文件 wget --no-check-certificate https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O /etc/mosdns/geosite.dat wget --no-check-certificate https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat -O /etc/mosdns/geoip-only-cn-private.dat //中国ip名单  配置文件
+log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite file: ./geosite.dat auto_reload: true - tag: geoip file: ./geoip-only-cn-private.dat auto_reload: true plugins: # 缓存 - tag: cache type: cache args: size: 4096 lazy_cache_ttl: 172800 # 转发至本地服务器的插件 - tag: forward_local type: fast_forward args: upstream: - addr: tls://223.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Zhs",
+      "item":"https://duan-dky.me/en/zh/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"博客",
+      "item":"https://duan-dky.me/en/zh/posts/"},{
+      "@type": "ListItem",
+      "position": 3 ,
+      "name":"解决dns污染问题",
+      "item":"https://duan-dky.me/en/zh/posts/2022-08-26-dns-config/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://duan-dky.me/en/zh/posts/2022-08-26-dns-config/"
+    },
+    "headline": "解决dns污染问题 | My Blogs","datePublished": "2022-08-26T00:00:00+00:00",
+    "dateModified": "2022-08-26T00:00:00+00:00",
+    "wordCount":  333 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "WANG Chucheng",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://duan-dky.me/images/icon.png"
+        }
+        },
+    "description": "起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。\n配置 dnsmasq 通过dnsmasq-china-list进行dns分流\n安装 git clone https:\/\/github.com\/felixonmars\/dnsmasq-china-list cd dnsmasq-china-list\u0026amp;\u0026amp;bash install.sh sudo systemctl restart dnsmasq \/\/重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降\nmosdns\u002bdnsmasq 安装 mosdns wget https:\/\/github.com\/IrineSistiana\/mosdns\/releases\/download\/v4.1.9\/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir \/etc\/mosdns sudo cp mosdns \/usr\/bin sudo cp config.yaml \/etc\/mosdns \/\/配置文件 wget --no-check-certificate https:\/\/github.com\/Loyalsoldier\/v2ray-rules-dat\/releases\/latest\/download\/geosite.dat -O \/etc\/mosdns\/geosite.dat wget --no-check-certificate https:\/\/raw.githubusercontent.com\/Loyalsoldier\/geoip\/release\/geoip-only-cn-private.dat -O \/etc\/mosdns\/geoip-only-cn-private.dat \/\/中国ip名单  配置文件\nlog: level: warn file: \u0026quot;mosdns.log\u0026quot; data_providers: - tag: geosite file: .\/geosite.dat auto_reload: true - tag: geoip file: .\/geoip-only-cn-private.dat auto_reload: true plugins: # 缓存 - tag: cache type: cache args: size: 4096 lazy_cache_ttl: 172800 # 转发至本地服务器的插件 - tag: forward_local type: fast_forward args: upstream: - addr: tls:\/\/223."
+}
+</script><meta property="og:title" content="解决dns污染问题 | My Blogs" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://duan-dky.me/images/icon.png">
+
+
+<meta property="og:url" content="https://duan-dky.me/en/zh/posts/2022-08-26-dns-config/" />
+
+
+
+
+<meta property="og:description" content="起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。
+配置 dnsmasq 通过dnsmasq-china-list进行dns分流
+安装 git clone https://github.com/felixonmars/dnsmasq-china-list cd dnsmasq-china-list&amp;&amp;bash install.sh sudo systemctl restart dnsmasq //重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降
+mosdns&#43;dnsmasq 安装 mosdns wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir /etc/mosdns sudo cp mosdns /usr/bin sudo cp config.yaml /etc/mosdns //配置文件 wget --no-check-certificate https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O /etc/mosdns/geosite.dat wget --no-check-certificate https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat -O /etc/mosdns/geoip-only-cn-private.dat //中国ip名单  配置文件
+log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite file: ./geosite.dat auto_reload: true - tag: geoip file: ./geoip-only-cn-private.dat auto_reload: true plugins: # 缓存 - tag: cache type: cache args: size: 4096 lazy_cache_ttl: 172800 # 转发至本地服务器的插件 - tag: forward_local type: fast_forward args: upstream: - addr: tls://223." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="My Blogs" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2022-08-26T00:00:00&#43;00:00" />
+
+
+<meta property="article:modified_time" content="2022-08-26T00:00:00&#43;00:00" />
+
+
+
+<meta property="article:section" content="zh" />
+
+
+<meta property="article:tag" content="network" />
+
+
+
+
+
+<meta property="og:see_also" content="https://duan-dky.me/en/posts/2022-08-26-dns-config/" />
+
+<meta property="og:see_also" content="https://duan-dky.me/en/zh/posts/2022-08-11-clash-tun-mode/" />
+
+<meta property="og:see_also" content="https://duan-dky.me/en/posts/2022-08-11-clash-tun-mode/" />
+
+<meta property="og:see_also" content="https://duan-dky.me/en/zh/posts/2022-08-10-trojan-config/" />
+
+<meta property="og:see_also" content="https://duan-dky.me/en/posts/2022-08-10-trojan-config/" />
+
+
+
+
+  <body class="flex min-h-screen flex-col">
+    <header
+      class="min-h-16 pl-scrollbar bg-secondary-bg fixed z-50 flex w-full items-center shadow-sm"
+    >
+      <div class="mx-auto w-full max-w-screen-xl"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/en/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/en/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
+            <a href="/en/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Posts</a>
+            <a href="/en/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+        </div>
+
+        <div class="flex">
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+    </header>
+    <main class="grow pt-16">
+        <div class="pl-scrollbar">
+          <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
+  
+  
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-8 lg:pt-12">
+    <div
+      class="lg:col-start-2 bg-secondary-bg col-span-2 rounded px-6 py-8 lg:col-span-6"
+    >
+      <article class="prose">
+  <h1 class="mb-4">解决dns污染问题</h1>
+
+  <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-08-26</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2 min read</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+  
+  
+
+  <h1 id="起因">起因</h1>
+<p>由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。</p>
+<h1 id="配置">配置</h1>
+<h2 id="dnsmasq">dnsmasq</h2>
+<p><em>通过<a href="https://github.com/felixonmars/dnsmasq-china-list">dnsmasq-china-list</a>进行dns分流</em></p>
+<h3 id="安装">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/felixonmars/dnsmasq-china-list
+
+cd dnsmasq-china-list&amp;&amp;bash install.sh
+
+sudo systemctl restart dnsmasq //重启dnsmasq
+</code></pre>
+<h3 id="效果">效果</h3>
+<p><em>重启dnsmasq太慢，且解析速度下降</em></p>
+<h2 id="mosdnsdnsmasq">mosdns+dnsmasq</h2>
+<h3 id="安装-1">安装</h3>
+<h4 id="mosdns">mosdns</h4>
+<pre><code class="language-bash">wget https://github.com/IrineSistiana/mosdns/releases/download/v4.1.9/mosdns-linux-amd64.zip
+
+unzip mosdns-linux-amd64.zip
+
+sudo mkdir /etc/mosdns
+
+sudo cp mosdns /usr/bin
+
+sudo cp config.yaml /etc/mosdns //配置文件
+
+wget --no-check-certificate https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O /etc/mosdns/geosite.dat 
+
+wget --no-check-certificate https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat -O /etc/mosdns/geoip-only-cn-private.dat //中国ip名单
+
+</code></pre>
+<p><em>配置文件</em></p>
+<pre><code class="language-conf">log:
+  level: warn
+  file: &quot;mosdns.log&quot;
+
+data_providers:
+- tag: geosite
+  file: ./geosite.dat
+  auto_reload: true
+- tag: geoip
+  file: ./geoip-only-cn-private.dat
+  auto_reload: true
+
+plugins:
+# 缓存
+- tag: cache
+  type: cache
+  args:
+    size: 4096
+    lazy_cache_ttl: 172800
+
+# 转发至本地服务器的插件
+- tag: forward_local
+  type: fast_forward
+  args:
+    upstream:
+      - addr: tls://223.6.6.6:853 #alidns
+        enable_pipeline: true
+
+      - addr: tls://119.29.29.29:853 #dnspod
+        idle_timeout: 8
+        trusted: true
+
+# 转发至远程服务器的插件
+- tag: forward_remote
+  type: fast_forward
+  args:
+    upstream:
+      - addr: https://1.1.1.1/dns-query #cloudflare
+        enable_pipeline: true
+
+      - addr: https://dns.google/dns-query #google
+        enable_pipeline: true
+        trusted: true
+
+
+# 匹配本地域名的插件
+- tag: query_is_local_domain
+  type: query_matcher
+  args:
+    domain:
+      - 'provider:geosite:apple-cn'
+      - 'provider:geosite:cn'
+
+# 匹配非本地域名的插件
+- tag: query_is_non_local_domain
+  type: query_matcher
+  args:
+    domain:
+      - 'provider:geosite:geolocation-!cn'
+
+# 匹配广告域名的插件
+- tag: query_is_ad_domain
+  type: query_matcher
+  args:
+    domain:
+      - 'provider:geosite:category-ads-all'
+
+# 匹配本地 IP 的插件
+- tag: response_has_local_ip
+  type: response_matcher
+  args:
+    ip:
+      - 'provider:geoip:cn'
+
+# 主要的运行逻辑插件
+# sequence 插件中调用的插件 tag 必须在 sequence 前定义，
+# 否则 sequence 找不到对应插件。
+- tag: main_sequence
+  type: sequence
+  args:
+    exec:
+      # 缓存
+      - cache
+
+      # 屏蔽广告域名
+      - if: query_is_ad_domain
+        exec:
+          - _new_nxdomain_response
+          - _return
+
+      # 已知的本地域名用本地服务器解析
+      - if: query_is_local_domain
+        exec:
+          - forward_local
+          - _return
+
+      # 已知的非本地域名用远程服务器解析
+      - if: query_is_non_local_domain
+        exec:
+          - forward_remote
+          - _return
+
+        # 剩下的未知域名用 IP 分流。
+        # primary 从本地服务器获取应答，丢弃非本地 IP 的结果。
+      - primary:
+          - forward_local
+          - if: &quot;(! response_has_local_ip) &amp;&amp; [_response_valid_answer]&quot;
+            exec:
+              - _drop_response
+        # secondary 从远程服务器获取应答。
+        secondary:
+          - forward_remote
+        # 这里建议设置成 local 服务器正常延时的 2~5 倍。
+        # 这个延时保证了 local 延时偶尔变高时，其结果不会被 remote 抢答。
+        # 如果 local 超过这个延时还没响应，可以假设 local 出现了问题。
+        # 这时用就采用 remote 的应答。单位: 毫秒。
+        fast_fallback: 200
+
+servers:
+- exec: main_sequence
+  listeners:
+    - protocol: udp
+      addr: 127.0.0.1:1053 //监听1053端口
+    - protocol: tcp
+      addr: 127.0.0.1:1053
+</code></pre>
+<p><em>新建systemd服务</em></p>
+<pre><code class="language-conf">[Unit]
+Description=mosdns Service
+Documentation=https://irine-sistiana.gitbook.io/mosdns-wiki/
+After=network.target
+
+[Service]
+NoNewPrivileges=true
+ExecStart=/usr/bin/mosdns start -c /etc/mosdns/config.yaml -d /etc/mosdns/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<h4 id="dnsmasq-1">dnsmasq</h4>
+<p><em>配置文件</em></p>
+<pre><code class="language-bash">sudo vim /etc/dnsmasq.d/local.conf
+</code></pre>
+<pre><code class="language-conf">no-hosts
+no-resolv
+server=127.0.0.1#1053 #将dns请求转发到1053端口
+</code></pre>
+<p><em>重启dnsmasq</em></p>
+<pre><code class="language-bash">sudo systemctl restart dnsmasq
+</code></pre>
+<h3 id="效果-1">效果</h3>
+<p><em>还行，过一段时间试试</em></p>
+
+</article>
+
+
+      
+        <div class="my-4">
+    
+    <a href="https://duan-dky.me/en/tags/network/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#network</a>
+    
+</div>
+      
+
+      
+
+
+
+      
+
+      
+  <div
+    class="-mx-2 mt-4 flex flex-col border-t px-2 pt-4 md:flex-row md:justify-between"
+  >
+    <div>
+      
+        <span class="text-primary-text block font-bold"
+          >Previous</span
+        >
+        <a href="https://duan-dky.me/en/zh/posts/2022-08-28-gitlab-setup/" class="block">自建gitlab</a>
+      
+    </div>
+    <div class="mt-4 md:mt-0 md:text-right">
+      
+        <span class="text-primary-text block font-bold">Next</span>
+        <a href="https://duan-dky.me/en/zh/posts/2022-08-21-random-number/" class="block">随机数生成</a>
+      
+    </div>
+  </div>
+
+
+      
+
+
+
+  <script id="utterances" src="https://utteranc.es/client.js"
+            issue-term=pathname
+            repo=duan-dky/duan-dky.github.io
+              theme=preferred-color-scheme
+        crossorigin="anonymous"
+        async>
+</script>
+<script>
+    if (storageColorScheme == "Light") {
+      document.getElementById('utterances').setAttribute('theme', 'github-light')
+    } else if (storageColorScheme == "Dark") {
+      document.getElementById('utterances').setAttribute('theme', 'github-dark')
+    }
+</script>
+
+    </div>
+    
+
+    
+    
+      <div
+        class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
+      >
+        <h3>See Also</h3>
+        
+          <a href="https://duan-dky.me/en/posts/2022-08-26-dns-config/" class="no-underline">解决dns污染问题</a>
+          <br />
+        
+          <a href="https://duan-dky.me/en/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
+          <br />
+        
+          <a href="https://duan-dky.me/en/zh/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
+          <br />
+        
+          <a href="https://duan-dky.me/en/zh/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
+          <br />
+        
+          <a href="https://duan-dky.me/en/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
+          <br />
+        
+      </div>
+    
+  </div>
+
+  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.highlightAll();
+      });
+    </script>
+
+          </div>
+        </div>
+      
+    </main>
+    <footer class="pl-scrollbar">
+      <div class="mx-auto w-full max-w-screen-xl"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021 <a href="https://www.wangchucheng.com/">WANG Chucheng</a> and <a href="https://www.ruiqima.com/">MA Ruiqi</a>
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+    </footer>
+  </body>
+</html>

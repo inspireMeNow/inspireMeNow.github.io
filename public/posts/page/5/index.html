@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="zh"
   dir="ltr"
   
 ><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>Posts | My Blogs</title>
+<title>博客 | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
 <link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
@@ -87,25 +87,25 @@
     "itemListElement":[{
             "@type":"ListItem",
             "position":  1 ,
-            "name": "git配置",
-            "description": "安装git Linux sudo apt install git //Debian sudo dnf install git //Fedora  Windows 直接安装 下载链接\nwinget安装 winget install --id Git.Git -e --source winget  git初步配置 git config --global user.name \u0026quot;username\u0026quot; //用户名 git config --list //已有配置信息 git config --global user.email youremail //邮箱 git config --global core.editor nvim //默认文本编辑器 git config --global merge.tool vimdiff //差异分析工具  git使用 概念:\n工作区：就是你在电脑里能看到的目录。\n暂存区：英文叫 stage 或 index。一般存放在 .git 目录下的 index 文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）。\n版本库：工作区有一个隐藏目录 .git，这个不算工作区，而是 Git 的版本库。\n基本操作 git init //初始化仓库  注：第一次初始提交后才有master分支",
-            "url": "https://duan-dky.me/posts/2022-08-05-git-config/"
-        },{
-            "@type":"ListItem",
-            "position":  2 ,
             "name": "fedora基本配置",
             "description": "1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides \u0026quot;*bin/named\u0026quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2.",
             "url": "https://duan-dky.me/posts/2022-08-03-fedora-config/"
         },{
             "@type":"ListItem",
-            "position":  3 ,
+            "position":  2 ,
             "name": "frp内网穿透",
             "description": "1.frp server端配置 [common] # frp监听的端口，默认是7000，可以改成其他的 bind_port = 14823 vhost_http_port = 12345 # 授权码，请改成更复杂的 token = 12345678 # frp管理后台端口，请按自己需求更改 dashboard_port = 7800 # frp管理后台用户名和密码，请改成自己的 dashboard_user = admin dashboard_pwd = admin enable_prometheus = true  2.frp client端配置 [common] server_addr = yourdomain server_port = 14823 #server端bind_port token = 12345678 #授权码 [ssh] #ssh远程链接 type = tcp local_ip = 127.0.0.1 local_port = 22 #本地ssh端口 remote_port = 6000 #远程ssh连接端口 [web1] type = http #http服务 local_port = 80 custom_domains = yourdomain  3.",
             "url": "https://duan-dky.me/posts/2022-07-31-frp-config/"
+        },{
+            "@type":"ListItem",
+            "position":  3 ,
+            "name": "rust学习",
+            "description": "1.rust函数\nfn main(){ //主函数 println!(\u0026quot;hello world!\u0026quot;); }  2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。\n声明变量使用let关键字。\n重影:指变量的名称可以被重新使用。\n有符号类型\n   长度 有符号 无符号     8bit i8 u8   16bit i16 u16   32bit i32 u32   64bit 164 u64   128bit i128 u128   arch isize usize    ",
+            "url": "https://duan-dky.me/posts/2022-07-27-rust-practice/"
         }
     ]
 }
-</script><meta property="og:title" content="Posts | My Blogs" />
+</script><meta property="og:title" content="博客 | 我的博客" />
 <meta property="og:type" content="website" />
 
 
@@ -124,30 +124,30 @@
 
 
 
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content="zh" />
 
 
 
-<meta property="og:locale:alternate" content="zh" />
-
-
-
-
-<meta property="og:site_name" content="My Blogs" />
+<meta property="og:locale:alternate" content="en" />
 
 
 
 
+<meta property="og:site_name" content="我的博客" />
 
 
-<meta property="og:updated_time" content="2022-09-14T00:00:00&#43;00:00" />
+
+
+
+
+<meta property="og:updated_time" content="2022-09-03T00:00:00&#43;00:00" />
 
 
 
 <meta property="article:section" content="posts" />
 
 
-<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/posts/index.xml" title="My Blogs" />
+<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/posts/index.xml" title="我的博客" />
 
 
   <body class="flex min-h-screen flex-col">
@@ -161,7 +161,7 @@
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -169,9 +169,9 @@
     <div id="target"
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
-            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">博客</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
         </div>
 
         <div class="flex">
@@ -183,22 +183,22 @@
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
                 </div>
             </div>
             <div class="relative pt-4 ps-4 md:pt-0">
                 <div class="cursor-pointer hover:text-eureka" id="languageMode">
                     <i class="fas fa-globe"></i>
-                    <span class="ps-1">English</span>
+                    <span class="ps-1">简体中文</span>
                 </div>
                 <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/">English</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/en/posts/">English</a>
                 </div>
             </div>
         </div>
@@ -237,58 +237,12 @@
         <div class="pl-scrollbar">
           <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
   <article class="prose mx-6 my-8">
-  <h1>Posts</h1>
+  <h1>博客</h1>
   
 </article>
 
   <div class="bg-secondary-bg rounded px-6">
     <div class="overflow-hidden divide-y">
-  
-  <div class="py-6">
-    <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="prose">
-  <a href="https://duan-dky.me/posts/2022-08-05-git-config/" class="no-underline">
-    <h3 class="mt-0">git配置</h3>
-  </a>
-  
-    安装git Linux sudo apt install git //Debian sudo dnf install git //Fedora  Windows 直接安装 下载链接
-winget安装 winget install --id Git.Git -e --source winget  git初步配置 git config --global user.name &#34;username&#34; //用户名 git config --list //已有配置信息 git config --global user.email youremail //邮箱 git config --global core.editor nvim //默认文本编辑器 git config --global merge.tool vimdiff //差异分析工具  git使用 概念:
-工作区：就是你在电脑里能看到的目录。
-暂存区：英文叫 stage 或 index。一般存放在 .git 目录下的 index 文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）。
-版本库：工作区有一个隐藏目录 .git，这个不算工作区，而是 Git 的版本库。
-基本操作 git init //初始化仓库  注：第一次初始提交后才有master分支
-  
-
-  
-    <div
-  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
->
-  <div class="me-6 my-2">
-    <i class="fas fa-calendar me-1"></i>
-    <span
-      >2022-08-05</span
-    >
-  </div>
-  <div class="me-6 my-2">
-    <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
-  </div>
-
-  
-
-  
-</div>
-
-  
-</div>
-
-  </div>
-
-  
-</div>
-  </div>
   
   <div class="py-6">
     <div class="flex flex-col-reverse lg:flex-row justify-between">
@@ -314,7 +268,7 @@ winget安装 winget install --id Git.Git -e --source winget  git初步配置 git
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
+    <span>3分钟阅读时长</span>
   </div>
 
   
@@ -355,7 +309,53 @@ winget安装 winget install --id Git.Git -e --source winget  git初步配置 git
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
+    <span>2分钟阅读时长</span>
+  </div>
+
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://duan-dky.me/posts/2022-07-27-rust-practice/" class="no-underline">
+    <h3 class="mt-0">rust学习</h3>
+  </a>
+  
+    1.rust函数
+fn main(){ //主函数 println!(&#34;hello world!&#34;); }  2.Rust变量 Rust 是强类型语言，但具有自动判断变量类型的能力。
+声明变量使用let关键字。
+重影:指变量的名称可以被重新使用。
+有符号类型
+   长度 有符号 无符号     8bit i8 u8   16bit i16 u16   32bit i32 u32   64bit 164 u64   128bit i128 u128   arch isize usize    
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-07-27</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>1分钟阅读时长</span>
   </div>
 
   

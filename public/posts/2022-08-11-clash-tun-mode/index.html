@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="zh"
   dir="ltr"
   
 ><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>clash tun模式配置 | My Blogs</title>
+<title>clash tun模式配置 | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
 <link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
@@ -90,7 +90,7 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
   "itemListElement": [{
       "@type": "ListItem",
       "position": 1 ,
-      "name":"Posts",
+      "name":"博客",
       "item":"https://duan-dky.me/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
@@ -109,7 +109,7 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
         "@type": "WebPage",
         "@id": "https://duan-dky.me/posts/2022-08-11-clash-tun-mode/"
     },
-    "headline": "clash tun模式配置 | My Blogs","datePublished": "2022-08-11T00:00:00+00:00",
+    "headline": "clash tun模式配置 | 我的博客","datePublished": "2022-08-11T00:00:00+00:00",
     "dateModified": "2022-08-11T00:00:00+00:00",
     "wordCount":  290 ,
     "publisher": {
@@ -122,7 +122,7 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
         },
     "description": "1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq  删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1\nsudo rm \/etc\/resolv.conf sudo vim \/etc\/resolv.conf  nameserver 127.0.0.1 options edns0 trust-ad search .  注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换\nsudo vim \/etc\/NetworkManager\/NetworkManager.conf  [main] dns = none  重启networkmanager\nsudo systemctl restart NetworkManager  编辑dnsmasq配置文件\nsudo vim \/etc\/dnsmasq.d\/clash.conf  no-hosts no-resolv server=127.0.0.1#1053 \/\/将dns请求全部转发到clash  重新启动dnsmasq\nsudo systemctl restart dnsmasq  clash的dns服务器配置\nconfig.yaml\ndns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host or fake-ip fake-ip-range: 198."
 }
-</script><meta property="og:title" content="clash tun模式配置 | My Blogs" />
+</script><meta property="og:title" content="clash tun模式配置 | 我的博客" />
 <meta property="og:type" content="article" />
 
 
@@ -146,16 +146,16 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
 
 
 
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content="zh" />
 
 
 
-<meta property="og:locale:alternate" content="zh" />
+<meta property="og:locale:alternate" content="en" />
 
 
 
 
-<meta property="og:site_name" content="My Blogs" />
+<meta property="og:site_name" content="我的博客" />
 
 
 
@@ -178,10 +178,6 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
 
 
 
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/" />
-
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-10-trojan-config/" />
-
 <meta property="og:see_also" content="https://duan-dky.me/posts/2022-08-10-trojan-config/" />
 
 
@@ -198,7 +194,7 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -206,9 +202,9 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
     <div id="target"
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
-            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">博客</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
         </div>
 
         <div class="flex">
@@ -220,22 +216,22 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
                 </div>
             </div>
             <div class="relative pt-4 ps-4 md:pt-0">
                 <div class="cursor-pointer hover:text-eureka" id="languageMode">
                     <i class="fas fa-globe"></i>
-                    <span class="ps-1">English</span>
+                    <span class="ps-1">简体中文</span>
                 </div>
                 <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/">English</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/en/posts/2022-08-11-clash-tun-mode/">English</a>
                 </div>
             </div>
         </div>
@@ -293,7 +289,7 @@ dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host o
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
+    <span>2分钟阅读时长</span>
   </div>
 
   
@@ -453,14 +449,14 @@ ipconfig /flushdns
     <div>
       
         <span class="text-primary-text block font-bold"
-          >Previous</span
+          >上一页</span
         >
         <a href="https://duan-dky.me/posts/2022-08-15-gpg-encrypt/" class="block">gpg加密解密</a>
       
     </div>
     <div class="mt-4 md:mt-0 md:text-right">
       
-        <span class="text-primary-text block font-bold">Next</span>
+        <span class="text-primary-text block font-bold">下一页</span>
         <a href="https://duan-dky.me/posts/2022-08-10-nginx-config/" class="block">nginx配置</a>
       
     </div>
@@ -494,13 +490,7 @@ ipconfig /flushdns
       <div
         class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
       >
-        <h3>See Also</h3>
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
-          <br />
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
-          <br />
+        <h3>相关</h3>
         
           <a href="https://duan-dky.me/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
           <br />

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="zh"
   dir="ltr"
   
 ><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>Posts | My Blogs</title>
+<title>博客 | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
 <link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
@@ -87,25 +87,25 @@
     "itemListElement":[{
             "@type":"ListItem",
             "position":  1 ,
-            "name": "随机数生成",
-            "description": "通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位\necho $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位\necho $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码\nopenssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字\n通过系统uuid生成 cat /proc/sys/kernel/random/uuid  通过程序实现 C++实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同\n# include \u0026lt;iostream\u0026gt; #include\u0026lt;random\u0026gt; #include\u0026lt;time.h\u0026gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout \u0026lt;\u0026lt; (rand() % (b - a + 1)) + a \u0026lt;\u0026lt; std::endl; return 0; }  随机字符 ",
-            "url": "https://duan-dky.me/posts/2022-08-21-random-number/"
-        },{
-            "@type":"ListItem",
-            "position":  2 ,
             "name": "sql server docker镜像配置",
             "description": "1.拉取docker镜像 sudo docker pull mcr.microsoft.com/mssql/server:2022-latest  2.创建并运行docker镜像 sudo docker run -e \u0026quot;ACCEPT_EULA=Y\u0026quot; -e \u0026quot;MSSQL_SA_PASSWORD=\u0026lt;YourPassword\u0026gt;\u0026quot; \\ -p 1433:1433 --name sql1 --hostname sql1 \\ -d \\ mcr.microsoft.com/mssql/server:2022-latest  注：开放1433端口以进行数据库连接，docker镜像名称为sql1\n3. 查看sql server服务器是否准备好连接 docker exec -t sql1 cat /var/opt/mssql/log/errorlog | grep connection  4.设置管理员密码 sudo docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd \\ -S localhost -U SA \\ -P \u0026quot;$(read -sp \u0026quot;Enter current SA password: \u0026quot;; echo \u0026quot;${REPLY}\u0026quot;)\u0026quot; \\ -Q \u0026quot;ALTER LOGIN SA WITH PASSWORD=\\\u0026quot;$(read -sp \u0026quot;Enter new SA password: \u0026quot;; echo \u0026quot;${REPLY}\u0026quot;)\\\u0026quot;\u0026quot;  5.",
             "url": "https://duan-dky.me/posts/2022-08-19-sqlserver-docker/"
         },{
             "@type":"ListItem",
-            "position":  3 ,
+            "position":  2 ,
             "name": "gpg加密解密",
             "description": "生成密钥 gpg生成私钥 gpg \u0026ndash;gen-key 导出密钥\ngpg --export --armor keyID \u0026gt; gpgkey.pub.asc  导入公钥\ngpg --import gpgkey.pub.asc  从服务器导入\ngpg --keyserver servername --recv-keys keyID  非对称加密解密 加密文件\ngpg -e -r username filename  解密文件\ngpg -d filename  对称加密解密 加密文件\ngpg --symmetric filename  解密文件\ngpg -d filename  对文件签名 数字签名\ngpg -o filename.sig -s filename  签名+加密\ngpg -o filename.sig -ser name filename  文本签名\ngpg -o filename.sig --clearsign filename  分离签名（原文件与签名分开）\ngpg -o filename.sig -ab filename  验证签名",
             "url": "https://duan-dky.me/posts/2022-08-15-gpg-encrypt/"
+        },{
+            "@type":"ListItem",
+            "position":  3 ,
+            "name": "clash tun模式配置",
+            "description": "1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq  删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1\nsudo rm /etc/resolv.conf sudo vim /etc/resolv.conf  nameserver 127.0.0.1 options edns0 trust-ad search .  注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换\nsudo vim /etc/NetworkManager/NetworkManager.conf  [main] dns = none  重启networkmanager\nsudo systemctl restart NetworkManager  编辑dnsmasq配置文件\nsudo vim /etc/dnsmasq.d/clash.conf  no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash  重新启动dnsmasq\nsudo systemctl restart dnsmasq  clash的dns服务器配置\nconfig.yaml\ndns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host or fake-ip fake-ip-range: 198.",
+            "url": "https://duan-dky.me/posts/2022-08-11-clash-tun-mode/"
         }
     ]
 }
-</script><meta property="og:title" content="Posts | My Blogs" />
+</script><meta property="og:title" content="博客 | 我的博客" />
 <meta property="og:type" content="website" />
 
 
@@ -124,30 +124,30 @@
 
 
 
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content="zh" />
 
 
 
-<meta property="og:locale:alternate" content="zh" />
-
-
-
-
-<meta property="og:site_name" content="My Blogs" />
+<meta property="og:locale:alternate" content="en" />
 
 
 
 
+<meta property="og:site_name" content="我的博客" />
 
 
-<meta property="og:updated_time" content="2022-09-14T00:00:00&#43;00:00" />
+
+
+
+
+<meta property="og:updated_time" content="2022-09-03T00:00:00&#43;00:00" />
 
 
 
 <meta property="article:section" content="posts" />
 
 
-<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/posts/index.xml" title="My Blogs" />
+<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/posts/index.xml" title="我的博客" />
 
 
   <body class="flex min-h-screen flex-col">
@@ -161,7 +161,7 @@
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -169,9 +169,9 @@
     <div id="target"
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
-            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">博客</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
         </div>
 
         <div class="flex">
@@ -183,22 +183,22 @@
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
                 </div>
             </div>
             <div class="relative pt-4 ps-4 md:pt-0">
                 <div class="cursor-pointer hover:text-eureka" id="languageMode">
                     <i class="fas fa-globe"></i>
-                    <span class="ps-1">English</span>
+                    <span class="ps-1">简体中文</span>
                 </div>
                 <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/">English</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/en/posts/">English</a>
                 </div>
             </div>
         </div>
@@ -237,58 +237,12 @@
         <div class="pl-scrollbar">
           <div class="mx-auto w-full max-w-screen-xl lg:px-4 xl:px-8">
   <article class="prose mx-6 my-8">
-  <h1>Posts</h1>
+  <h1>博客</h1>
   
 </article>
 
   <div class="bg-secondary-bg rounded px-6">
     <div class="overflow-hidden divide-y">
-  
-  <div class="py-6">
-    <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="prose">
-  <a href="https://duan-dky.me/posts/2022-08-21-random-number/" class="no-underline">
-    <h3 class="mt-0">随机数生成</h3>
-  </a>
-  
-    通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位
-echo $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位
-echo $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码
-openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字
-通过系统uuid生成 cat /proc/sys/kernel/random/uuid  通过程序实现 C&#43;&#43;实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同
-# include &lt;iostream&gt; #include&lt;random&gt; #include&lt;time.h&gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout &lt;&lt; (rand() % (b - a &#43; 1)) &#43; a &lt;&lt; std::endl; return 0; }  随机字符 
-  
-
-  
-    <div
-  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
->
-  <div class="me-6 my-2">
-    <i class="fas fa-calendar me-1"></i>
-    <span
-      >2022-08-21</span
-    >
-  </div>
-  <div class="me-6 my-2">
-    <i class="fas fa-clock me-1"></i>
-    <span>1 min read</span>
-  </div>
-
-  
-
-  
-</div>
-
-  
-</div>
-
-  </div>
-
-  
-</div>
-  </div>
   
   <div class="py-6">
     <div class="flex flex-col-reverse lg:flex-row justify-between">
@@ -315,7 +269,7 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>1 min read</span>
+    <span>1分钟阅读时长</span>
   </div>
 
   
@@ -367,7 +321,55 @@ gpg -o filename.sig -ab filename  验证签名
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>1 min read</span>
+    <span>1分钟阅读时长</span>
+  </div>
+
+  
+
+  
+</div>
+
+  
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="prose">
+  <a href="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/" class="no-underline">
+    <h3 class="mt-0">clash tun模式配置</h3>
+  </a>
+  
+    1. 劫持系统dns 安装dnsmasq并启动dnsmasq sudo dnf install dnsmasq sudo systemctl start dnsmasq  删除系统自己的resolv.conf,并新建resolv.conf指定dns服务器ip 注：systemd-resolved的dns服务器ip为127.0.0.53，dnsmasq为127.0.0.1
+sudo rm /etc/resolv.conf sudo vim /etc/resolv.conf  nameserver 127.0.0.1 options edns0 trust-ad search .  注意：需要关闭networkmanager的dns服务器防止dns服务器ip被替换
+sudo vim /etc/NetworkManager/NetworkManager.conf  [main] dns = none  重启networkmanager
+sudo systemctl restart NetworkManager  编辑dnsmasq配置文件
+sudo vim /etc/dnsmasq.d/clash.conf  no-hosts no-resolv server=127.0.0.1#1053 //将dns请求全部转发到clash  重新启动dnsmasq
+sudo systemctl restart dnsmasq  clash的dns服务器配置
+config.yaml
+dns: enable: true ipv6: true listen: :1053 enhanced-mode: fake-ip # redir-host or fake-ip fake-ip-range: 198.
+  
+
+  
+    <div
+  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
+>
+  <div class="me-6 my-2">
+    <i class="fas fa-calendar me-1"></i>
+    <span
+      >2022-08-11</span
+    >
+  </div>
+  <div class="me-6 my-2">
+    <i class="fas fa-clock me-1"></i>
+    <span>2分钟阅读时长</span>
   </div>
 
   

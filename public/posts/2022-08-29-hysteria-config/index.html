@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="zh"
   dir="ltr"
   
 ><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>hysteria配置 | My Blogs</title>
+<title>hysteria配置 | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
 <link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
@@ -85,7 +85,7 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
   "itemListElement": [{
       "@type": "ListItem",
       "position": 1 ,
-      "name":"Posts",
+      "name":"博客",
       "item":"https://duan-dky.me/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
@@ -104,7 +104,7 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
         "@type": "WebPage",
         "@id": "https://duan-dky.me/posts/2022-08-29-hysteria-config/"
     },
-    "headline": "hysteria配置 | My Blogs","datePublished": "2022-08-29T00:00:00+00:00",
+    "headline": "hysteria配置 | 我的博客","datePublished": "2022-08-29T00:00:00+00:00",
     "dateModified": "2022-08-29T00:00:00+00:00",
     "wordCount":  110 ,
     "publisher": {
@@ -117,7 +117,7 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
         },
     "description": "由于hysteria用了udp协议，不受tcp阻断的影响，故尝试此项目。\nserver端 下载安装 下载 wget https:\/\/github.com\/HyNetwork\/hysteria\/releases\/download\/v1.2.0\/hysteria-linux-amd64\n编辑配置文件config.json { \u0026quot;listen\u0026quot;: \u0026quot;:37658\u0026quot;, #监听端口 \u0026quot;protocol\u0026quot;: \u0026quot;wechat-video\u0026quot;, #流量类型，支持udp，faketcp，wechat-video \u0026quot;cert\u0026quot;: \u0026quot;\/path\/to\/fullchain.pem\u0026quot;, \u0026quot;key\u0026quot;: \u0026quot;\/path\/to\/privkey.pem\u0026quot;, \u0026quot;alpn\u0026quot;: \u0026quot;h3\u0026quot;, \u0026quot;auth\u0026quot;: { \u0026quot;mode\u0026quot;: \u0026quot;passwords\u0026quot;, \u0026quot;config\u0026quot;: [\u0026quot;yourpassword\u0026quot;] }, \u0026quot;up_mbps\u0026quot;: 100, #限速，建议值不要过高，默认单位：Mbps \u0026quot;down_mbps\u0026quot;: 100 }  启动hysteria .\/hysteria -c config.json server  注册为systemd服务 [Unit] Description=Hysteria, a feature-packed network utility optimized for networks of poor quality Documentation=https:\/\/github.com\/HyNetwork\/hysteria\/wiki After=network.target [Service] CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_NET_RAW AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_NET_RAW NoNewPrivileges=true WorkingDirectory=\/etc\/hysteria Environment=HYSTERIA_LOG_LEVEL=info ExecStart=\/usr\/bin\/hysteria -c \/etc\/hysteria\/config.json server Restart=on-failure RestartPreventExitStatus=1 RestartSec=5 [Install] WantedBy=multi-user.target  重载systemd服务 sudo systemctl daemon-reload sudo systemctl enable --now hysteria  client端 我是用的clash meta核心，它可以进行分流"
 }
-</script><meta property="og:title" content="hysteria配置 | My Blogs" />
+</script><meta property="og:title" content="hysteria配置 | 我的博客" />
 <meta property="og:type" content="article" />
 
 
@@ -136,16 +136,16 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
 
 
 
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content="zh" />
 
 
 
-<meta property="og:locale:alternate" content="zh" />
+<meta property="og:locale:alternate" content="en" />
 
 
 
 
-<meta property="og:site_name" content="My Blogs" />
+<meta property="og:site_name" content="我的博客" />
 
 
 
@@ -168,15 +168,9 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
 
 
 
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/" />
-
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-26-dns-config/" />
-
 <meta property="og:see_also" content="https://duan-dky.me/posts/2022-08-26-dns-config/" />
 
 <meta property="og:see_also" content="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/" />
-
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/" />
 
 <meta property="og:see_also" content="https://duan-dky.me/posts/2022-08-10-trojan-config/" />
 
@@ -194,7 +188,7 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -202,9 +196,9 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
     <div id="target"
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
-            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">博客</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
         </div>
 
         <div class="flex">
@@ -216,22 +210,22 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
                 </div>
             </div>
             <div class="relative pt-4 ps-4 md:pt-0">
                 <div class="cursor-pointer hover:text-eureka" id="languageMode">
                     <i class="fas fa-globe"></i>
-                    <span class="ps-1">English</span>
+                    <span class="ps-1">简体中文</span>
                 </div>
                 <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-29-hysteria-config/">English</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-29-hysteria-config/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/en/posts/2022-08-29-hysteria-config/">English</a>
                 </div>
             </div>
         </div>
@@ -289,7 +283,7 @@ server端 下载安装 下载 wget https://github.com/HyNetwork/hysteria/release
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>1 min read</span>
+    <span>1分钟阅读时长</span>
   </div>
 
   
@@ -386,14 +380,14 @@ sudo systemctl enable --now hysteria
     <div>
       
         <span class="text-primary-text block font-bold"
-          >Previous</span
+          >上一页</span
         >
         <a href="https://duan-dky.me/posts/2022-08-31-vless-config/" class="block">vless配置</a>
       
     </div>
     <div class="mt-4 md:mt-0 md:text-right">
       
-        <span class="text-primary-text block font-bold">Next</span>
+        <span class="text-primary-text block font-bold">下一页</span>
         <a href="https://duan-dky.me/posts/2022-08-28-gitlab-setup/" class="block">自建gitlab</a>
       
     </div>
@@ -427,24 +421,15 @@ sudo systemctl enable --now hysteria
       <div
         class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
       >
-        <h3>See Also</h3>
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-29-hysteria-config/" class="no-underline">hysteria配置</a>
-          <br />
+        <h3>相关</h3>
         
           <a href="https://duan-dky.me/posts/2022-08-26-dns-config/" class="no-underline">解决dns污染问题</a>
-          <br />
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-26-dns-config/" class="no-underline">解决dns污染问题</a>
           <br />
         
           <a href="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
           <br />
         
-          <a href="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
-          <br />
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
+          <a href="https://duan-dky.me/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
           <br />
         
       </div>

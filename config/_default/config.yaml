@@ -14,7 +14,7 @@ copyright: >
 enableEmoji: true
 enableGitInfo: false
 summaryLength: 75
-defaultContentLanguage: en
+defaultContentLanguage: zh
 hasCJKLanguage: false # Set `true` for Chinese/Japanese/Korean.
 defaultContentLanguageInSubdir: false
 

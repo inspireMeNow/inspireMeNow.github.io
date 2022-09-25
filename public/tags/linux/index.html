@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="zh"
   dir="ltr"
   
 ><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>linux | My Blogs</title>
+<title>linux | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
 <link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
@@ -108,19 +108,13 @@
         },{
             "@type":"ListItem",
             "position":  2 ,
-            "name": "随机数生成",
-            "description": "通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位\necho $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位\necho $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码\nopenssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字\n通过系统uuid生成 cat /proc/sys/kernel/random/uuid  通过程序实现 C++实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同\n# include \u0026lt;iostream\u0026gt; #include\u0026lt;random\u0026gt; #include\u0026lt;time.h\u0026gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout \u0026lt;\u0026lt; (rand() % (b - a + 1)) + a \u0026lt;\u0026lt; std::endl; return 0; }  随机字符 ",
-            "url": "https://duan-dky.me/zh/posts/2022-08-21-random-number/"
-        },{
-            "@type":"ListItem",
-            "position":  3 ,
             "name": "fedora基本配置",
             "description": "1.软件包管理工具 dnf命令 sudo dnf makecache //建立软件包缓存 sudo dnf upgrade //进行软件包更新 sudo dnf upgrade package_name //更新单个软件包 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库 dnf search package_name //搜索软件包 dnf list kernel-* //查找软件包，使用通配符 dnf list all //列出所有软件包 dnf list installed package_name //列出已安装软件包 dnf group list //列出所有包组 dnf repolist //列出已启用的软件仓库 dnf repository-packages fedora list //列出来自单个软件仓库的软件包 dnf info package_name //显示单个软件包的信息 dnf repoquery package_name --info //列出具体软件包的所有信息 dnf provides \u0026quot;*bin/named\u0026quot; //列出哪个软件包提供了该二进制文件 dnf -v group list group_name //列出某个软件包组的详细信息 sudo dnf install package_name //安装单个软件包 sudo dnf install /usr/sbin/named //不知道包名的情况下使用 sudo dnf groupinstall group_nane //安装软件包组 sudo dnf remove package _name //卸载软件包 sudo dnf group remove group_name //卸载软件包组 dnf history list //列出所有事务  2.",
             "url": "https://duan-dky.me/posts/2022-08-03-fedora-config/"
         }
     ]
 }
-</script><meta property="og:title" content="linux | My Blogs" />
+</script><meta property="og:title" content="linux | 我的博客" />
 <meta property="og:type" content="website" />
 
 
@@ -139,16 +133,16 @@
 
 
 
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content="zh" />
 
 
 
-<meta property="og:locale:alternate" content="zh" />
+<meta property="og:locale:alternate" content="en" />
 
 
 
 
-<meta property="og:site_name" content="My Blogs" />
+<meta property="og:site_name" content="我的博客" />
 
 
 
@@ -162,7 +156,7 @@
 <meta property="article:section" content="tags" />
 
 
-<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/tags/linux/index.xml" title="My Blogs" />
+<link rel="alternate" type="application/rss+xml" href="https://duan-dky.me/tags/linux/index.xml" title="我的博客" />
 
 
   <body class="flex min-h-screen flex-col">
@@ -176,7 +170,7 @@
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -184,9 +178,9 @@
     <div id="target"
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
-            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Posts</a>
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">博客</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
         </div>
 
         <div class="flex">
@@ -198,22 +192,22 @@
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
                 </div>
             </div>
             <div class="relative pt-4 ps-4 md:pt-0">
                 <div class="cursor-pointer hover:text-eureka" id="languageMode">
                     <i class="fas fa-globe"></i>
-                    <span class="ps-1">English</span>
+                    <span class="ps-1">简体中文</span>
                 </div>
                 <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/tags/linux/">English</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/tags/linux/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/tags/linux/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/en/tags/linux/">English</a>
                 </div>
             </div>
         </div>
@@ -288,53 +282,7 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>1 min read</span>
-  </div>
-
-  
-
-  
-</div>
-
-  
-</div>
-
-  </div>
-
-  
-</div>
-  </div>
-  
-  <div class="py-6">
-    <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="prose">
-  <a href="https://duan-dky.me/zh/posts/2022-08-21-random-number/" class="no-underline">
-    <h3 class="mt-0">随机数生成</h3>
-  </a>
-  
-    通过系统变量生成 echo $RANDOM  获取特定位数的随机字符,这里为10位
-echo $RANDOM |md5sum |cut -c 1-10  获取随机数字,这里为10位
-echo $RANDOM |cksum |cut -c 1-10  通过openssl生成 base64编码
-openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机字符，也可使用cksum等命令生成随机数字
-通过系统uuid生成 cat /proc/sys/kernel/random/uuid  通过程序实现 C&#43;&#43;实现 随机数 生成1~100000之间的随机数，使用srand函数初始化保证每次的随机数不同
-# include &lt;iostream&gt; #include&lt;random&gt; #include&lt;time.h&gt; int main(){ srand((unsigned)time(NULL)); int a=1; int b=100000; std::cout &lt;&lt; (rand() % (b - a &#43; 1)) &#43; a &lt;&lt; std::endl; return 0; }  随机字符 
-  
-
-  
-    <div
-  class="text-tertiary-text not-prose mt-2 flex flex-row flex-wrap items-center"
->
-  <div class="me-6 my-2">
-    <i class="fas fa-calendar me-1"></i>
-    <span
-      >2022-08-21</span
-    >
-  </div>
-  <div class="me-6 my-2">
-    <i class="fas fa-clock me-1"></i>
-    <span>1 min read</span>
+    <span>1分钟阅读时长</span>
   </div>
 
   
@@ -375,7 +323,7 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
+    <span>3分钟阅读时长</span>
   </div>
 
   
@@ -397,26 +345,6 @@ openssl rand -base64 10  注：openssl产生的是指定长度个bytes的随机�
 
   </div>
   
-    <ul class="pagination pagination-default">
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="First" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;&laquo;</span></a>
-      </li>
-      <li class="page-item disabled">
-        <a aria-disabled="true" aria-label="Previous" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item active">
-        <a aria-current="page" aria-label="Page 1" class="page-link" role="button">1</a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/linux/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/linux/page/2/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/tags/linux/page/2/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
-      </li>
-    </ul>
 
           </div>
         </div>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
-  lang="en"
+  lang="zh"
   dir="ltr"
   
 ><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<title>解决dns污染问题 | My Blogs</title>
+<title>解决dns污染问题 | 我的博客</title>
 
 <meta name="generator" content="Hugo Eureka 0.9.3" />
 <link rel="stylesheet" href="https://duan-dky.me/css/eureka.min.faa8bf2a5c9fc279a37c3bc5d8334aa06d491653aaa47c13af09b81396aef331f70d5d528ba104107dda7a3e99247dee.css">
@@ -87,7 +87,7 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
   "itemListElement": [{
       "@type": "ListItem",
       "position": 1 ,
-      "name":"Posts",
+      "name":"博客",
       "item":"https://duan-dky.me/posts/"},{
       "@type": "ListItem",
       "position": 2 ,
@@ -106,7 +106,7 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
         "@type": "WebPage",
         "@id": "https://duan-dky.me/posts/2022-08-26-dns-config/"
     },
-    "headline": "解决dns污染问题 | My Blogs","datePublished": "2022-08-26T00:00:00+00:00",
+    "headline": "解决dns污染问题 | 我的博客","datePublished": "2022-08-26T00:00:00+00:00",
     "dateModified": "2022-08-26T00:00:00+00:00",
     "wordCount":  333 ,
     "publisher": {
@@ -119,7 +119,7 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
         },
     "description": "起因 由于近期dns污染严重，域名解析不正常，故设置doh，dns分流进行dns解析。\n配置 dnsmasq 通过dnsmasq-china-list进行dns分流\n安装 git clone https:\/\/github.com\/felixonmars\/dnsmasq-china-list cd dnsmasq-china-list\u0026amp;\u0026amp;bash install.sh sudo systemctl restart dnsmasq \/\/重启dnsmasq  效果 重启dnsmasq太慢，且解析速度下降\nmosdns\u002bdnsmasq 安装 mosdns wget https:\/\/github.com\/IrineSistiana\/mosdns\/releases\/download\/v4.1.9\/mosdns-linux-amd64.zip unzip mosdns-linux-amd64.zip sudo mkdir \/etc\/mosdns sudo cp mosdns \/usr\/bin sudo cp config.yaml \/etc\/mosdns \/\/配置文件 wget --no-check-certificate https:\/\/github.com\/Loyalsoldier\/v2ray-rules-dat\/releases\/latest\/download\/geosite.dat -O \/etc\/mosdns\/geosite.dat wget --no-check-certificate https:\/\/raw.githubusercontent.com\/Loyalsoldier\/geoip\/release\/geoip-only-cn-private.dat -O \/etc\/mosdns\/geoip-only-cn-private.dat \/\/中国ip名单  配置文件\nlog: level: warn file: \u0026quot;mosdns.log\u0026quot; data_providers: - tag: geosite file: .\/geosite.dat auto_reload: true - tag: geoip file: .\/geoip-only-cn-private.dat auto_reload: true plugins: # 缓存 - tag: cache type: cache args: size: 4096 lazy_cache_ttl: 172800 # 转发至本地服务器的插件 - tag: forward_local type: fast_forward args: upstream: - addr: tls:\/\/223."
 }
-</script><meta property="og:title" content="解决dns污染问题 | My Blogs" />
+</script><meta property="og:title" content="解决dns污染问题 | 我的博客" />
 <meta property="og:type" content="article" />
 
 
@@ -140,16 +140,16 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
 
 
 
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content="zh" />
 
 
 
-<meta property="og:locale:alternate" content="zh" />
+<meta property="og:locale:alternate" content="en" />
 
 
 
 
-<meta property="og:site_name" content="My Blogs" />
+<meta property="og:site_name" content="我的博客" />
 
 
 
@@ -172,13 +172,7 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
 
 
 
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-26-dns-config/" />
-
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/" />
-
 <meta property="og:see_also" content="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/" />
-
-<meta property="og:see_also" content="https://duan-dky.me/zh/posts/2022-08-10-trojan-config/" />
 
 <meta property="og:see_also" content="https://duan-dky.me/posts/2022-08-10-trojan-config/" />
 
@@ -196,7 +190,7 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
     }
 </script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="me-6 text-primary-text text-xl font-bold">My Blogs</a>
+    <a href="/" class="me-6 text-primary-text text-xl font-bold">我的博客</a>
     <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
         <i class="fas fa-bars"></i>
     </button>
@@ -204,9 +198,9 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
     <div id="target"
         class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
         <div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">About</a>
-            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">Posts</a>
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">Learning</a>
+            <a href="/#about" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">关于我</a>
+            <a href="/posts/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  me-4">博客</a>
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  me-4">学习</a>
         </div>
 
         <div class="flex">
@@ -218,22 +212,22 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">浅色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">深色</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">自动</span>
                 </div>
             </div>
             <div class="relative pt-4 ps-4 md:pt-0">
                 <div class="cursor-pointer hover:text-eureka" id="languageMode">
                     <i class="fas fa-globe"></i>
-                    <span class="ps-1">English</span>
+                    <span class="ps-1">简体中文</span>
                 </div>
                 <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open-lang">
                 </div>
                 <div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
                     id='languageOptions'>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-26-dns-config/">English</a>
-                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/zh/posts/2022-08-26-dns-config/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/posts/2022-08-26-dns-config/">简体中文</a>
+                    <a class="px-4 py-1 hover:text-eureka" href="https://duan-dky.me/en/posts/2022-08-26-dns-config/">English</a>
                 </div>
             </div>
         </div>
@@ -291,7 +285,7 @@ log: level: warn file: &quot;mosdns.log&quot; data_providers: - tag: geosite fil
   </div>
   <div class="me-6 my-2">
     <i class="fas fa-clock me-1"></i>
-    <span>2 min read</span>
+    <span>2分钟阅读时长</span>
   </div>
 
   
@@ -514,14 +508,14 @@ server=127.0.0.1#1053 #将dns请求转发到1053端口
     <div>
       
         <span class="text-primary-text block font-bold"
-          >Previous</span
+          >上一页</span
         >
         <a href="https://duan-dky.me/posts/2022-08-28-gitlab-setup/" class="block">自建gitlab</a>
       
     </div>
     <div class="mt-4 md:mt-0 md:text-right">
       
-        <span class="text-primary-text block font-bold">Next</span>
+        <span class="text-primary-text block font-bold">下一页</span>
         <a href="https://duan-dky.me/posts/2022-08-21-random-number/" class="block">随机数生成</a>
       
     </div>
@@ -555,18 +549,9 @@ server=127.0.0.1#1053 #将dns请求转发到1053端口
       <div
         class="lg:col-start-2 bg-secondary-bg prose col-span-2 rounded p-6 lg:col-span-6"
       >
-        <h3>See Also</h3>
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-26-dns-config/" class="no-underline">解决dns污染问题</a>
-          <br />
+        <h3>相关</h3>
         
           <a href="https://duan-dky.me/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
-          <br />
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-11-clash-tun-mode/" class="no-underline">clash tun模式配置</a>
-          <br />
-        
-          <a href="https://duan-dky.me/zh/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
           <br />
         
           <a href="https://duan-dky.me/posts/2022-08-10-trojan-config/" class="no-underline">trojan-go配置</a>
