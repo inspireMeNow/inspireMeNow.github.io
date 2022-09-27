@@ -10,63 +10,103 @@ lastmod: '2022-09-23'
 # 1.软件包管理工具
 
 ## dnf命令
-
+*建立软件包缓存*  
 ```bash
-sudo dnf makecache //建立软件包缓存
-
-sudo dnf upgrade //进行软件包更新
-
-sudo dnf upgrade package_name //更新单个软件包
-
-sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm //启用rpmfusion软件仓库
-
-dnf search package_name //搜索软件包
-
-dnf list kernel-* //查找软件包，使用通配符
-
-dnf list all //列出所有软件包
-
-dnf list installed package_name //列出已安装软件包
-
-dnf group list //列出所有包组
-
-dnf repolist //列出已启用的软件仓库
-
-dnf repository-packages fedora list //列出来自单个软件仓库的软件包
-
-dnf info package_name //显示单个软件包的信息
-
-dnf repoquery package_name --info //列出具体软件包的所有信息
-
-dnf provides "*bin/named" //列出哪个软件包提供了该二进制文件
-
-dnf -v group list group_name //列出某个软件包组的详细信息
-
-sudo dnf install package_name //安装单个软件包
-
-sudo dnf install /usr/sbin/named //不知道包名的情况下使用
-
-sudo dnf groupinstall group_nane //安装软件包组
-
-sudo dnf remove package _name //卸载软件包
-
-sudo dnf group remove group_name //卸载软件包组
-
-dnf history list //列出所有事务
+sudo dnf makecache
+```
+*进行软件包更新*
+```bash
+sudo dnf upgrade
+```
+*更新单个软件包*
+```bash
+sudo dnf upgrade package_name
+```
+*启用rpmfusion软件仓库*
+```bash
+sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+```
+*搜索软件包*
+```bash
+dnf search package_name
+```
+*查找软件包，使用通配符*
+```bash
+dnf list kernel-*
+```
+*列出所有软件包*
+```bash
+dnf list all
+```
+*列出已安装软件包*
+```bash
+dnf list installed package_nam
+```
+*列出所有包组*
+```bash
+dnf group list
+```
+*列出已启用的软件仓库*
+```bash
+dnf repolist
+```
+*列出来自单个软件仓库的软件包*
+```bash
+dnf repository-packages fedora list
+```
+*显示单个软件包的信息*
+```bash
+dnf info package_name
+```
+*列出具体软件包的所有信息*
+```bash
+dnf repoquery package_name --info
+```
+*列出哪个软件包提供了该二进制文件*
+```bash
+dnf provides "*bin/named"
+```
+*列出某个软件包组的详细信息*
+```bash
+dnf -v group list group_name
+```
+*安装单个软件包*
+```bash
+sudo dnf install package_name
+```
+*不知道包名的情况下使用*
+```bash
+sudo dnf install /usr/sbin/named
+```
+*安装软件包组*
+```bash
+sudo dnf groupinstall group_nane
+```
+*卸载软件包*
+```bash
+sudo dnf remove package _name
+```
+*卸载软件包组*
+```bash
+sudo dnf group remove group_name
+```
+*列出所有事务*
+```bash
+dnf history list
 ```
 
 # 2.驱动安装
 
 ## 显卡
-
+*查看显卡型号*
 ```bash
-lspci -k | grep -EA3 'VGA|3D|Display' //查看显卡型号
+lspci -k | grep -EA3 'VGA|3D|Display' 
 ```
 
 ### AMD, Intel显卡免驱
-
+*查看模块加载情况*
 ```bash
-lsmod|grep amdgpu //查看模块加载情况
+lsmod|grep amdgpu
 ```
 
 ### NVIDIA 显卡驱动安装
@@ -86,7 +126,7 @@ sudo dnf install gcc kernel-headers kernel-devel akmod-nvidia xorg-x11-drv-nvidi
 #### 3.等待驱动模块加载，过程需要5~10分钟
 
 ```bash
-ps -e | grep akmods //执行命令无输出说明模块安装完成
+ps -e | grep akmods # 执行命令无输出说明模块安装完成
 ```
 
 #### 4.强制从更新的内核模块中读取配置
@@ -104,7 +144,7 @@ sudo reboot
 ```
 
 ```bash
-lsmod | grep nvidia //查看模块加载情况
+lsmod | grep nvidia # 查看模块加载情况
 ```
 ## 网卡
 ### intel
@@ -142,46 +182,59 @@ sudo systemctl restart NetworkManager
 # realtek
 *你可能需要自己编译驱动，源码请自行寻找。*
 # 3. systemd服务
-
+*启动服务*
 ```bash
-systemctl start service_name //启动服务
-
-systemctl restart service_name //重启服务
-
-systemctl enable service_name //服务自动启动
-
-systemctl disable service_name //服务取消自动启动
-
-systemctl mask service_name //屏蔽服务
-
-systemctl is-enabled service_name //查看服务是否自动启动
-
-systemctl edit httpd.service //编辑服务
+systemctl start service_name
 ```
+*重启服务*
 ```bash
-vim /etc/systemd/system/foo.service //新建服务
+systemctl restart service_name
+```
+*服务自动启动*
+```bash
+systemctl enable service_name
+```
+*服务取消自动启动*
+```bash
+systemctl disable service_name
+```
+*屏蔽服务*
+```bash
+systemctl mask service_name
+```
+*查看服务是否自动启动*
+```bash
+systemctl is-enabled service_name
+```
+*编辑服务*
+```bash
+systemctl edit httpd.service
+```
+*新建服务*
+```bash
+vim /etc/systemd/system/foo.service
 ```
 
 ```conf
-//示例
+#示例
 [Unit]
-Description=frpc //服务描述
-After=network.target //在网络连接激活后启动
+Description=frpc #服务描述
+After=network.target #在网络连接激活后启动
 
 [Service]
-Type=simple //服务类型
-ExecStart=/usr/bin/frpc -c frp.ini //命令
+Type=simple #服务类型
+ExecStart=/usr/bin/frpc -c frp.ini #命令
 
 [Install]
 WantedBy=multi-user.target
 ```
 
 ```bash
-systemctl status service_name //查看服务运行状态
+systemctl status service_name #查看服务运行状态
 
-journalctl -u service_name //查看服务运行日志
+journalctl -u service_name #查看服务运行日志
 
-journalctl --vacuum-size=1M //清理运行日志
+journalctl --vacuum-size=1M #清理运行日志
 ```
 
 # 4.vim命令
@@ -206,14 +259,21 @@ x 删除当前光标所在处的字符
 *输入“/”搜索字符串，回车后跳转到对应字符串位置*
 
 # 5.KVM虚拟化
+*查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化*
 ```bash
-egrep '^flags.*(vmx|svm)' /proc/cpuinfo //查看CPU是否支持虚拟化，有输出说明CPU支持虚拟化
-
-sudo dnf install @virtualization //安装虚拟化包组
-
-sudo systemctl enable --now libvirtd //设置libvirtd自动启动并启动服务
-
-lsmod | grep kvm //查看KVM内核模块是否加载
+egrep '^flags.*(vmx|svm)' /proc/cpuinfo 
+```
+*安装虚拟化包组*
+```bash
+sudo dnf install @virtualization
+```
+*设置libvirtd自动启动并启动服务*
+```bash
+sudo systemctl enable --now libvirtd
+```
+*查看KVM内核模块是否加载*
+```bash
+lsmod | grep kvm
 ```
 
 ## 使用virsh-install配置
@@ -237,17 +297,25 @@ sudo virt-install --name Fedora \
 ### 根据gui界面管理
 
 ## 使用virsh配置
-
+*创建虚拟机*
 ```bash
-virsh create machine_name //创建虚拟机
-
-virsh list --all //列出所有虚拟机
-
-virsh dumpxml <virtual machine (name | id | uuid) //导出配置文件
-
-virsh shutdown machine_name //虚拟机关机
-
-virsh destroy machine_name //虚拟机强制关机
+virsh create machine_name 
+```
+*列出所有虚拟机*
+```bash
+virsh list --all
+```
+*导出配置文件*
+```bash
+virsh dumpxml <virtual machine (name | id | uuid)
+```
+*虚拟机关机*
+```bash
+virsh shutdown machine_name
+```
+*虚拟机强制关机*
+```bash
+virsh destroy machine_name
 ```
 
 # 6.启用flathub软件仓库
@@ -298,6 +366,27 @@ sudo vim /etc/sysctl.d/90-sysrq.conf
 ```
 ```conf
 kernel.sysrq = 1
+```
+*查看sysrq是否已启用*
+```bash
+cat /proc/sys/kernel/sysrq
+```
+**注：各数字代表功能：**  
+- 0 - disable sysrq completely
+- 1 - enable all functions of sysrq
+- \>1 - bitmask of allowed sysrq functions (see below for detailed function description):
+  - 2 - enable control of console logging level
+  - 4 - enable control of keyboard (SAK, unraw)
+  - 8 - enable debugging dumps of processes etc.
+  - 16 - enable sync command
+  - 32 - enable remount read-only
+  - 64 - enable signalling of processes (term, kill, oom-kill)
+  - 128 - allow reboot/poweroff
+  - 256 - allow nicing of all RT tasks  
+
+*临时启用sysrq*  
+```bash
+echo "number" >/proc/sys/kernel/sysrq 
 ```
 注：需重启电脑或~~sysctl -p~~生效
 

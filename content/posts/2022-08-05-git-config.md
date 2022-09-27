@@ -11,11 +11,13 @@ lastmod: '2022-08-05'
 # 安装git
 
 ## Linux
-
+### Debian
 ```bash
-sudo apt install git //Debian
-
-sudo dnf install git //Fedora
+sudo apt install git
+```
+### Fedora
+```bash
+sudo dnf install git
 ```
 
 ## Windows
@@ -33,15 +35,15 @@ winget install --id Git.Git -e --source winget
 # git初步配置
 
 ```bash
-git config --global user.name "username" //用户名
+git config --global user.name "username" #用户名
 
-git config --list //已有配置信息
+git config --list #已有配置信息
 
-git config --global user.email youremail //邮箱
+git config --global user.email youremail #邮箱
 
-git config --global core.editor nvim //默认文本编辑器
+git config --global core.editor nvim #默认文本编辑器
 
-git config --global merge.tool vimdiff //差异分析工具
+git config --global merge.tool vimdiff #差异分析工具
 ```
 
 # git使用
@@ -54,41 +56,41 @@ git config --global merge.tool vimdiff //差异分析工具
 ## 基本操作
 
 ```bash
-git init //初始化仓库
+git init #初始化仓库
 ```
 
 **注：第一次初始提交后才有master分支**
 
 ```bash
-git reset HEAD //版本回退，重写暂存区的目录树，被 master 分支指向的目录树所替换
+git reset HEAD #版本回退，重写暂存区的目录树，被 master 分支指向的目录树所替换
 
-git rm --cached <file>  //直接从暂存区删除文件，工作区则不做出改变
+git rm --cached <file>  #直接从暂存区删除文件，工作区则不做出改变
 
-git checkout .  //清除工作区中未添加到暂存区中的改动
+git checkout .  #清除工作区中未添加到暂存区中的改动
 
-git mv    //移动或重命名工作区文件
+git mv    #移动或重命名工作区文件
 
-git checkout HEAD . //用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件
+git checkout HEAD . #用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件
 
-git add file //将文件加入版本控制
+git add file #将文件加入版本控制
 
-git commit -m 'first commit' //提交说明
+git commit -m 'first commit' #提交说明
 
-git status //查看仓库状态
+git status #查看仓库状态
 
-git clone <repo> <directory> //拷贝项目到指定目录
+git clone <repo> <directory> #拷贝项目到指定目录
 
-git log //查看历史提交记录
+git log #查看历史提交记录
  
-git log --show-signature //查看仓库每次提交的签名信息
+git log --show-signature #查看仓库每次提交的签名信息
 
-git blame <path> //查看文件修改记录（列表形式）
+git blame <path> #查看文件修改记录（列表形式）
 
-git pull //下载源代码合并
+git pull #下载源代码合并
 
-git push //上传源代码合并
+git push #上传源代码合并
 
-git fetch //从远程获取代码库
+git fetch #从远程获取代码库
 ```
 
 ## git diff命令
@@ -136,18 +138,18 @@ git diff [<commit-id>] [<commit-id>]
 #### 做补丁
 
 ```bash
-git diff > patch //patch命名随意
-git diff --cached > patch //是将我们暂存区与版本库的差异做成补丁
-git diff --HEAD > patch //是将工作区与版本库的差异做成补丁
-git diff Testfile > patch//将单个文件做成一个单独的补丁
+git diff > patch #patch命名随意
+git diff --cached > patch #是将我们暂存区与版本库的差异做成补丁
+git diff --HEAD > patch #是将工作区与版本库的差异做成补丁
+git diff Testfile > patch #将单个文件做成一个单独的补丁
 ```
 
 #### 打补丁
 
 ```bash
-git apply patch //打补丁
-git apply --check patch //无输出表示可以顺利接受补丁
-git apply --reject patch //若有冲突则生成.rej文件，可手动打补丁
+git apply patch #打补丁
+git apply --check patch #无输出表示可以顺利接受补丁
+git apply --reject patch #若有冲突则生成.rej文件，可手动打补丁
 ```
 
 ## git branch命令
@@ -172,7 +174,7 @@ git checkout (branchname)
 
 **注：使用分支将工作切分开来，并能够来回切换。**  
 
-![git-checkout](https://duan-dky.me/assets/img/posts/git-config/git-checkout.png)  
+![git-checkout](../../images/git-checkout.png)  
 
 如图，切换到test分支后创建README.md,提交更改，然后切换回master分支后发现README.md消失，再切换回test分支后README.md文件出现。  
 

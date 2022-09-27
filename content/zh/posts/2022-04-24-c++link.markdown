@@ -6,7 +6,8 @@ key: c++link
 date: '2022-04-24'
 lastmod: '2022-04-24'
 ---
-//查找元素
+# 链表
+## 查找元素
 ```c++
 std::pair<int, int> getElem(int a,list *l1)
 {

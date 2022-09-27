@@ -164,7 +164,7 @@ servers:
 - exec: main_sequence
   listeners:
     - protocol: udp
-      addr: 127.0.0.1:1053 //监听1053端口
+      addr: 127.0.0.1:1053 #监听1053端口
     - protocol: tcp
       addr: 127.0.0.1:1053
 ```

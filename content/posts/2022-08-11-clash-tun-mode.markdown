@@ -59,7 +59,7 @@ sudo vim /etc/dnsmasq.d/clash.conf
 ```conf
 no-hosts
 no-resolv
-server=127.0.0.1#1053 //将dns请求全部转发到clash
+server=127.0.0.1#1053 #将dns请求全部转发到clash
 ```
 
 *重新启动dnsmasq*
@@ -112,7 +112,7 @@ nslookup www.google.com
 
 # 2.clash tun网卡配置
 
-*注：clash需要root权限创建网卡*
+*注：clash需要root权限创建网卡*  
 **linux/unix**
 ```yaml
 tun:
