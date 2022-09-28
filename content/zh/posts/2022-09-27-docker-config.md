@@ -43,7 +43,7 @@ lastmod: '2022-09-27'
 # 设置debian参数
 *-e用于设置环境变量，-v用于设置挂载的volume，可以挂载实际文件夹，也可以挂载docker的volume，后者需要为volume命名，如果系统启用了selinux，则需要加上:Z参数*
 ```bash
-docker run --name debian -e LANG=C.UTF-8 -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix:Z -v /home/dky/Github/Others:/mnt/github:Z -it debian:unstable /bin/bash -l
+docker run --name debian -e LANG=C.UTF-8 -e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix:Z -v /pathto/github:/pathto/github:Z -it debian:unstable /bin/bash -l
 ```
 **注意：debian镜像中需要先安装好X11**
 # 平时启动debian
