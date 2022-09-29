@@ -52,3 +52,8 @@ widget:
 
 ## 项目 
 
+- [Java-matrix](https://github.com/duan-dky/Java-matrix)
+- [c-practice](https://github.com/duan-dky/c-practice)
+- [DataStructure](https://github.com/duan-dky/DataStructure)
+- [java-database](https://github.com/duan-dky/java-database)
+- [java-gradesystem](https://github.com/duan-dky/java-gradesystem)
