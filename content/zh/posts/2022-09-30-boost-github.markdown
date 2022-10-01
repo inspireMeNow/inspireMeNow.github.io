@@ -2,7 +2,7 @@
 title: 自签证书解决github访问问题
 tags: 
   - network
-key: servlet-post
+key: boost-github
 date: '2022-09-14'
 lastmod: '2022-09-17'
 ---
