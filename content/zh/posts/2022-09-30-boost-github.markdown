@@ -3,8 +3,8 @@ title: 自签证书解决github访问问题
 tags: 
   - network
 key: boost-github
-date: '2022-09-14'
-lastmod: '2022-09-17'
+date: '2022-09-30'
+lastmod: '2022-10-01'
 ---
 *由于众所周知的原因，国内github时常连不上，tcpping查看github的ip可以访问，但就是通过域名就无法访问，这类问题是sni阻断造成的，本文的方法类似中间人攻击，在本地反向代理github网站，由于得不到github的证书，浏览器会直接报ssl错误，阻止连接，此时我们需要信任证书，然后你就可以通过本地的域名访问github了，此过程没有发送github的sni，即避免了sni阻断。*
 # 配置证书
