@@ -10,7 +10,7 @@ organization:
 social:
   - icon: envelope
     iconPack: fas
-    url: mailto:courage159357@gmail.com
+    url: mailto:postmaster@duan-dky.me
   - icon: twitter
     iconPack: fab
     url: https://twitter.com/d_kaiyao
