@@ -76,5 +76,11 @@ nohup clash &
 *我没有使用crouton或者chromebrew，我使用了官方的crostini，官方内置的是debian镜像，按debian系统的操作即可。* 
 # 中文输入法
 *linux环境中使用fcitx即可，chromeos的中文可以在设置中启用。*
+# vscode-server使用
+*过程中遇到了vscode中gpg签名失败的方法，查阅了资料，得到解决办法如下：*
+```bash
+export GPG_TTY=$(tty)
+```
+*之后应该可以在终端中验证gpg签名了。*
 # 体验
 *我这台是3k屏，观感比之前1080p的win本好了不少，写代码比之前舒服多了，就是chromebook的中文输入法比较残废。*
