@@ -71,7 +71,7 @@ nohup clash &
 *进入设置选手动配置代理即可。*  
 
 ### 配置文件
-*之前说过，不再赘述*
+*之前说过，不再赘述。*
 # 设置linux环境
 *我没有使用crouton或者chromebrew，我使用了官方的crostini，官方内置的是debian镜像，按debian系统的操作即可。* 
 # 中文输入法
