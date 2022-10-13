@@ -3,8 +3,8 @@ title: chromebook配置
 tags: 
   - chromebook
 key: chromebook-config
-date: '2022-09-30'
-lastmod: '2022-10-01'
+date: '2022-10-10'
+lastmod: '2022-10-13'
 ---
 # 启用开发者模式
 **注意：此操作会对chromebook进行powerwash操作！**  
@@ -73,7 +73,33 @@ nohup clash &
 ### 配置文件
 *之前说过，不再赘述。*
 # 设置linux环境
-*我没有使用crouton或者chromebrew，我使用了官方的crostini，官方内置的是debian镜像，按debian系统的操作即可。* 
+~~我没有使用crouton或者chromebrew~~  
+*我是用了crostini和chromebrew，一个做包管理器，一个运行gui软件。*
+## chromebrew
+*chromebrew会将在chromeos中唯一的可执行目录/usr/local/写入rootfs并修改rootfs权限，从而使普通用户可读可执行文件。*
+### 安装
+```bash
+curl -Ls git.io/vddgY | bash
+```
+### 使用
+#### 安装软件包
+```bash
+crew install packagename
+```
+#### 搜索软件包
+```bash
+crew search packagename
+```
+#### 删除软件包
+```bash
+crew remove packagename
+```
+#### 重新安装软件包
+```bash
+crew reinstall packagename
+```
+## crostini
+*打开chromebook设置中的linux支持即可，本质是一个lxc容器，相当于虚拟机。*
 # 中文输入法
 *linux环境中使用fcitx即可，chromeos的中文可以在设置中启用。*
 # vscode-server使用
