@@ -4,7 +4,7 @@ tags:
   - chromebook
 key: chromebook-config
 date: '2022-10-10'
-lastmod: '2022-10-13'
+lastmod: '2022-10-17'
 ---
 # 启用开发者模式
 **注意：此操作会对chromebook进行powerwash操作！**  
@@ -97,6 +97,15 @@ crew remove packagename
 #### 重新安装软件包
 ```bash
 crew reinstall packagename
+```
+### 遇到的问题
+*安装rust后提示permission denied，发现home目录被设置了noexec标签导致无法运行可执行文件，故重新挂载home目录。*
+```bash
+sudo mount -i -o remount,rw,exec /home/chronos/user/
+```
+*此时重新运行cargo发现可以正常执行。*
+```bash
+cargo --version
 ```
 ## crostini
 *打开chromebook设置中的linux支持即可，本质是一个lxc容器，相当于虚拟机。*
