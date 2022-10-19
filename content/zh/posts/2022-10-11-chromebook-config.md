@@ -119,3 +119,33 @@ export GPG_TTY=$(tty)
 *之后应该可以在终端中验证gpg签名了。*
 # 体验
 *我这台是3k屏，观感比之前1080p的win本好了不少，写代码比之前舒服多了，就是chromebook的中文输入法比较残废。*
+# 刷bios
+**注意：刷bios之前需要拆下写保护螺丝并备份好BIOS！！！**
+```bash
+cd; curl -LO mrchromebox.tech/firmware-util.sh
+sudo install -Dt /usr/local/bin -m 755 firmware-util.sh
+sudo firmware-util.sh
+```
+*由于国内网络问题，建议使用软路由等建立热点连接，或者为root用户指定http_proxy变量。*
+```bash
+export http_proxy=http://127.0.0.1:7890
+export https_proxy=http://127.0.0.1:7890
+```
+*之后按照提示进行操作即可，重启后进入bios较慢，耐心等待即可。*
+# 使用windows
+## 声卡驱动
+**注意：需要提前安装intel智音驱动！！！**  
+*使用@coolstar的sklkblsst驱动即可，但是该驱动有个问题就是开机后设备管理器一切正常但不发出声音，可以使用chromebook研究院群里的脚本解决，但是每次开机都需要执行该脚本。*
+```powershell
+pnputil /remove-device "ACPI\INT343B\0" 
+pnputil /scan-devices 
+pnputil /remove-device "ACPI\INT343B\1" 
+pnputil /scan-devices 
+exit
+```
+## 触摸板驱动
+*使用@coolstar的sklkblsst驱动即可*
+## 其他驱动
+*使用windows更新安装即可。*
+# 使用linux
+*触摸板，蓝牙，wifi均工作正常，只有声卡不工作，正在寻找解决方法。*
