@@ -50,10 +50,3 @@ widget:
 
 我是大学CS本科生，主要学习linux和网络安全相关知识。
 
-## 项目 
-
-- [c-practice](https://github.com/duan-dky/c-practice)
-- [Java-matrix](https://github.com/duan-dky/Java-matrix)
-- [DataStructure](https://github.com/duan-dky/DataStructure)
-- [java-database](https://github.com/duan-dky/java-database)
-- [java-gradesystem](https://github.com/duan-dky/java-gradesystem)

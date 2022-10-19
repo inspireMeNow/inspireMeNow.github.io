@@ -50,5 +50,4 @@ widget:
 
 I'm a CS Undergraduate in University, and I study linux and network security related knowledge.
 
-## Projects  
 

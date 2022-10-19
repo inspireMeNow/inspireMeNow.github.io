@@ -1,30 +1,26 @@
 ---
-title: Experience
+title: 个人经历
 draft: false
 experiences:
-  - title: Example Role 1
+  - title: 学生
     organization:
-      name: Example Organization 1
-      url: https://example.org
-    dates: "2019 - Present"
-    location: Country
+      name: STDU
+      url: https://www.stdu.edu.cn
+    dates: "2020 - 现今"
+    location: 中国
     writeup: >
-      Donec scelerisque egestas augue at tempor. Fusce faucibus magna in.
+      我做过的项目：
 
-      - Suspendisse lacinia mauris a laoreet vehicula.
+      - [c-practice](https://github.com/duan-dky/c-practice)
 
-      - Aenean tincidunt enim vitae ante blandit tempor.
+      - [Java-matrix](https://github.com/duan-dky/Java-matrix)
 
-      - Nam tincidunt diam quis lorem rutrum ullamcorper.
+      - [DataStructure](https://github.com/duan-dky/DataStructure)
 
-  - title: Example Role 2
-    organization:
-      name: Example Organization 2
-      url: https://example.org
-    dates: "2017 - 2019"
-    location: Country
-    writeup: >
-      **Aliquam** at **rutrum** ante. In sed quam faucibus.
+      - [java-database](https://github.com/duan-dky/java-database)
+
+      - [java-gradesystem](https://github.com/duan-dky/java-gradesystem)
+
 
 weight: 3
 widget:
