@@ -1,5 +1,5 @@
 ---
-title: c++链表
+title: c++练习
 tags: 
   - c++
 key: c++link
