@@ -247,7 +247,7 @@ sudo dnf group upgrade --with-optional Multimedia
 ```conf
 /usr/bin/google-chrome-stable --proxy-server=socks5://127.0.0.1:7890 --enable-gpu-rasterization --enable-zero-copy --disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --enable-features=VaapiVideoEncoder --ignore-gpu-blocklist --ozone-platform-hint=auto --gtk-version=4 --enable-features=WebUIDarkMode --force-dark-mode %U
 ```
-*firefox的硬件解码应该开箱即用*
+*firefox的硬件解码应该开箱即用*  
 # 4.vim命令
 
 ## 命令模式
@@ -400,7 +400,7 @@ sudo systemctl enable --now docker
 ```
 **（可选）可以添加当前用户到docker用户组，但是这样做会留下安全隐患！**  
 ```bash
-sudo systemctl start docker
+sudo usermod -a -G docker username
 ```
 *验证docker是否已正确安装*
 ```bash
