@@ -4,7 +4,7 @@ tags:
   - linux
 key: fedora-setting 
 date: '2022-08-03'
-lastmod: '2022-09-23'
+lastmod: '2022-10-28'
 ---
 
 # 1.软件包管理工具
@@ -21,10 +21,6 @@ sudo dnf upgrade
 *更新单个软件包*
 ```bash
 sudo dnf upgrade package_name
-```
-*启用rpmfusion软件仓库*
-```bash
-sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
 *搜索软件包*
 ```bash
@@ -236,7 +232,22 @@ journalctl -u service_name #查看服务运行日志
 
 journalctl --vacuum-size=1M #清理运行日志
 ```
-
+## 硬件解码
+**注意：需要先启用rpmfusion仓库才能继续操作！**  
+```bash
+sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
+```
+```bash
+sudo dnf install lame\* --exclude=lame-devel
+```
+```bash
+sudo dnf group upgrade --with-optional Multimedia
+```
+*chrome设置硬件解码（wayland下不可用）*  
+```conf
+/usr/bin/google-chrome-stable --proxy-server=socks5://127.0.0.1:7890 --enable-gpu-rasterization --enable-zero-copy --disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --enable-features=VaapiVideoEncoder --ignore-gpu-blocklist --ozone-platform-hint=auto --gtk-version=4 --enable-features=WebUIDarkMode --force-dark-mode %U
+```
+*firefox的硬件解码应该开箱即用*
 # 4.vim命令
 
 ## 命令模式
@@ -318,8 +329,8 @@ virsh shutdown machine_name
 virsh destroy machine_name
 ```
 
-# 6.启用flathub软件仓库
-
+# 6.启用第三方软件仓库
+## 启用flathub仓库
 *添加软件源*
 
 ```bash
@@ -343,7 +354,70 @@ flatpak --user install package_name
 ```bash
 flatpak --user remove package_name
 ```
-# 7.端口被占用解决方法
+## 启用rpmfusion软件仓库
+```bash
+sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+```
+*之后执行dnf makecache重新生成软件包缓存即可。*  
+## 启用docker软件仓库
+*删除之前所有旧版本docker*
+```bash
+ sudo dnf remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+```
+*设置docker软件仓库*  
+```bash
+sudo dnf -y install dnf-plugins-core
+```
+```bash
+sudo dnf config-manager \
+    --add-repo \
+    https://download.docker.com/linux/fedora/docker-ce.repo
+```
+*安装docker引擎*  
+```bash
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+*查看docker存储库中的可用版本*  
+```bash
+dnf list docker-ce  --showduplicates | sort -r
+```
+*安装特定版本的docker*  
+```bash
+sudo dnf -y install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io docker-compose-plugin
+```
+*启动docker并设置docker开机自启动*
+```bash
+sudo systemctl enable --now docker
+```
+**（可选）可以添加当前用户到docker用户组，但是这样做会留下安全隐患！**  
+```bash
+sudo systemctl start docker
+```
+*验证docker是否已正确安装*
+```bash
+sudo docker run hello-world
+```
+## 设置其他软件仓库
+*依照软件官网的设置向导设置即可。*
+# 7.中文输入法配置
+```bash
+sudo dnf install fcitx5-configtool fcitx5 fcitx5-rime
+```
+*配置输入法自动启动*  
+```bash
+sudo dnf install fcitx5-rime
+```
+*注销账户重新登录或者重启电脑后即可使用。*
+# 8.端口被占用解决方法
 ## 查看占用端口的程序
 *lsof命令*  
 ```bash
@@ -357,7 +431,7 @@ netstat -tunlp | grep port_number
 ```bash
 kill -9 PID
 ```
-# 8.开启sysrq
+# 9.开启sysrq
 
 **由于某个服务卡死或者kernel loop导致无法关机时使用**
 
@@ -390,7 +464,7 @@ echo "number" >/proc/sys/kernel/sysrq
 ```
 注：需重启电脑或~~sysctl -p~~生效
 
-# 9.迁移/var目录遇到的问题
+# 10.迁移/var目录遇到的问题
 
 *由于我的好多docker镜像存储在/var目录，导致根目录可用空间越来越小，于是考虑将/var目录迁移到新分区。*
 
@@ -457,3 +531,9 @@ sudo fixfiles -F -B onboot
 ## 最终结果
 
 *重启后selinux重新relabel有一堆警告，可以无视，重启后即可正常开机，log中也没有大量denied字段。*
+
+# 11.无法执行二进制文件的解决方法
+*systemd报错提示Permission Denied,怀疑是selinux的问题，于是setenforce 0，重启systemd服务，二进制文件可以正常执行，于是查资料发现需要selinux设置可执行文件标签才可以正常运行程序。*
+```bash
+sudo chcon -R -t bin_t /usr/bin/tuic
+```
