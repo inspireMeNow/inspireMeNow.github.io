@@ -81,12 +81,12 @@ dns:
   fake-ip-range: 198.18.0.1/16    # Fake IP addresses pool CIDR
   use-hosts: true                 # lookup hosts and return IP record
   nameserver:
-    - 223.5.5.5         # 阿里 19ms
+    - 223.6.6.6         # 阿里 19ms
     - 119.29.29.29      # DNSpod DNS 17ms
   # 提供 fallback 时，如果GEOIP非 CN 中国时使用 fallback 解析
   fallback:
-    - tls://8.8.8.8:53         # Google DNS over TLS 50ms
-    - tls://8.8.4.4:53         # cloudflare DNS over TLS 50ms
+    - tls://8.8.8.8:853         # Google DNS over TLS 50ms
+    - tls://8.8.4.4:853         # cloudflare DNS over TLS 50ms
     - https://1.1.1.1/dns-query # cloudflare DNS over HTTPS
     - https://dns.google/dns-query # Google DNS over HTTPS
 
