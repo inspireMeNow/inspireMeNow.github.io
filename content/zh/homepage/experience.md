@@ -2,7 +2,7 @@
 title: 个人经历
 draft: false
 experiences:
-  - title: 学生
+  - title: 本科
     organization:
       name: STDU
       url: https://www.stdu.edu.cn
