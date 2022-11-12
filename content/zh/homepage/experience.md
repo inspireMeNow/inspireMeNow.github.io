@@ -21,6 +21,7 @@ experiences:
 
       - [java-gradesystem](https://github.com/duan-dky/java-gradesystem)
 
+      - [python-practice](https://github.com/duan-dky/python-practice)
 
 weight: 3
 widget:

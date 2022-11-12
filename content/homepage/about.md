@@ -13,7 +13,7 @@ social:
     url: mailto:courage159357@gmail.com
   - icon: twitter
     iconPack: fab
-    url: https://twitter.com/d_kaiyao
+    url: https://twitter.com/duan_dky
   - icon: github
     iconPack: fab
     url: https://github.com/duan-dky
