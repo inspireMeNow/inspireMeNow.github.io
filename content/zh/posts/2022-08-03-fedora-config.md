@@ -359,20 +359,6 @@ flatpak --user remove package_name
 sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.ustc.edu.cn/rpmfusion/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 ```
 *之后执行dnf makecache重新生成软件包缓存即可。*  
-## 启用docker软件仓库
-*删除之前所有旧版本docker*
-```bash
- sudo dnf remove docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-selinux \
-                  docker-engine-selinux \
-                  docker-engine
-```
 ## 设置其他软件仓库
 *依照软件官网的设置向导设置即可。*
 # 7.中文输入法配置
