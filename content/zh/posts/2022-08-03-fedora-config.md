@@ -373,39 +373,6 @@ sudo dnf install https://mirrors.ustc.edu.cn/rpmfusion/free/fedora/rpmfusion-fre
                   docker-engine-selinux \
                   docker-engine
 ```
-*设置docker软件仓库*  
-```bash
-sudo dnf -y install dnf-plugins-core
-```
-```bash
-sudo dnf config-manager \
-    --add-repo \
-    https://download.docker.com/linux/fedora/docker-ce.repo
-```
-*安装docker引擎*  
-```bash
-sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-```
-*查看docker存储库中的可用版本*  
-```bash
-dnf list docker-ce  --showduplicates | sort -r
-```
-*安装特定版本的docker*  
-```bash
-sudo dnf -y install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io docker-compose-plugin
-```
-*启动docker并设置docker开机自启动*
-```bash
-sudo systemctl enable --now docker
-```
-**（可选）可以添加当前用户到docker用户组，但是这样做会留下安全隐患！**  
-```bash
-sudo usermod -a -G docker username
-```
-*验证docker是否已正确安装*
-```bash
-sudo docker run hello-world
-```
 ## 设置其他软件仓库
 *依照软件官网的设置向导设置即可。*
 # 7.中文输入法配置
