@@ -22,6 +22,8 @@ experiences:
 
       - [java-gradesystem](https://github.com/duan-dky/java-gradesystem)
 
+      - [WareHouse-MS](https://github.com/duan-dky/WareHouse-MS)
+
 
 weight: 3
 widget:
