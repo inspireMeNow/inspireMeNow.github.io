@@ -67,4 +67,15 @@ widget:
 All unsigned commits are not responsible for this
 
 ### 💻 Environment
-[Fedora](https://getfedora.org/) [Windows](https://www.microsoft.com/windows10) [ArchLinux](https://archlinux.org) [Android](https://www.android.com/)
+- [![Fedora](https://img.shields.io/badge/Fedora-294172?style=flat-square&logo=fedora&logoColor=white)](https://getfedora.org/)
+- [![Windows](https://img.shields.io/badge/Windows-00BBFF?style=flat-square&logo=Windows&logoColor=FFFFFF&labelColor=00BBFF)](https://www.microsoft.com/windows10)
+- [![Arch Linux](https://img.shields.io/badge/Arch%20Linux-008BFF?style=flat-square&logo=arch-linux&logoColor=FFFFFF&labelColor=008BFF)](https://archlinux.org)
+- [![Android](https://img.shields.io/badge/Android-00C000?style=flat-square&logo=android&logoColor=FFFFFF&labelColor=00C000)](https://www.android.com/)
+
+### 📱 Devices
+- [![Pixel 4a 5G](https://img.shields.io/badge/Pixel%204a%205G-00C000?style=flat-square&logo=google&logoColor=FFFFFF&labelColor=00C000)](https://store.google.com/)
+- [![Pixel 3 XL](https://img.shields.io/badge/Pixel%203%20XL-00C000?style=flat-square&logo=google&logoColor=FFFFFF&labelColor=00C000)](https://store.google.com/)
+- [![Legion R7000](https://img.shields.io/badge/Legion%20R7000-00BBFF?style=flat-square&logo=lenovo&logoColor=FFFFFF&labelColor=00BBFF)](https://www.lenovo.com.cn)
+- [![HP Chromebook 13 G1](https://img.shields.io/static/v1?style=flat-square&message=HP%20Chromebook%2013%20G1&color=0096D6&logo=HP&logoColor=FFFFFF&label=)](https://store.google.com/)
+### 🔗 Links
+- [Jackfen](https://jackfen.github.io/)
