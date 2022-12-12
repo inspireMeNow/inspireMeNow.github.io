@@ -25,6 +25,8 @@ experiences:
 
       - [WareHouse-MS](https://github.com/duan-dky/WareHouse-MS)
 
+      - [NeverMiss](https://github.com/duan-dky/NeverMiss)
+
 weight: 3
 widget:
   handler: experience
