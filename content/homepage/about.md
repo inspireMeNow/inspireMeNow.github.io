@@ -54,7 +54,7 @@ widget:
 - 🔭 I’m currently working at school.
 - 🌱 I’m currently learning Computer Science.
 - 📬 My email address is postmaster@duan-dky.me
-- ⚒️ I'm coding with*C, C++ , Java, C#, Rust, Python, Vue.js*
+- ⚒️ I'm coding with *C, C++ , Java, C#, Rust, Python, Vue.js*
 - 💬 Ask me about linux and network.
 
 ### 🔒 FingerPrint
