@@ -67,15 +67,9 @@ widget:
 All unsigned commits are not responsible for this
 
 ### 💻 Environment
-- [Fedora](https://getfedora.org/)
-- [Windows](https://www.microsoft.com/windows10)
-- [Arch Linux](https://archlinux.org)
-- [Android](https://www.android.com/)
+[Fedora](https://getfedora.org/)  [Windows](https://www.microsoft.com/windows10)  [Arch Linux](https://archlinux.org)  [Android](https://www.android.com/)
 
 ### 📱 Devices
-- [Pixel 4a 5G](https://store.google.com/)
-- [Pixel 3 XL](https://store.google.com/)
-- [Legion R7000](https://www.lenovo.com.cn)
-- [HP Chromebook 13 G1](https://store.google.com/)
+[Pixel 4a 5G](https://store.google.com/)  [Pixel 3 XL](https://store.google.com/)  [Legion R7000](https://www.lenovo.com.cn)  [HP Chromebook 13 G1](https://store.google.com/)
 ### 🔗 Links
 - [Jackfen](https://jackfen.github.io/)
