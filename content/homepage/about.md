@@ -20,6 +20,9 @@ social:
   - icon: telegram
     iconPack: fab
     url: https://t.me/courage159357
+  - icon: rss
+    iconPack: fas
+    url: https://duan-dky.me/index.xml
 
 weight: 1
 widget:
