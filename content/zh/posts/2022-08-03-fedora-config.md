@@ -456,7 +456,7 @@ sudo mount /dev/nvme0n1p3 /mnt/var
 ##### pigz解包
 
 ```bash
-sudo tar --use-compress-program=pigz -cvpf linux-backup.tgz -C /mnt/
+sudo tar -xvf linux-backup.tgz -C /mnt/
 ```
 
 ##### zstd解包
