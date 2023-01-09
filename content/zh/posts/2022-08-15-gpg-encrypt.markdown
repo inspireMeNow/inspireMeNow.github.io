@@ -98,3 +98,9 @@ curl https://github.com/web-flow.gpg | gpg --import
 ```bash
 gpg --sign-key {key_id}
 ```
+### gpg签名失败的解决方法
+**注意：首先检查邮箱、用户名以及signkey是否正确！**
+```bash
+export GPG_TTY=$(tty)
+```
+*之后应该可以在终端中验证gpg签名了。*

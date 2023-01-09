@@ -112,7 +112,7 @@ cargo --version
 # 中文输入法
 *linux环境中使用fcitx即可，chromeos的中文可以在设置中启用。*
 # vscode-server使用
-*过程中遇到了vscode中gpg签名失败的方法，查阅了资料，得到解决办法如下：*
+*过程中遇到了vscode中gpg签名失败的问题，查阅了资料，得到解决办法如下：*
 ```bash
 export GPG_TTY=$(tty)
 ```
