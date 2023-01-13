@@ -6,7 +6,7 @@ key: linux-remote
 date: '2023-01-06'
 lastmod: '2023-01-06'
 ---
-# Linux下的远程客户端
+# 远程服务端选择
 trigervnc、xrdp、gnome-remote-desktop、spice
 # vnc配置
 ## 添加用户
