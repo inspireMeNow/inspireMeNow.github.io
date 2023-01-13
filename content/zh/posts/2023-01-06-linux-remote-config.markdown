@@ -3,8 +3,8 @@ title: Linux远程桌面配置
 tags: 
   - remote
 key: linux-remote
-date: '2022-01-06'
-lastmod: '2022-01-06`
+date: '2023-01-06'
+lastmod: '2023-01-06`
 ---
 # Linux下的远程客户端
 trigervnc、xrdp、gnome-remote-desktop、spice
