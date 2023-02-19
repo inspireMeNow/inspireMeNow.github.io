@@ -98,9 +98,9 @@ admin:$(openssl passwd yourpassword)
 | --tls-key <path> | 证书密钥文件 |
 | --log-format <format> | 日志格式 |
 # 使用的客户端
-## 图形化软件
+## 客户端软件
 - windows平台： winscp
-- linux平台： nautilus
+- linux平台： nautilus、rclone
 - macos平台： 访达
 ## 使用curl
 *上传文件*
