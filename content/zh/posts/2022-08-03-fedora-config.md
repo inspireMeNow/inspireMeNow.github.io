@@ -490,3 +490,21 @@ sudo fixfiles -F -B onboot
 ```bash
 sudo chcon -R -t bin_t /usr/bin/tuic
 ```
+# 12.ssh远程登录机器时遇到的问题
+*远程登录时遇到publickey permission denied报错，经过查阅资料发现ssh密钥不是立刻被导入电脑的，需要自己先行导入。*  
+**注意：有时无法登录时可以kill掉ssh-agent进程并重新启动此进程。**
+```bash
+eval $(ssh-agent) > /dev/null
+killall ssh-agent #kill掉ssh-agent进程
+eval `ssh-agent`
+ssh-add ~/.ssh/id_rsa #添加自己的密钥
+```
+*第一次登录可以使用-i选项指定密钥登录，此外也可以指定端口。*
+```bash
+ssh -i /path/to/yourkey username@host -p port
+```
+**重要：公钥放在服务器的authorized_keys文件中，私钥一定要自己拿好，不要给别人，服务器一定要禁用密码登录和root用户登录！**
+```conf
+PasswordAuthentication yes #禁止密码登录
+PermitRootLogin no #禁止root用户登录
+```
