@@ -69,11 +69,15 @@ curl "http://192.168.251.75/quickauth.do?userid=userid&passwd=passwd&wlanuserip=
 ```
 # 使用python脚本认证
 ## 使用netifaces包获取本机ip和mac地址
+### 获取本机的所有网络接口
 ```python
-#!/bin/python3
 import netifaces
-mac = netifaces.ifaddresses('wlp0s20f3')[netifaces.AF_LINK][0]['addr']
-ip = netifaces.ifaddresses('wlp0s20f3')[netifaces.AF_INET][0]['addr']
+netifaces.interfaces()
+```
+### 找到自己的wifi接口名称并获取ip和mac地址
+```python
+mac = netifaces.ifaddresses('interface')[netifaces.AF_LINK][0]['addr']
+ip = netifaces.ifaddresses('interface')[netifaces.AF_INET][0]['addr']
 ```
 ## 使用request库模拟curl的get请求
 ```python
