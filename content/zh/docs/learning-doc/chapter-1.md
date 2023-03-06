@@ -1,6 +1,6 @@
 ---
 title: c++语言
-description: c++语言api文档
+description: c++语言
 toc: true
 authors:
 tags:
@@ -14,3 +14,11 @@ draft: false
 ## api文档
 
 *https://learn.duan-dky.me/c-language/index.html*
+
+## 数据结构
+
+*https://the-algorithms.com/*  
+
+*https://iacj.github.io/react-datastructer/#/*  
+
+*https://visualgo.net/zh/*
