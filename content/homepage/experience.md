@@ -26,6 +26,8 @@ experiences:
 
       - [NeverMiss](https://github.com/duan-dky/NeverMiss)
 
+      - [python-management-system](https://github.com/duan-dky/python-management-system)
+
 weight: 3
 widget:
   handler: experience
