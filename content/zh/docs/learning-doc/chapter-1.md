@@ -13,7 +13,7 @@ draft: false
 
 ## api文档
 
-*https://learn.duan-dky.me/c-language/index.html*
+*https://duan-dky.tech/c-language/index.html*
 
 ## 数据结构
 
