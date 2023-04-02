@@ -60,20 +60,20 @@
 {{- $eurekaJS := resources.Get "js/eureka.js" | resources.ExecuteAsTemplate "js/eureka.js" . | minify | fingerprint "sha384" }}
 <script defer src="{{ $eurekaJS.Permalink }}"></script>
 
-{{ $googleFonts := "" }}
+<!-- {{ $googleFonts := "" }}
 {{ range $index, $value := partial "utils/get-style-fonts" (dict "context" . "param" "googleFonts") }}
 {{ with $value }}
 {{ $googleFonts = print $googleFonts "family=" .  "&" }}
 {{ end }}
-{{ end }}
+{{ end }} -->
 
-{{ with $googleFonts }}
+<!-- {{ with $googleFonts }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload"
   href="{{ printf "https://fonts.googleapis.com/css2?%sdisplay=swap" . }}"
   as="style" onload="this.onload=null;this.rel='stylesheet'">
-{{ end }}
+{{ end }} -->
 
 {{- $assets := .Site.Data.assets }}
 
