@@ -56,7 +56,7 @@ widget:
 
 - 🔭 I’m currently working at school.
 - 🌱 I’m currently learning Computer Science.
-- 📬 My email address is duan-dky@proton.me
+- 📬 My email address is duan@duan-dky.tech
 - ⚒️ I'm coding with *C, C++ , Java, C#, Rust, Python, Vue.js*
 - 💬 Ask me about linux and network.
 
