@@ -65,6 +65,12 @@ widget:
 
 所有未签名的提交均不对此负责
 
+### 💖 赞助我
+
+- [github](https://github.com/sponsors/duan-dky)
+
+- [stripe](https://buy.stripe.com/6oE6pH8kP00Y9vGdQS)
+
 ### 💻 环境
 [Fedora](https://getfedora.org/)  [Windows](https://www.microsoft.com/windows10)  [Arch Linux](https://archlinux.org)  [Android](https://www.android.com/)
 
