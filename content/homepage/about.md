@@ -69,6 +69,10 @@ widget:
 
 All unsigned commits are not responsible for this
 
+### 💖 Sponsored me
+
+- [github](https://github.com/sponsors/duan-dky)
+
 ### 💻 Environment
 [Fedora](https://getfedora.org/)  [Windows](https://www.microsoft.com/windows10)  [Arch Linux](https://archlinux.org)  [Android](https://www.android.com/)
 
