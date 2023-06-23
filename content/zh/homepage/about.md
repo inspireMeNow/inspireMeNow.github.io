@@ -2,7 +2,7 @@
 title: Duan Dky
 draft: false
 role: 在校大学生
-avatar: images/icon.png
+avatar: images/avatar.png
 bio: 做最好的自己
 organization:
   name: 大学

@@ -2,7 +2,7 @@
 title: Duan Dky
 draft: false
 role: CS Undergraduate
-avatar: images/icon.png
+avatar: images/avatar.png
 bio: Be the best you can be.
 organization:
   name: University
