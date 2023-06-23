@@ -82,3 +82,6 @@ All unsigned commits are not responsible for this
 
 ### 🔗 Links
 - [Jackfen](https://jackfen.github.io/)
+- [zhuangzhongxu](https://www.cnblogs.com/zhuangzhongxu/)
+- [Integral](https://integral.org.cn/)
+- [MeowRain](https://meowrain.cn/)
