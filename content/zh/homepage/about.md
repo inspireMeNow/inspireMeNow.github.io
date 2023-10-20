@@ -1,5 +1,5 @@
 ---
-title: Duan Dky
+title: inspireMeNow
 draft: false
 role: 在校大学生
 avatar: images/avatar.png
@@ -10,13 +10,13 @@ organization:
 social:
   - icon: envelope
     iconPack: fas
-    url: mailto:postmaster@duan-dky.me
+    url: mailto:duan-dky@proton.me
   - icon: twitter
     iconPack: fab
-    url: https://twitter.com/duan_dky
+    url: https://twitter.com/inspireMeNow_me
   - icon: github
     iconPack: fab
-    url: https://github.com/duan-dky
+    url: https://github.com/inspireMeNow
   - icon: telegram
     iconPack: fab
     url: https://t.me/courage159357
@@ -53,7 +53,7 @@ widget:
 
 我是大学CS本科生，主要学习linux和网络安全相关知识。
 
-- 📬 我的邮箱地址 duan@duan-dky.tech
+- 📬 我的邮箱地址 duan-dky@proton.me
 - ⚒️ 我使用的编程语言 *C, C++ , Java, C#, Rust, Python, Vue.js*
 
 ### 🔒 密钥
@@ -67,7 +67,7 @@ widget:
 
 ### 💖 赞助我
 
-- [github](https://github.com/sponsors/duan-dky)
+- [github](https://github.com/sponsors/inspireMeNow)
 
 - [stripe](https://buy.stripe.com/6oE6pH8kP00Y9vGdQS)
 

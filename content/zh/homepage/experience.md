@@ -11,23 +11,23 @@ experiences:
     writeup: >
       我做过的项目：
 
-      - [c-practice](https://github.com/duan-dky/c-practice)
+      - [c-practice](https://github.com/inspireMeNow/c-practice)
 
-      - [Java-matrix](https://github.com/duan-dky/Java-matrix)
+      - [Java-matrix](https://github.com/inspireMeNow/Java-matrix)
 
-      - [DataStructure](https://github.com/duan-dky/DataStructure)
+      - [DataStructure](https://github.com/inspireMeNow/DataStructure)
 
-      - [java-database](https://github.com/duan-dky/java-database)
+      - [java-database](https://github.com/inspireMeNow/java-database)
 
-      - [java-gradesystem](https://github.com/duan-dky/java-gradesystem)
+      - [java-gradesystem](https://github.com/inspireMeNow/java-gradesystem)
 
-      - [python-practice](https://github.com/duan-dky/python-practice)
+      - [python-practice](https://github.com/inspireMeNow/python-practice)
 
-      - [WareHouse-MS](https://github.com/duan-dky/WareHouse-MS)
+      - [WareHouse-MS](https://github.com/inspireMeNow/WareHouse-MS)
 
-      - [NeverMiss](https://github.com/duan-dky/NeverMiss)
+      - [NeverMiss](https://github.com/inspireMeNow/NeverMiss)
 
-      - [python-management-system](https://github.com/duan-dky/python-management-system)
+      - [python-management-system](https://github.com/inspireMeNow/python-management-system)
 
 weight: 3
 widget:

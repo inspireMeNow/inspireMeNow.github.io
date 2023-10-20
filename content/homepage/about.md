@@ -13,10 +13,10 @@ social:
     url: mailto:courage159357@gmail.com
   - icon: twitter
     iconPack: fab
-    url: https://twitter.com/duan_dky
+    url: https://twitter.com/inspireMeNow_me
   - icon: github
     iconPack: fab
-    url: https://github.com/duan-dky
+    url: https://github.com/inspireMeNow
   - icon: telegram
     iconPack: fab
     url: https://t.me/courage159357
