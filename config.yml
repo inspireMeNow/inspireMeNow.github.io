@@ -21,7 +21,7 @@ params:
   keywords: [Blog, Portfolio, PaperMod]
   author: Me
   # author: ["Me", "You"] # multiple authors
-  images: ["<link or path of image for opengraph, twitter-cards>"]
+  images: ["/images/profile.jpg"]
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
@@ -36,18 +36,18 @@ params:
   UseHugoToc: true
   disableSpecial1stPost: false
   disableScrollToTop: false
-  comments: false
+  comments: true
   hidemeta: false
   hideSummary: false
   showtoc: false
   tocopen: false
 
-  #assets:
+  assets:
     # disableHLJS: true # to disable highlight.js
     # disableFingerprinting: true
-    # favicon: "<link / abs url>"
-    # favicon16x16: "<link / abs url>"
-    # favicon32x32: "<link / abs url>"
+    favicon: "/images/profile.jpg"
+    favicon16x16: "/images/profile.jpg"
+    favicon32x32: "/images/profile.jpg"
     # apple_touch_icon: "<link / abs url>"
     # safari_pinned_tab: "<link / abs url>"
 
@@ -90,13 +90,13 @@ params:
     - name: rss
       url: "/index.xml"
 
-  analytics:
-    google:
-      SiteVerificationTag: "XYZabc"
-    bing:
-      SiteVerificationTag: "XYZabc"
-    yandex:
-      SiteVerificationTag: "XYZabc"
+  # analytics:
+  #   google:
+  #     SiteVerificationTag: "XYZabc"
+  #   bing:
+  #     SiteVerificationTag: "XYZabc"
+  #   yandex:
+  #     SiteVerificationTag: "XYZabc"
 
   cover:
     hidden: true # hide everywhere but not in structured data
@@ -118,16 +118,25 @@ params:
     threshold: 0.4
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
+
 menu:
   main:
     - identifier: categories
       name: categories
       url: /posts/
       weight: 5
+    - identifier: search
+      name: search
+      url: /search/
+      weight: 10
     - identifier: tags
       name: tags
       url: /tags/
-      weight: 10
+      weight: 15
+    - identifier: archives
+      name: archives
+      url: /archives/
+      weight: 17
     - identifier: about
       name: about
       url: /about/
@@ -135,7 +144,7 @@ menu:
     - identifier: private
       name: drive
       url: https://cloud.duan-dky.me
-      weight: 30
+      weight: 25
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
 markup:
@@ -146,3 +155,9 @@ markup:
     # guessSyntax: true
     # lineNos: true
     # style: monokai
+
+outputs:
+    home:
+        - HTML
+        - RSS
+        - JSON # is necessary for search
