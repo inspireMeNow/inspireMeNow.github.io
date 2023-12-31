@@ -1,5 +1,5 @@
 baseURL: "https://duan-dky.me/"
-title: inspireMeNow的小站
+title: inspireMeNow
 paginate: 5
 theme: PaperMod
 
@@ -52,7 +52,7 @@ params:
     safari_pinned_tab: "<link / abs url>"
 
   label:
-    text: "inspireMeNow的小站"
+    text: "inspireMeNow"
     # icon: /apple-touch-icon.png
     # iconHeight: 35
 
@@ -67,9 +67,11 @@ params:
     imageTitle: my image
     buttons:
       - name: Posts
-        url: posts
+        url: /posts/
       - name: Tags
-        url: tags
+        url: /tags/
+      - name: About
+        url: /about/
 
   # home-info mode
   homeInfoParams:
