@@ -5,7 +5,7 @@ tags:
   - git
 key: git-config 
 date: '2022-08-05'
-lastmod: '2022-08-05'
+lastmod: '2023-01-09'
 ---
 
 # 安装git
@@ -174,7 +174,7 @@ git checkout (branchname)
 
 **注：使用分支将工作切分开来，并能够来回切换。**  
 
-![git-checkout](../../images/git-checkout.png)  
+![git-checkout](/images/git-checkout.png)  
 
 如图，切换到test分支后创建README.md,提交更改，然后切换回master分支后发现README.md消失，再切换回test分支后README.md文件出现。  
 
@@ -185,3 +185,28 @@ git merge
 ```
 
 **注：多次合并到统一分支， 也可在合并之后直接删除被并入的分支。** 
+# git标签
+**注意：提交信代码不会改变这个版本，可以理解为当前版本的提交快照！**  
+  
+*发布release版本时使用，使用-a选项会创建一个带注解的标签，没有-a选项也可以执行，但是不会记录打标签的时间以及提交标签的人，所以推荐创建带注解的标签*  
+  
+*创建带注解的标签*
+```bash
+git tag -a v1.0
+```
+*提交标签到远程仓库*
+```bash
+git push --tags
+```
+*追加标签*  
+*适用于忘了给提交打标签，却发布了release版本的情况*
+*下面命令中d0f2d34是已经发布的提交*
+```bash
+git tag -a v1.0 d0f2d34
+git log --oneline --decorate --graph
+```
+
+*指定标签信息*
+```bash
+git tag -a <tagname> -m "message"
+```

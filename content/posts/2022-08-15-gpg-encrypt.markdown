@@ -4,11 +4,19 @@ tags:
   - encrypt
 key: gpg-encrypt
 date: '2022-08-15'
-lastmod: '2022-08-15'
+lastmod: '2022-10-25'
 ---
 # 生成密钥
-*gpg生成私钥*
-gpg --gen-key
+**注意：千万不要随意更改.gnupg目录的权限，否则你的密钥将无法解密数据，提示损坏的私钥！！！**  
+
+*gpg生成私钥*  
+```bash
+gpg --full-generate-key
+```
+*列出所有密钥*
+```bash
+gpg --list-keys
+```
 *导出密钥*
 ```bash
 gpg --export --armor keyID > gpgkey.pub.asc
@@ -69,8 +77,13 @@ git config --global user.signingkey {key_id}
 ```
 *3.用gpg key id签名*
 ### 每次提交时加上-S参数
+*先设置git签名所用的gpg密钥ID*
 ```bash
-git commit -S -m "update blogs"
+git config --global user.signingkey key_id
+```
+*再设置git提交时使用gpg密钥进行验证*
+```bash
+git commit -S -m "..."
 ```
 ### 全局设置每次提交时使用签名
 ```bash
@@ -85,3 +98,9 @@ curl https://github.com/web-flow.gpg | gpg --import
 ```bash
 gpg --sign-key {key_id}
 ```
+### gpg签名失败的解决方法
+**注意：首先检查邮箱、用户名以及signkey是否正确！**
+```bash
+export GPG_TTY=$(tty)
+```
+*之后应该可以在终端中验证gpg签名了。*
