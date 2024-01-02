@@ -1,0 +1,61 @@
+---
+title: c++练习
+ZHtags: 
+  - c++
+key: c++link
+date: '2022-04-24'
+lastmod: '2022-04-24'
+---
+# 练习题
+## 二分法求解方程
+```c++
+#include <iostream>
+# include <sstream>
+# include <cmath>
+# include <iomanip>
+using namespace std;
+double x,y,h;
+bool check(double w){
+    return h/sqrt(x*x-w*w)+h/sqrt(y*y-w*w)-1>=0; //单调递减函数
+}
+int main() {
+    int t;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        cin>>x>>y>>h;
+        double l=0;
+        double r=x<y?x:y;
+        while(r-1>1e-12){
+            double mid = (l+r)/2;
+            if(check(mid))r=mid; //如果在x轴上方则向右查找
+            else{
+                l = mid;
+            }
+        }
+        cout<<fixed<<setprecision(6)<<i<<": "<<r;
+    }
+}
+```
+## 十六进制转换成二进制
+
+## 链表
+## 查找元素
+```c++
+std::pair<int, int> getElem(int a,list *l1)
+{
+
+    list *b=l1;
+    int count=0;
+    for(;b->next!=NULL;b=b->next){
+        if(a==b->a){
+            return std::pair<int, int>(a,count); //返回元素和下标
+        }
+        count++;
+    }
+    if(b->a==a){
+        return std::pair<int, int>(a,count); //未找到返回-1
+    }
+    return std::pair<int, int>(a,-1);
+    
+}
+```
