@@ -36,20 +36,63 @@ theme: PaperMod
 # 修复新帖子不渲染的问题
 buildFuture: true
 
+# 设置网站默认显示语言
 DefaultContentLanguage: "zh"
 DefaultContentLanguageInSubdir: true
 
+# 启用Robots.txt
 enableRobotsTXT: true
 buildDrafts: false
 buildExpired: false
 
 # 启用Google Analytics
 googleAnalytics: EXAMPLE
-
-minify:
-  disableXML: true
-  minifyOutput: true
-
+```
+# 新建一篇文章
+*新建content/posts文件夹，在posts文件夹里新建Markdown文件即可，以下为示例*
+```markdown
+---
+title: c++练习
+tags: 
+  - c++
+key: c++link
+date: '2022-04-24'
+lastmod: '2022-04-24'
+---
+```
+*date为创建日期，lastmod为最后修改日期*
+# 新建归档页面
+*编辑content/archive.md文件*
+```markdown
+---
+title: "archives"
+layout: "archives"
+url: "/en/archives/"
+summary: archives
+---
+```
+# 为网站启用搜索
+*config.yml*
+```yaml
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # 搜索需要
+```
+*content/search.md*
+```markdown
+---
+title: "Search" # in any language you want
+layout: "search" # is necessary
+# url: "/archive"
+# description: "Description for Search"
+summary: "search"
+placeholder: "search"
+---
+```
+# 添加多语言支持
+```yaml
 languages:
   zh:
     languageName: ":zh:"
@@ -162,150 +205,8 @@ languages:
             url: /tags/
           - name: "about"
             url: /about/
-
-params:
-  env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  title: "username"
-  description: "username"
-  keywords: [Blog, Portfolio, PaperMod]
-  author: Me
-  # author: ["Me", "You"] # multiple authors
-  images: ["/images/profile.jpg"]
-  DateFormat: "January 2, 2006"
-  defaultTheme: auto # dark, light
-  disableThemeToggle: false
-
-  ShowReadingTime: true
-  ShowShareButtons: true
-  ShowPostNavLinks: true
-  ShowBreadCrumbs: true
-  ShowCodeCopyButtons: false
-  ShowWordCount: true
-  ShowRssButtonInSectionTermList: true
-  UseHugoToc: true
-  disableSpecial1stPost: false
-  disableScrollToTop: false
-  comments: true
-  hidemeta: false
-  hideSummary: false
-  showtoc: false
-  tocopen: false
-
-  assets:
-    # disableHLJS: true # to disable highlight.js
-    # disableFingerprinting: true
-    favicon: "/images/profile.jpg"
-    favicon16x16: "/images/profile.jpg"
-    favicon32x32: "/images/profile.jpg"
-    # apple_touch_icon: "<link / abs url>"
-    # safari_pinned_tab: "<link / abs url>"
-  label:
-    text: "username"
-    # icon: /apple-touch-icon.png
-    # iconHeight: 35
-
-  # home-info mode
-  # homeInfoParams:
-  #   Title: "Hi there \U0001F44B"
-  #   Content: "I am an undergraduate student majoring in Computer Science. I have a strong passion for open source and free software, and I thoroughly enjoy acquiring new knowledge and exploring emerging technologies."
-
-  # 社交网站
-  socialIcons:
-    - name: twitter
-      url: "https://twitter.com/username"
-    - name: telegram
-      url: "https://t.me/username"
-    - name: github
-      url: "https://github.com/username"
-    - name: email
-      url: "mailto:username@example.com"
-    - name: rss
-      url: "/index.xml"
-
-  # analytics:
-  #   google:
-  #     SiteVerificationTag: "XYZabc"
-  #   bing:
-  #     SiteVerificationTag: "XYZabc"
-  #   yandex:
-  #     SiteVerificationTag: "XYZabc"
-
-  cover:
-    hidden: true # hide everywhere but not in structured data
-    hiddenInList: true # hide on list pages and home
-    hiddenInSingle: true # hide on single page
-
-  editPost:
-    URL: "https://github.com/username/username.github.io/tree/master/content"
-    Text: "Suggest Changes" # edit text
-    appendFilePath: true # to append file path to Edit link
-
-  # for search
-  # https://fusejs.io/api/options.html
-  fuseOpts:
-    isCaseSensitive: false
-    shouldSort: true
-    location: 0
-    distance: 1000
-    threshold: 0.4
-    minMatchCharLength: 0
-    keys: ["title", "permalink", "summary", "content"]
-
-# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
-pygmentsUseClasses: true
-markup:
-  highlight:
-    noClasses: false
-    # anchorLineNos: true
-    # codeFences: true
-    # guessSyntax: true
-    # lineNos: true
-    # style: monokai
 ```
-# 新建一篇文章
-*新建content/posts文件夹，在posts文件夹里新建Markdown文件即可，多语言文章以.language.markdown为后缀即可，language替换为对应的地区代码，以下为示例*
-```markdown
----
-title: c++练习
-tags: 
-  - c++
-key: c++link
-date: '2022-04-24'
-lastmod: '2022-04-24'
----
-```
-*lastmod为最后修改日期*
-# 新建归档页面
-*编辑content/archive.md文件*
-```markdown
----
-title: "archives"
-layout: "archives"
-url: "/en/archives/"
-summary: archives
----
-```
-*多语言归档页面设置方式与上面相同*
-# 为网站启用搜索
-*config.yml*
-```yaml
-outputs:
-  home:
-    - HTML
-    - RSS
-    - JSON # 搜索需要
-```
-*content/search.md*
-```markdown
----
-title: "Search" # in any language you want
-layout: "search" # is necessary
-# url: "/archive"
-# description: "Description for Search"
-summary: "search"
-placeholder: "search"
----
-```
+*多语言文章命名以.language.markdown为后缀即可，language替换为对应的地区代码，多语言归档页面设置方式与上面相同*
 # 修复中文标签题目的显示问题
 *将themes/PaperMod/layout/_default/terms.html文件复制到layout/_default/目录，之后修改新复制的文件内容*
 ```html
