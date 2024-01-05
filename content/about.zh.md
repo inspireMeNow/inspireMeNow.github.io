@@ -2,7 +2,7 @@
 title: 关于
 ---
 
-- 📬 我的邮箱地址 duan@duan-dky.tech
+- 📬 我的邮箱地址 duan-dky@proton.me
 - ⚒️ 我使用的编程语言 *C, C++ , Java, C#, Rust, Python, Vue.js*
 
 ### 🔒 密钥
