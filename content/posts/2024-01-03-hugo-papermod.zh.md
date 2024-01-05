@@ -207,6 +207,17 @@ languages:
             url: /about/
 ```
 *多语言文章命名以.language.markdown为后缀即可，language替换为对应的地区代码，多语言归档页面设置方式与上面相同*
+# 使用Hugo工具构建页面
+```bash
+HUGO_ENV="production" hugo --minify -D
+```
+# 部署到服务器
+```bash
+rsync -a -v public/* root@ip:/var/www/html/
+```
+*至此博客就搭建完成了，使用浏览器看一下效果吧~*
+
+**~~更新~~**
 # 修复中文标签题目的显示问题
 *将themes/PaperMod/layout/_default/terms.html文件复制到layout/_default/目录，之后修改新复制的文件内容*
 ```html
@@ -232,12 +243,15 @@ languages:
 {{- end }}
 <!-- 与原始文件相同 -->
 ```
-# 使用Hugo工具构建页面
-```bash
-hugo --minify -D
+# 禁止搜索引擎爬取标签页
+*robots.txt*
+```txt
+User-agent: *
+{{- if hugo.IsProduction | or (eq site.Params.env "production") }}
+Disallow: /en/tags/
+Disallow: /zh/zhtags/
+{{- else }}
+Disallow: /
+{{- end }}
+Sitemap: {{ "sitemap.xml" | absURL }}
 ```
-# 部署到服务器
-```bash
-rsync -a -v public/* root@ip:/var/www/html/
-```
-*至此博客就搭建完成了，使用浏览器看一下效果吧~*

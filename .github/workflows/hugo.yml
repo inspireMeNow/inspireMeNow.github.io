@@ -52,7 +52,7 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: |
-          hugo --minify -D
+          HUGO_ENV="production" hugo --minify -D
       
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@main
