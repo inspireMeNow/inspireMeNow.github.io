@@ -1,15 +1,14 @@
 ---
-title: vless配置
+title: xray reality配置
 ZHtags: 
   - network
 key: vless-config 
 date: '2022-08-31'
-lastmod: '2022-08-31'
+lastmod: '2024-01-05'
 ---
 # xray安装
-*注：我使用的是xray内核，v2ray内核应该也可以*  
 ```bash
-wget https://github.com/XTLS/Xray-core/releases/download/v1.5.10/Xray-linux-64.zip
+wget https://github.com/XTLS/Xray-core/releases/download/v1.8.1/Xray-linux-64.zip
 
 unzip Xray-linux-64.zip
 
@@ -41,236 +40,162 @@ WantedBy=multi-user.target
 ```bash
 sudo systemctl enable --now xray
 ```
-# vless+websocket+tls配置
-## server端
-### xray配置
-```conf
+~~vless+websocket+tls和vless+nginx+grpc+tls容易被识别，不建议使用~~
+# vless reality配置
+*服务端*
+```json
 {
     "log": {
-        "loglevel": "warning" //日志级别
+    	"loglevel": "info",
+    	"access": "/var/log/xray/access.log",
+    	"error": "/var/log/xray/error.log"
     },
-    "inbounds": [
+    "inbounds": [ // 服务端入站配置
         {
-            "port": 10016,
+            "port": 443,
             "protocol": "vless",
             "settings": {
                 "clients": [
                     {
-                        "id": "youruuid", // 填写你的 UUID
-                        "level": 0,
-                        "email": "youremail"
-                    }
-                ],
-                "decryption": "none",
-                "fallbacks": [
-                    {
-                        "dest": 80 //回落到nginx的80端口
-                    },
-                    {
-                        "path": "/path", // 必须换成自定义的 PATH
-                        "dest": 1234,
-                        "xver": 1
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "tls",
-                "tlsSettings": {
-                    "alpn": [
-                        "http/1.1"
-                    ],
-                    "certificates": [
-                        {
-                            "certificateFile": "/path/to/fullchain.pem", // 换成你的证书，绝对路径
-                            "keyFile": "/path/to/privkey.pem" // 换成你的私钥，绝对路径
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "port": 1234,
-            "listen": "127.0.0.1",
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "youruuid", // 填写你的 UUID
-                        "level": 0,
-                        "email": "youremail"
+                        "id": "UUID", // 必填，执行 ./xray uuid 生成，或 1-30 字节的字符串
+                        "flow": "xtls-rprx-vision" // 选填，若有，客户端必须启用 XTLS
                     }
                 ],
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "acceptProxyProtocol": true, // 若使用 Nginx/Caddy 等反代 WS，需要删掉这行
-                    "path": "/path" // 必须换成自定义的 PATH，需要和上面的一致
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,  // 选填，若为 true，输出调试信息
+                    "dest": ":PORT", // 必填，格式同 VLESS fallbacks 的 dest，回退到Nginx监听端口
+                    "xver": 0,  // 选填，格式同 VLESS fallbacks 的 xver
+                    "serverNames": [ // 必填，客户端可用的 serverName 列表，暂不支持 * 通配符
+                        "SNI"
+                    ],
+                    "privateKey": "privateKey", // 必填，执行 ./xray x25519 生成
+                    "minClientVer": "", // 选填，客户端 Xray 最低版本，格式为 x.y.z
+                    "maxClientVer": "", // 选填，客户端 Xray 最高版本，格式为 x.y.z
+                    //"maxTimeDiff": 0, // 选填，允许的最大时间差，单位为毫秒
+                    "shortIds": [ // 必填，客户端可用的 shortId 列表，可用于区分不同的客户端
+                        "shortId" // 0 到 f，长度为 2 的倍数，长度上限为 16
+                    ]
                 }
             }
         }
     ],
     "outbounds": [
-        {
-            "protocol": "freedom"
-        }
-    ]
-}
-```
-### nginx配置
-*由于nginx占用443端口。故使用nginx根据sni进行流量转发*  
-*nginx.conf*
-```conf
-stream {
-# 这里就是 SNI 识别，将域名映射成一个配置名，请修改自己的一级域名
-  map $ssl_preread_server_name $backend_name {
-    cl.example.com web;
-    blog.example.com xray;
-    default web;
-  }
-# web，配置转发详情
-  upstream web {
-    server 127.0.0.1:10001;
-  }
-# 转发到xray
-  upstream xray {
-    server 127.0.0.1:10016;
-  }
-# 监听 443 并开启 ssl_preread
-  server {
-    listen 443 reuseport;
-    listen [::]:443 reuseport;
-    proxy_pass $backend_name;
-    ssl_preread on;
-  }
-}
-```
-## client端
-*我使用的clash meta核，以下为clash配置*   
-```yaml
-- name: "vless"
-      type: vless
-      server: yourdomain
-      port: 443
-      uuid: youruuid
-      tls: true
-      udp: true
-      network: ws
-      servername: yourdomain # priority over wss host
-      ws-opts:
-        path: /path
-        headers: { Host: yourdomain }
-```
-# vless+nginx+grpc+tls配置
-## server端
-### xray配置
-```conf
-{
-  "log": {
-    "loglevel": "warning" //日志级别
-  },
-  "inbounds": [
     {
-      "listen": "/dev/shm/Xray-VLESS-gRPC.socket,0666", //监听socket
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "youruuid" // 填写你的 UUID
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "yourservicename" // 填写你的 ServiceName
-        }
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "tag": "direct",
       "protocol": "freedom",
-      "settings": {}
+      "settings" : {
+	      "domainStrategy": "UseIPv6"
+      },
+      "tag": "direct"
     },
     {
-      "tag": "blocked",
       "protocol": "blackhole",
-      "settings": {}
+      "tag": "blocked"
     }
   ],
   "routing": {
-    "domainStrategy": "AsIs", //域名匹配
+    "domainStrategy": "IPIfNonMatch",
     "rules": [
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "domain": [
+          "domain:iqiyi.com",
+          "domain:video.qq.com",
+          "domain:youku.com"
+        ],
+        "type": "field",
+        "outboundTag": "blocked"
+      },
       {
         "type": "field",
         "ip": [
+          "geoip:cn",
           "geoip:private"
         ],
+        "outboundTag": "blocked"
+      },
+      {
+        "protocol": [
+          "bittorrent"
+        ],
+        "type": "field",
         "outboundTag": "blocked"
       }
     ]
   }
 }
+
 ```
-### nginx配置
+*客户端*
+```json
+{
+    "log": {
+    	"loglevel": "info"
+    },
+    "inbounds": [
+    // 4.2 有少数APP不兼容socks协议，需要用http协议做转发，则可以用下面的端口
+    {
+      "tag": "socks",
+      "protocol": "socks",
+      "listen": "127.0.0.1", // 这个是通过http协议做本地转发的地址
+      "port": 1081 // 这个是通过http协议做本地转发的端口
+    }
+    ],
+    "outbounds": [ // 客户端出站配置
+        {
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "IP", // 服务端的域名或 IP
+                        "port": 443,
+                        "users": [
+                            {
+                                "id": "UUID", // 与服务端一致
+                                "flow": "xtls-rprx-vision", // 与服务端一致
+                                "encryption": "none"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false, // 选填，若为 true，输出调试信息
+                    "fingerprint": "chrome", // 必填，使用 uTLS 库模拟客户端 TLS 指纹
+                    "serverName": "SNI", // 服务端 serverNames 之一
+                    "publicKey": "publicKey", // 服务端私钥对应的公钥
+                    "shortId": "shortId", // 服务端 shortIds 之一
+                    "spiderX": "/" // 爬虫初始路径与参数，建议每个客户端不同
+                }
+            }
+        }
+    ]
+}
+
+```
+### nginx配置 
+*nginx.conf*
 ```conf
-server {
-	listen 10013 ssl http2 so_keepalive=on;
-	server_name yourdomain;
-
-	index index.html;
-	root /var/www/html;
-
-	ssl_certificate /path/to/fullchain.pem;
-	ssl_certificate_key /path/to/privkey.pem;
-	ssl_protocols TLSv1.2 TLSv1.3;
-	ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
-	
-	client_header_timeout 52w;
-        keepalive_timeout 52w;
-	# 在 location 后填写 /你的 ServiceName
-	location /yourservicename {
-		if ($content_type !~ "application/grpc") {
-			return 404;
-		}
-		client_max_body_size 0;
-		client_body_buffer_size 512k;
-		grpc_set_header X-Real-IP $remote_addr;
-		client_body_timeout 52w;
-		grpc_read_timeout 52w;
-		grpc_pass unix:/dev/shm/Xray-VLESS-gRPC.socket; #监听socket
-	}
+stream {
+# 监听 PORT 并开启 ssl_preread
+  server {
+    listen PORT reuseport;
+    listen [::]:PORT reuseport;
+    proxy_pass $backend_name;
+    ssl_preread on;
+  }
 }
-server {
-    if ($host = yourdomain) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-        listen 80 ;
-        listen [::]:80 ;
-    server_name yourdomain;
-    return 404; # managed by Certbot
-}
-```
-*注：nginx端口转发可参照websocket中的配置*  
-## client端
-*clash meta配置*  
-```yaml
-- name: "vless"
-      type: vless
-      server: yourdomain
-      port: 443
-      uuid: youruuid
-      tls: true
-      udp: true
-      network: grpc
-      servername: yourdomain # priority over wss host
-      # skip-cert-verify: true
-      grpc-opts: 
-        grpc-service-name: yourservicename
 ```

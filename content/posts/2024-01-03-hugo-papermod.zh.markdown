@@ -232,3 +232,12 @@ languages:
 {{- end }}
 <!-- 与原始文件相同 -->
 ```
+# 使用Hugo工具构建页面
+```bash
+hugo --minify -D
+```
+# 部署到服务器
+```bash
+rsync -a -v public/* root@ip:/var/www/html/
+```
+*至此博客就搭建完成了，使用浏览器看一下效果吧~*
