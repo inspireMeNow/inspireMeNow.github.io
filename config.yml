@@ -74,6 +74,17 @@ languages:
             url: /zh/zhtags/
           - name: "关于"
             url: /zh/about/
+      socialIcons:
+        - name: twitter
+          url: "https://twitter.com/inspireMeNow_me"
+        - name: telegram
+          url: "https://t.me/courage159357"
+        - name: github
+          url: "https://github.com/inspireMeNow"
+        - name: email
+          url: "mailto:duan-dky@proton.me"
+        - name: rss
+          url: "/zh/index.xml"
 
   en:
     languageName: "English"
@@ -127,6 +138,17 @@ languages:
             url: /tags/
           - name: "about"
             url: /about/
+      socialIcons:
+        - name: twitter
+          url: "https://twitter.com/inspireMeNow_me"
+        - name: telegram
+          url: "https://t.me/courage159357"
+        - name: github
+          url: "https://github.com/inspireMeNow"
+        - name: email
+          url: "mailto:duan-dky@proton.me"
+        - name: rss
+          url: "/en/index.xml"
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
@@ -174,17 +196,6 @@ params:
   #   Title: "Hi there \U0001F44B"
   #   Content: "I am an undergraduate student majoring in Computer Science. I have a strong passion for open source and free software, and I thoroughly enjoy acquiring new knowledge and exploring emerging technologies."
 
-  socialIcons:
-    - name: twitter
-      url: "https://twitter.com/inspireMeNow_me"
-    - name: telegram
-      url: "https://t.me/courage159357"
-    - name: github
-      url: "https://github.com/inspireMeNow"
-    - name: email
-      url: "mailto:duan-dky@proton.me"
-    - name: rss
-      url: "/index.xml"
 
   # analytics:
   #   google:
