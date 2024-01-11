@@ -23,7 +23,7 @@ title: 关于
 [Fedora](https://getfedora.org/)  [Windows](https://www.microsoft.com/windows10)  [Arch Linux](https://archlinux.org)  [Android](https://www.android.com/)
 
 ### 📱 设备
-[Pixel 4a 5G](https://store.google.com/)  [XiaoMi Pad 5](https://www.mi.com)  [Intel NUC M15](https://www.intel.com/)
+[Pixel 4a 5G](https://store.google.com/)  [Samsung Tab S6](https://www.samsung.com)  [Intel NUC M15](https://www.intel.com/)
 
 ### 🔗 友链
 - [Jackfen](https://jackfen.github.io/)
