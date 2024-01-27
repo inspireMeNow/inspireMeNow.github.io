@@ -133,11 +133,11 @@ languages:
         imageTitle: my image
         buttons:
           - name: "categories"
-            url: /posts/
+            url: /en/posts/
           - name: "tags"
-            url: /tags/
+            url: /en/tags/
           - name: "about"
-            url: /about/
+            url: /en/about/
       socialIcons:
         - name: twitter
           url: "https://twitter.com/inspireMeNow_me"
