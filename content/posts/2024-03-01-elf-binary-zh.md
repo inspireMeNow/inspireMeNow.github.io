@@ -56,7 +56,10 @@ typedef struct elf32_hdr{
 值）
 - e_ident: 0x00~0x03为 Magic Number（魔数）， 0x04指定格式为32位/64位，0x05指定大端/小端模式，0x06为
 elf文件版本，0x07为OSABI，0x08为ABI版本,0x09~0x0f为保留位。
-- e_type（目标文件类型，ET_NONE ET_REL ET_EXEC ET_DYN ET_CORE ET_LOPROC ET_HIPROC），e_machine(机器架构)，e_version（文件版本），e_flags（处理器相关标志）
+- e_type（目标文件类型，ET_NONE ET_REL ET_EXEC ET_DYN ET_CORE ET_LOPROC ET_HIPROC）
+- e_machine(机器架构) 
+- e_version（文件版本）
+- e_flags（处理器相关标志）
 - e_ehsize（ELF文件头长度）
 
 ### 程序头表
