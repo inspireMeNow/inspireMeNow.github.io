@@ -10,10 +10,10 @@ title: About
 
 ### 🔒 FingerPrint
 
-    54FB 30C8 F48C 83C4 4EFD 55E1 079B 71DB 7AE4 3E7E
+    AD3D 2BAD 63B3 81F4 071D DECA 1333 72E0 763E 04E0
 
 
-[Pubilc Key](https://keys.openpgp.org/vks/v1/by-fingerprint/54FB30C8F48C83C44EFD55E1079B71DB7AE43E7E)
+[Pubilc Key](https://keys.openpgp.org/vks/v1/by-fingerprint/AD3D2BAD63B381F4071DDECA133372E0763E04E0)
 
 All unsigned commits are not responsible for this
 
