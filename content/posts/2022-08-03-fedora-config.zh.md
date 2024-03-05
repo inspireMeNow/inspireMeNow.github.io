@@ -4,7 +4,7 @@ ZHtags:
   - linux
 key: fedora-setting 
 date: '2022-08-03'
-lastmod: '2022-10-28'
+lastmod: '2024-03-05'
 ---
 
 # 1.软件包管理工具
@@ -243,11 +243,36 @@ sudo dnf install lame\* --exclude=lame-devel
 ```bash
 sudo dnf group upgrade --with-optional Multimedia
 ```
-*chrome设置硬件解码（wayland下不可用）*  
+### intel视频解码
+```bash
+sudo dnf install intel-media-driver libva libva-utils gstreamer1-vaapi ffmpeg intel-gpu-tools mesa-dri-drivers mpv
+```
+*编辑~/.bashrc*
+```bash
+export LIBVA_DRIVER_NAME=iHD
+```
+*十一代CPU及以后开启guc以及fbc*  
+*编辑/etc/modprobe.d/i915.conf*
+```conf
+options i915 enable_guc=3
+options i915 enable_fbc=1
+```
+*重新生成initramfs* 
+```bash
+sudo dracut --force
+```
+*重启查看guc以及huc是否启用*
+```bash
+sudo dmesg | grep -i guc
+```
+### 浏览器硬件解码
+*chrome*  
+**wayland下不可用**  
 ```conf
 /usr/bin/google-chrome-stable --proxy-server=socks5://127.0.0.1:7890 --enable-gpu-rasterization --enable-zero-copy --disable-features=UseChromeOSDirectVideoDecoder --enable-features=VaapiVideoDecoder --enable-features=VaapiVideoEncoder --ignore-gpu-blocklist --ozone-platform-hint=auto --gtk-version=4 --enable-features=WebUIDarkMode --force-dark-mode %U
 ```
-*firefox的硬件解码应该开箱即用*  
+*firefox*  
+*硬件解码应该开箱即用*  
 # 4.vim命令
 
 ## 命令模式
