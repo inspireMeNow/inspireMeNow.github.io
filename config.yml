@@ -50,8 +50,11 @@ languages:
           weight: 20
         - identifier: ZHprivate
           name: "云盘"
-          url: https://myv6.duan-dky.me:50001/
+          url: https://my.duan-dky.me:50001/
           weight: 25
+        - identifier: ZHprivate
+          name: "剪贴板"
+          url: https://my.duan-dky.me:50002/index.php
 
     # custom params for each language should be under [langcode].parms - hugo v0.120.0
     params:
@@ -115,10 +118,6 @@ languages:
           name: about
           url: /about/
           weight: 20
-        - identifier: private
-          name: drive
-          url: https://myv6.duan-dky.me:50001/
-          weight: 25
 
     params:
       env: production
