@@ -52,7 +52,7 @@ languages:
           name: "云盘"
           url: https://my.duan-dky.me:50001/
           weight: 25
-        - identifier: ZHprivate
+        - identifier: ZHclipboard
           name: "剪贴板"
           url: https://my.duan-dky.me:50002/index.php
 
