@@ -50,11 +50,11 @@ languages:
           weight: 20
         - identifier: ZHprivate
           name: "云盘"
-          url: https://my.duan-dky.me:50001/
+          url: https://my.inspiremenow.top:50001/
           weight: 25
         - identifier: ZHclipboard
           name: "剪贴板"
-          url: https://my.duan-dky.me:50002/index.php
+          url: https://my.inspiremenow.top:50002/index.php
 
     # custom params for each language should be under [langcode].parms - hugo v0.120.0
     params:
