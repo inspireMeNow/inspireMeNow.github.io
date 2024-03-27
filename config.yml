@@ -145,7 +145,7 @@ languages:
         - name: github
           url: "https://github.com/inspireMeNow"
         - name: email
-          url: "mailto:duan-dky@proton.me"
+          url: "mailto:inspiremenow@murena.io"
         - name: rss
           url: "/en/index.xml"
 
