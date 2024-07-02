@@ -72,4 +72,4 @@ chmod +x benchncnn
 ./benchncnn 8 4 2 0 1
 ```
 ![](/images/ncnn-benchmark-android-gpu.png)
-*看起来cpu性能和gpu差的有点多..*
+*看起来gpu跑分还不如cpu..*
