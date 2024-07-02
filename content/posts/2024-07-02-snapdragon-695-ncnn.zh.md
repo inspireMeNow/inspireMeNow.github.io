@@ -1,5 +1,5 @@
 ---
-title: 在骁龙765平台上运行ncnn并测试
+title: 在骁龙765G平台上运行ncnn并测试
 ZHtags: 
   - ncnn
 key: ncnn
