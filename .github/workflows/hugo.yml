@@ -53,16 +53,6 @@ jobs:
           HUGO_ENV: production
         run: |
           HUGO_ENV="production" hugo --minify -D
-
-      - name: Deploy to server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-          SOURCE: "public/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-          TARGET: ${{ secrets.TARGET }}
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
