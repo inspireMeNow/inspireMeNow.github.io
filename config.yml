@@ -10,6 +10,7 @@ DefaultContentLanguageInSubdir: true
 enableRobotsTXT: true
 buildDrafts: false
 buildExpired: false
+disableAliases: true
 
 googleAnalytics: G-DJG7T67K4Z
 
