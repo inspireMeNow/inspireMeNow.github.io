@@ -50,8 +50,8 @@ languages:
           url: /zh/about/
           weight: 20
         - identifier: ZHprivate
-          name: "云盘"
-          url: https://my.inspiremenow.top:50001/
+          name: "简历"
+          url: https://inspiremenow.top/pdf/cv.pdf
           weight: 25
         - identifier: ZHclipboard
           name: "剪贴板"
@@ -119,6 +119,10 @@ languages:
           name: about
           url: /about/
           weight: 20
+        - identifier: ENprivate
+          name: "CV"
+          url: https://inspiremenow.top/pdf/cv.pdf
+          weight: 25
 
     params:
       env: production
