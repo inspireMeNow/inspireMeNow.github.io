@@ -27,7 +27,7 @@ uki_generator=dracut
 sudo cp /usr/lib/kernel/install.d/90-uki-copy.install /etc/kernel/install.d/
 sudo vim /etc/kernel/install.d/90-uki-copy.install
 ```
-*这里添加了 UKI_FALLBACK_FILE， 留一份原来的内核备用*
+*这里添加了 `UKI_FALLBACK_FILE`， 留一份原来的内核备用*
 ```sh
 #!/usr/bin/sh
 # -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
@@ -159,7 +159,7 @@ sudo sbctl enroll-keys
 sudo cp /usr/lib/kernel/install.d/91-sbctl.install /etc/kernel/install.d/
 sudo vim /etc/kernel/install.d/91-sbctl.install
 ```
-*这里固定了 IMAGE_FILE，并删掉了 remove 部分，~~毕竟不需要清理内核了~~*
+*这里固定了 `IMAGE_FILE`，并删掉了 remove 部分，~~毕竟不需要清理内核了~~*
 ```sh
 #!/usr/bin/sh
 #  This file is part of sbctl.
