@@ -1,6 +1,6 @@
 ---
 title: Fedora 切换到 UKI 内核并启用安全启动
-ZHtags: 
+ZHtags:
   - fedora
 key: fedora
 date: '2025-05-29'
@@ -14,6 +14,10 @@ sudo rm -rf /boot/efi/*
 sudo dnf remove grub2\* --setopt=protected_packages=
 ```
 ## 配置 kernel-install
+*这里为 UKI 镜像所在文件夹，可以根据需要自行修改*
+```bash
+sudo mkdir -p /boot/efi/EFI/Linux
+```
 ~~这里也可以使用 ukify~~
 ```bash
 sudo vim /etc/kernel/install.conf
@@ -64,10 +68,13 @@ UKI_DIR="$BOOT_ROOT/EFI/Linux"
 UKI_FILE="$UKI_DIR/fedora-linux.efi"
 UKI_FALLBACK_FILE="$UKI_DIR/fedora-linux-fallback.efi"
 
+if [ -f "$UKI_FILE" ]; then
+    install -m 0644 "$UKI_FILE" "$UKI_FALLBACK_FILE"
+fi
+
 # If there is a UKI named uki.efi on the staging area use that, if not use what
 # was passed in as $KERNEL_IMAGE but insist it has a .efi extension
 if [ -f "$KERNEL_INSTALL_STAGING_AREA/uki.efi" ]; then
-    install -m 0644 "$UKI_FILE" "$UKI_FALLBACK_FILE"
     [ "$KERNEL_INSTALL_VERBOSE" -gt 0 ] && echo "Installing $KERNEL_INSTALL_STAGING_AREA/uki.efi as $UKI_FILE"
     install -m 0644 "$KERNEL_INSTALL_STAGING_AREA/uki.efi" "$UKI_FILE" || {
         echo "Error: could not copy '$KERNEL_INSTALL_STAGING_AREA/uki.efi' to '$UKI_FILE'." >&2
@@ -125,8 +132,8 @@ sudo dnf install sbctl
 sudo sbctl create-keys
 ```
 ## 将密钥导入BIOS
-**这部分的操作可能导致设备变砖！！**   
-    
+**这部分的操作可能导致设备变砖！！**
+
 **导入前 BIOS 需要启用 Setup Mode，具体参考 [example enrollment](https://github.com/Foxboron/sbctl/blob/master/docs/workflow-example.md)**
 
 ### Option ROM
@@ -205,4 +212,3 @@ sudo kernel-install add-all -v
 - [Unified kernel image - Gentoo Wiki](https://wiki.gentoo.org/wiki/Unified_kernel_image)
 - [Unified kernel image - ArchWiki](https://wiki.archlinux.org/title/Unified_kernel_image)
 - [FAQ Foxboron/sbctl Wiki](https://github.com/Foxboron/sbctl/wiki/FAQ)
-
