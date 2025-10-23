@@ -53,9 +53,6 @@ languages:
           name: "简历"
           url: https://inspiremenow.top/pdf/cv.pdf
           weight: 25
-        - identifier: ZHclipboard
-          name: "剪贴板"
-          url: https://my.inspiremenow.top:50002/index.php
 
     # custom params for each language should be under [langcode].parms - hugo v0.120.0
     params:
