@@ -27,8 +27,8 @@ All unsigned commits are not responsible for this
 ### 📱 Devices
 [Pixel 4a 5G](https://store.google.com/)  [Samsung Tab S6](https://www.samsung.com)  [Intel NUC M15](https://www.intel.com/)
 
-### 🔗 Links
+### 🔗 Blogroll
 - [Jackfen](https://jackfen.github.io/)
 - [zhuangzhongxu](https://www.cnblogs.com/zhuangzhongxu/)
-- [Integral](https://integral.org.cn/)
+- [Integral](https://blog.i7arch.com)
 - [MeowRain](https://meowrain.cn/)
