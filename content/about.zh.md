@@ -27,5 +27,5 @@ title: 关于
 ### 🔗 友链
 - [Jackfen](https://jackfen.top/)
 - [zhuangzhongxu](https://www.cnblogs.com/zhuangzhongxu/)
-- [Integral](https://blog.i7.homes/)
+- [Integral](https://blog.i7arch.com)
 - [MeowRain](https://meowrain.cn/)
