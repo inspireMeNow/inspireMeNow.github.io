@@ -4,7 +4,7 @@ paginate: 5
 theme: PaperMod
 buildFuture: true
 
-DefaultContentLanguage: "zh"
+DefaultContentLanguage: "en"
 DefaultContentLanguageInSubdir: true
 
 enableRobotsTXT: true
@@ -63,7 +63,7 @@ languages:
       profileMode:
         enabled: true # needs to be explicitly set
         title: inspireMeNow
-        subtitle: "CS本科生，热爱开源和自由软件"
+        subtitle: ""
         imageUrl: "/images/profile.jpg"
         imageWidth: 120
         imageHeight: 120
@@ -76,10 +76,8 @@ languages:
           - name: "关于"
             url: /zh/about/
       socialIcons:
-        - name: twitter
-          url: "https://twitter.com/inspireMeNow_me"
-        - name: telegram
-          url: "https://t.me/courage159357"
+        - name: mastodon
+          url: "https://fosstodon.org/@inspiredMeNow"
         - name: github
           url: "https://github.com/inspireMeNow"
         - name: email
@@ -127,7 +125,7 @@ languages:
       profileMode:
         enabled: true # needs to be explicitly set
         title: inspireMeNow
-        subtitle: "CS undergraduate student, passionate about open source and free software"
+        subtitle: ""
         imageUrl: "/images/profile.jpg"
         imageWidth: 120
         imageHeight: 120
@@ -140,10 +138,8 @@ languages:
           - name: "about"
             url: /en/about/
       socialIcons:
-        - name: twitter
-          url: "https://twitter.com/inspireMeNow_me"
-        - name: telegram
-          url: "https://t.me/courage159357"
+        - name: mastodon
+          url: "https://fosstodon.org/@inspiredMeNow"
         - name: github
           url: "https://github.com/inspireMeNow"
         - name: email
