@@ -95,23 +95,23 @@ languages:
     menu:
       main:
         - identifier: categories
-          name: categories
+          name: Categories
           url: /posts/
           weight: 5
         - identifier: search
-          name: search
+          name: Search
           url: /search/
           weight: 10
         - identifier: tags
-          name: tags
+          name: Tags
           url: /tags/
           weight: 15
         - identifier: archives
-          name: archives
+          name: Archives
           url: /archives/
           weight: 17
         - identifier: about
-          name: about
+          name: About
           url: /about/
           weight: 20
         - identifier: ENprivate
